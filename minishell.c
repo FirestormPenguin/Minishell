@@ -6,9 +6,10 @@
 
 //gcc -o minishell minishell.c -lreadline
 
-int main() {
+void getInput()
+{
     char *inputString;
-
+    
     while (1) {
         inputString = readline("");
         if (strcmp(inputString, "exit") == 0)
@@ -20,5 +21,9 @@ int main() {
         add_history(inputString);
         free(inputString);
     }
-    return 0;
+}
+
+int main() {
+    getInput();
+    return (0);
 }
