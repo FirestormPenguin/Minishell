@@ -1,4 +1,4 @@
-#include <stdio.h> 
+#include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <time.h>
@@ -63,7 +63,7 @@ int main()
 {
    t_node *root;
 
-   root = create_node(7);
+   root = create_node(1);
    insertLeft(root, 2);
    insertRight(root, 3);
    insertLeft(root->left, 4);
