@@ -11,7 +11,9 @@ void getInput()
     char *inputString;
     
     while (1) {
-        inputString = readline("");
+        inputString = readline("Minishell: ");
+        if (!inputString)
+            break;
         if (strcmp(inputString, "exit") == 0)
         {
             free(inputString);
@@ -23,7 +25,10 @@ void getInput()
     }
 }
 
-int main() {
+int main(int ac, char **av, char **envp)
+{
+    (void) ac;
+    (void) av;
     getInput();
     return (0);
 }
