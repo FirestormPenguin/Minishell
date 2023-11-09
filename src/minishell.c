@@ -4,8 +4,6 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-//gcc -o minishell minishell.c -lreadline
-
 void getInput()
 {
     char *inputString;
