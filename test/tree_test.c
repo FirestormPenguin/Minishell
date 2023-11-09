@@ -38,7 +38,7 @@ void inorderTraversal(t_node *root)
 {
     if (root != NULL) {
         inorderTraversal(root->left);
-        printf("%d ", root->data);
+        printf("%d \n", root->data);
         inorderTraversal(root->right);
     }
 }
@@ -68,7 +68,6 @@ int main()
    insertRight(root, 3);
    insertLeft(root->left, 4);
    insertRight(root->left, 5);
-   printf("Attraversamento in ordine: ");
    inorderTraversal(root);
    printf("\n");
    free(root->left);
