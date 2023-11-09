@@ -1,8 +1,8 @@
 NAME = minishell
 CC = gcc
 INCLUDE = ./include
-CFLAGS = -Werror -Wall -Wextra -lreadline -I./include
-#CLFAGS = -lreadline
+#CFLAGS = -Wall -Wextra -Werror -lreadline -I./include
+CFLAGS = -lreadline -I./include
 SRC = $(SRC_DIR)/minishell.c  
 OBJ = $(addprefix $(OBJ_DIR)/,$(notdir $(SRC:%.c=%.o)))
 OBJ_DIR = ./obj
@@ -29,7 +29,7 @@ all: obj_dir $(NAME)
 
 $(NAME): $(OBJ)
 	@echo $(SEPARATOR)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+	@$(CC) $(OBJ) $(CFLAGS) -o $(NAME)
 	@echo "$(BOLD)$(GREEN)  Compiled $(NAME) successfully$(RESET)"
 	@echo "$(BOLD)$(GREEN)  READY TO START!$(RESET)"
 	@echo $(SEPARATOR)
