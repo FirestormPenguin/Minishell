@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/10 13:28:44 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/10 14:04:40 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ char    **split_args(char *str)
     int i = -1;
     return (args);
 }
+
 
 void exe(char *str)
 {
