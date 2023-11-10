@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/10 15:18:41 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/10 17:12:26 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,39 @@ void exe(char *str)
     }
 }
 
+
+
+void check_string(char *str)
+{
+    char    *tmp;
+    int     i;
+    int     j;
+    int     l;
+    
+    i = -1;
+    j = -1;
+    while (*str)
+    {
+        l = -1;
+        if (*str != ' ' || *str!= '\0')
+        {
+            while(++l <= i)
+            {
+                tmp[l] = str[++j];
+                printf("%c\n", tmp[j]);
+            }
+            tmp[j + 1] = '\0';
+            printf("%s\n", tmp);
+            exe(tmp);
+            i++;
+        }
+    }
+}
+
 void getInput()
 {
     char *inputString;
+    char *exeString;
     
     while (1)
     {
@@ -63,7 +93,9 @@ void getInput()
             break;
         }
         else
-            exe(inputString);
+        {
+            check_string(inputString);
+        }
         /*aggiunge alla history il comando appena scritto*/
         add_history(inputString);
         free(inputString);
