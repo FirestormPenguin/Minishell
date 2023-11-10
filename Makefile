@@ -3,7 +3,7 @@ CC = gcc
 INCLUDE = ./include
 #CFLAGS = -Wall -Wextra -Werror -lreadline -I./include
 CFLAGS = -lreadline -I./include
-SRC = $(SRC_DIR)/minishell.c  
+SRC = $(SRC_DIR)/minishell.c $(SRC_DIR)/utils.c  
 OBJ = $(addprefix $(OBJ_DIR)/,$(notdir $(SRC:%.c=%.o)))
 OBJ_DIR = ./obj
 SRC_DIR = ./src

@@ -6,43 +6,43 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/09 17:33:08 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/10 13:28:44 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <../include/minishell.h>
+
+char    **split_args(char *str)
+{
+    char    **args = ft_split(str, ' ');
+    
+    args = ft_split(str, ' ');
+    args[count_split(str, ' ') + 1] = NULL;
+    int i = -1;
+    return (args);
+}
 
 void exe(char *str)
 {
     pid_t   pid;
     int     status;
     char    path[50] = "/bin/";
-    char    *args[] = {str, NULL};
+    char    **mtx;
+    char    **args;
     
-    /*con strcat unisco al path il comando
-    NOTA: non si puo' usare strcat, da mettere ft_strcat*/
-    strcat(path, str);
-    /*forka il processo creando un figlio*/
+    mtx = split_args(str);
+    args = mtx;
+    strcat(path, mtx[0]);
     pid = fork();
-    /*if is in pid, siamo nel processo padre
-    che tramite wait attende che i figli si chiudano,
-    else siamo nel processo figlio, i due processi
-    lavorano in contemporanea*/
     if (pid)
     {
-        //printf("%d\n", pid);
         waitpid(-1, &status, WUNTRACED);
-        //printf("%d\n", status);
     }
     else
     {
-        /*execve esegue un comando di bash tramite path (/bin/...)
-        e comando di per se (ls, pwd, etc), args normalmente
-        contiene il comando + flag (opzionale) + NULL*/
-        execve(path, args, NULL);
+        execve(path, (char *const *)args, NULL);
         exit(0);
     }
-    
 }
 
 void getInput()
