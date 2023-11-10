@@ -23,3 +23,14 @@ contiene il comando + flag (opzionale) + NULL*/
 /*if inputString is "exit", break*/
 
 /*aggiunge alla history il comando appena scritto*/
+
+10/11/2023
+/*facciamo che spiego qui che ho fatto va:
+Ho creato split args, che tramite ft_split divide
+l'input e lo inserisce in args, che sara' poi utilizzato
+in execve(riga 43), in questo modo ai comandi si
+possono eserire anche le flag, tipo per ls, -l, -a, -la, 
+etc
+Poi vabbe ho usato una matrice di stringhe per poi passare
+i valori all args che deve essere di tipo "char *const *"
+and thats all, ora devo capire cosa é un tokenizer*/
