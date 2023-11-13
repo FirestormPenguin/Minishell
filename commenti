@@ -34,3 +34,8 @@ etc
 Poi vabbe ho usato una matrice di stringhe per poi passare
 i valori all args che deve essere di tipo "char *const *"
 and thats all, ora devo capire cosa é un tokenizer*/
+
+13/11/2023
+/*Aggiunto tokenizer, essenzialmente prende la stringa di
+input e divide ogni parola inserita in token utilizzabili
+poi per eseguire i comandi vari*/
