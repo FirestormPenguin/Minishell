@@ -96,3 +96,90 @@ char	**ft_split(char const *s, char c)
 	split[i] = NULL;
 	return (split);
 }
+
+char	*ft_strdup(const char *s1)
+{
+	char	*str;
+	size_t	i;
+
+	str = (char *) malloc(sizeof(*s1) * (ft_strlen(s1) + 1));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (s1[i])
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	str[i] = 0;
+	return (str);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == (char)c)
+		{
+			return ((char *)(s + i));
+		}		
+		i++;
+	}
+	if (s[i] == (char)c)
+	{	
+		return ((char *)(s + i));
+	}	
+	return (NULL);
+}
+
+char* ft_strtok(char* str, const char* delim) 
+{
+    static char	*current_str;
+
+    if (str != NULL)
+        current_str = str;
+	else if (current_str == NULL)
+        return NULL;
+    while (*current_str != '\0' && ft_strchr(delim, *current_str) != NULL)
+        current_str++;
+    if (*current_str == '\0')
+	{
+        current_str = NULL;
+        return NULL;
+    }
+    char *token_start = current_str;
+    while (*current_str != '\0' && ft_strchr(delim, *current_str) == NULL)
+        current_str++;
+    if (*current_str == '\0')
+        current_str = NULL;
+	else
+	{
+        *current_str = '\0';
+        current_str++;
+    }
+    return (token_start);
+}
+
+static int	cmp_char(char c1, char c2)
+{
+	if ((unsigned char)c1 != (unsigned char)c2)
+		return ((unsigned char)c1 - (unsigned char)c2);
+	return (0);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	while (s1[i] && s2[i])
+	{
+		if (cmp_char(s1[i], s2[i]))
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
+	}
+	return (0);
+}

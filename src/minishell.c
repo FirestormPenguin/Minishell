@@ -6,20 +6,43 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/10 17:12:26 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/13 15:16:26 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <../include/minishell.h>
 
-char    **split_args(char *str)
+char** tokenizer(char *input, int *token_count)
 {
-    char    **args = ft_split(str, ' ');
+    char    *input_copy;
+    int     count;
+    char    *token;
+    char    **tokens;
+    int     i;
     
-    args = ft_split(str, ' ');
-    args[count_split(str, ' ') + 1] = NULL;
-    int i = -1;
-    return (args);
+    count = 0;
+    i = 0;
+    input_copy = ft_strdup(input);
+    token = ft_strtok(input_copy, " \t");
+    while (token != NULL)
+    {
+        count++;
+        token = ft_strtok(NULL, " \t");
+    }
+    tokens = (char**)malloc((count + 1) * sizeof(char*));
+    token = ft_strtok(input, " \t");
+    while (token != NULL)
+    {
+        tokens[i] = ft_strdup(token);
+        if (tokens[i] == NULL)
+            exit(1);
+        i++;
+        token = ft_strtok(NULL, " \t");
+    }
+    tokens[i] = NULL;
+    *token_count = count;
+    free(input_copy);
+    return (tokens);
 }
 
 void exe(char *str)
@@ -29,8 +52,9 @@ void exe(char *str)
     char    path[50] = "/bin/";
     char    **mtx;
     char    **args;
+    int     arg_count;
     
-    mtx = split_args(str);
+    mtx = tokenizer(str, &arg_count);
     args = mtx;
     strcat(path, mtx[0]);
     pid = fork();
@@ -45,59 +69,25 @@ void exe(char *str)
     }
 }
 
-
-
-void check_string(char *str)
-{
-    char    *tmp;
-    int     i;
-    int     j;
-    int     l;
-    
-    i = -1;
-    j = -1;
-    while (*str)
-    {
-        l = -1;
-        if (*str != ' ' || *str!= '\0')
-        {
-            while(++l <= i)
-            {
-                tmp[l] = str[++j];
-                printf("%c\n", tmp[j]);
-            }
-            tmp[j + 1] = '\0';
-            printf("%s\n", tmp);
-            exe(tmp);
-            i++;
-        }
-    }
-}
-
 void getInput()
 {
     char *inputString;
-    char *exeString;
     
     while (1)
     {
-        /*utilizzo readline per prendere da terminale l'input*/
-        inputString = readline("<Minishell> ");      
-        /*if inputString is NULL (cntrl + D) break*/    
+        inputString = readline("<Minishell> ");         
         if (!inputString)
             break;
-        /*if inputString is "exit", break*/
-        if (strcmp(inputString, "exit") == 0)
+        if (ft_strcmp(inputString, "exit") == 0)
         {
             free(inputString);
             break;
         }
         else
         {
-            check_string(inputString);
+            add_history(inputString);
+            exe(inputString);
         }
-        /*aggiunge alla history il comando appena scritto*/
-        add_history(inputString);
         free(inputString);
     }
 }
@@ -107,7 +97,6 @@ int main(int ac, char **av, char **envp)
     (void) ac;
     (void) av;
 
-    /*prende l'input da terminale*/
     getInput();
     return (0);
 }
