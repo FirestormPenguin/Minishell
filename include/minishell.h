@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: mirko <mirko@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/13 15:07:02 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/14 14:36:12 by mirko            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@
 #include <sys/wait.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+
+typedef struct s_node
+{
+   int data;
+   struct s_node *left;
+   struct s_node *right;
+}     t_node;
 
 char	**ft_split(char const *s, char c);
 int     count_split(char const *str, char c);

@@ -183,3 +183,36 @@ int	ft_strcmp(const char *s1, const char *s2)
 	}
 	return (0);
 }
+
+
+t_node *create_node(int value)
+{
+  t_node* tmp;
+  
+  tmp = malloc(sizeof(t_node));
+  tmp->data = value;
+  tmp->left = NULL;
+  tmp->right = NULL;
+  return (tmp);
+}
+
+t_node* insertLeft(t_node* root, int value)
+{
+  root->left = create_node(value);
+  return (root->left);
+}
+
+t_node* insertRight(t_node* root, int value)
+{
+  root->right = create_node(value);
+  return (root->right);
+}
+
+void inorderTraversal(t_node *root)
+{
+    if (root != NULL) {
+        inorderTraversal(root->left);
+        printf("%d \n", root->data);
+        inorderTraversal(root->right);
+    }
+}

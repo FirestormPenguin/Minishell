@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: mirko <mirko@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/13 15:16:26 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/14 14:29:32 by mirko            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void getInput()
     
     while (1)
     {
-        inputString = readline("<Minishell> ");         
+        inputString = readline("Minishell: ");         
         if (!inputString)
             break;
         if (ft_strcmp(inputString, "exit") == 0)
@@ -86,7 +86,8 @@ void getInput()
         else
         {
             add_history(inputString);
-            exe(inputString);
+            //exe(inputString);
+            printf("%s: command not found\n", inputString);
         }
         free(inputString);
     }
