@@ -44,13 +44,29 @@ void test(char *str)
     char **mtx;
     int i;
     int arg_count;
-    char *div;
+    t_tree *tmp;
 
+    char pipe = '|';
+    char space = ' ';
+    char minmaj = '>';
+    
+    if (strchr(str, pipe) != NULL)
+    {
+        tmp = create_tree("|");
+        mtx = tokenizer(str, &arg_count, "|");
+    }
+    else
+    {
+        return ;
+    }
     i = -1;
-    div = "|";
-    mtx = tokenizer(str, &arg_count, div);
     while(mtx[++i])
-                printf("%s\n", mtx[i]);
+        printf("%s\n", mtx[i]);
+    //if (strchr(str, space) != NULL)
+    mtx = tokenizer(str, &arg_count, " ");
+    insertLeft(tmp, mtx[0]);
+    insertRight(tmp, mtx[1]);
+     inorderTraversal(tmp);
 }
 
 void getInput()

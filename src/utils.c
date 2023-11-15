@@ -211,8 +211,8 @@ t_tree* insertRight(t_tree* root, char *value)
 void inorderTraversal(t_tree *root)
 {
     if (root != NULL) {
+		printf("%s \n", root->data);
         inorderTraversal(root->left);
-        printf("%s \n", root->data);
         inorderTraversal(root->right);
     }
 }
