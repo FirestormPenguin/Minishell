@@ -12,39 +12,6 @@
 
 #include <../include/minishell.h>
 
-char** tokenizer(char *input, int *token_count)
-{
-    char    *input_copy;
-    int     count;
-    char    *token;
-    char    **tokens;
-    int     i;
-    
-    count = 0;
-    i = 0;
-    input_copy = ft_strdup(input);
-    token = ft_strtok(input_copy, " \t");
-    while (token != NULL)
-    {
-        count++;
-        token = ft_strtok(NULL, " \t");
-    }
-    tokens = (char**)malloc((count + 1) * sizeof(char*));
-    token = ft_strtok(input, " \t");
-    while (token != NULL)
-    {
-        tokens[i] = ft_strdup(token);
-        if (tokens[i] == NULL)
-            exit(1);
-        i++;
-        token = ft_strtok(NULL, " \t");
-    }
-    tokens[i] = NULL;
-    *token_count = count;
-    free(input_copy);
-    return (tokens);
-}
-
 void exe(char *str)
 {
     pid_t   pid;
@@ -53,8 +20,11 @@ void exe(char *str)
     char    **mtx;
     char    **args;
     int     arg_count;
+    char    *div;
     
-    mtx = tokenizer(str, &arg_count);
+    int i = -1;
+    div = " \t\n|";
+    mtx = tokenizer(str, &arg_count, div);
     args = mtx;
     strcat(path, mtx[0]);
     pid = fork();
@@ -64,15 +34,29 @@ void exe(char *str)
     }
     else
     {
-        execve(path, (char *const *)args, NULL);
+        //execve(path, (char *const *)args, NULL);
         exit(0);
     }
+}
+
+void test(char *str)
+{
+    char **mtx;
+    int i;
+    int arg_count;
+    char *div;
+
+    i = -1;
+    div = "|";
+    mtx = tokenizer(str, &arg_count, div);
+    while(mtx[++i])
+                printf("%s\n", mtx[i]);
 }
 
 void getInput()
 {
     char *inputString;
-    
+   
     while (1)
     {
         inputString = readline("Minishell: ");         
@@ -85,9 +69,10 @@ void getInput()
         }
         else
         {
+            test(inputString);
             add_history(inputString);
             //exe(inputString);
-            printf("%s: command not found\n", inputString);
+            //printf("%s: command not found\n", inputString);
         }
         free(inputString);
     }

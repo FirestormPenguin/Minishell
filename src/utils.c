@@ -185,34 +185,34 @@ int	ft_strcmp(const char *s1, const char *s2)
 }
 
 
-t_node *create_node(int value)
+t_tree *create_tree(char *value)
 {
-  t_node* tmp;
+  t_tree* tmp;
   
-  tmp = malloc(sizeof(t_node));
+  tmp = malloc(sizeof(t_tree));
   tmp->data = value;
   tmp->left = NULL;
   tmp->right = NULL;
   return (tmp);
 }
 
-t_node* insertLeft(t_node* root, int value)
+t_tree* insertLeft(t_tree* root, char *value)
 {
-  root->left = create_node(value);
+  root->left = create_tree(value);
   return (root->left);
 }
 
-t_node* insertRight(t_node* root, int value)
+t_tree* insertRight(t_tree* root, char *value)
 {
-  root->right = create_node(value);
+  root->right = create_tree(value);
   return (root->right);
 }
 
-void inorderTraversal(t_node *root)
+void inorderTraversal(t_tree *root)
 {
     if (root != NULL) {
         inorderTraversal(root->left);
-        printf("%d \n", root->data);
+        printf("%s \n", root->data);
         inorderTraversal(root->right);
     }
 }
