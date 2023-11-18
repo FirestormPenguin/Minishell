@@ -39,34 +39,53 @@ void exe(char *str)
     }
 }
 
+/*funzione che builda i nodi relativi del tree partendo dalla
+matrice composta da due parti, realativamente a sinistra e destra
+il divisore*/
+void build_tree(char **mtx, t_tree *tree)
+{
+    int i;
+    t_tree  *tmp;
+
+    tmp = tree;
+    i = -1;
+    while (mtx[++i])
+    {
+        insertLeft(tmp, mtx[i]);
+        if (mtx[i + 1])
+        {
+            insertRight(tmp, mtx[i + 1]);
+            i++;
+        }
+    }
+    inorderTraversal(tree);
+}
+
 void test(char *str)
 {
     char **mtx;
-    int i;
     int arg_count;
-    t_tree *tmp;
+    t_tree *tree;
+    char div[1];
 
     char pipe = '|';
     char space = ' ';
     char minmaj = '>';
     
+    div[0] = pipe;
     if (strchr(str, pipe) != NULL)
     {
-        tmp = create_tree("|");
-        mtx = tokenizer(str, &arg_count, "|");
+        tree = create_tree(div);
+        mtx = tokenizer(str, &arg_count, div);
     }
     else
     {
         return ;
     }
-    i = -1;
-    while(mtx[++i])
-        printf("%s\n", mtx[i]);
-    //if (strchr(str, space) != NULL)
-    mtx = tokenizer(str, &arg_count, " ");
-    insertLeft(tmp, mtx[0]);
-    insertRight(tmp, mtx[1]);
-     inorderTraversal(tmp);
+    build_tree(mtx, tree);
+    // insertLeft(tree, mtx[0]);
+    // insertRight(tree, mtx[1]);
+    // inorderTraversal(tree);
 }
 
 void getInput()
