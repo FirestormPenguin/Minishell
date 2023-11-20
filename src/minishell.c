@@ -34,7 +34,7 @@ void exe(char *str)
     }
     else
     {
-        //execve(path, (char *const *)args, NULL);
+        execve(path, (char *const *)args, NULL);
         exit(0);
     }
 }
