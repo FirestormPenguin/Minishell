@@ -6,7 +6,7 @@
 /*   By: mirko <mirko@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/14 14:29:32 by mirko            ###   ########.fr       */
+/*   Updated: 2023/11/29 18:09:03 by mirko            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,6 @@ void test(char *str)
         return ;
     }
     build_tree(mtx, tree);
-    // insertLeft(tree, mtx[0]);
-    // insertRight(tree, mtx[1]);
-    // inorderTraversal(tree);
 }
 
 void getInput()
