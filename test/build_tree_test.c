@@ -7,77 +7,79 @@
 typedef struct s_tree
 {
 	char			*data;
+    int             id;
 
 	struct s_tree	*left;
 	struct s_tree	*right;
 }		t_tree;
 
-t_tree *create_node(char *value)
+/*Solito create_node*/
+t_tree *create_node(char *value, int id)
 {
   t_tree* tmp;
   
   tmp = malloc(sizeof(t_tree));
-  tmp->data = value;
+  tmp->data = strdup(value);
+  tmp->id = id;
   tmp->left = NULL;
   tmp->right = NULL;
   return (tmp);
 }
 
-t_tree* insertLeft(t_tree* node, char *value)
-{
-  node->left = create_node(value);
-  return (node->left);
-}
-
-t_tree* insertRight(t_tree* node, char *value)
-{
-  node->right = create_node(value);
-  return (node->right);
-}
-
+/*Solito scorrimento del tree*/
 void inorderTraversal(t_tree *node)
 {
     if (node != NULL)
 	{
+        printf("%d\t", node->id);;
 		printf("%s\n", node->data);
         inorderTraversal(node->left);
         inorderTraversal(node->right);
     }
 }
 
+/*Funzione veloce per freeare il tree*/
 void free_tree(t_tree *node)
 {
     if (node != NULL) {
         free_tree(node->left);
         free_tree(node->right);
+        free(node->data);
 		free(node);
     }
 }
 
+/*Tolgo av[0] questo leggitelo perche' io non ci ho
+mai pensato nella vita a farlo cosi e la mia testa
+e' esplosa quando me ne sono reso conto*/
 char **convert_av(char **av)
 {
 	char **tmp = av + 1;
 	return (tmp);
 }
 
-t_tree *insert_node(t_tree *root, char *value, int *inserted)
+/*Funzione ricorsiva che calcolo che se l' id e' pari inserisce
+nel nodo a sinstra, se no a destra, funziona ? boh, piu o meno,
+sta di fatto che piu' o meno la base logica e' una roba simile*/
+t_tree *insert_node(t_tree *root, char *value, int id)
 {
-	if (root == NULL) {
-        *inserted = 1;
-        return create_node(value);
+    if (root == NULL)
+    {
+        return create_node(value, id);
     }
-
-    int compare_result = strcmp(value, root->data);
-
-    if (compare_result < 0) {
-        root->left = insert_node(root->left, value);
-    } else if (compare_result > 0) {
-        root->right = insert_node(root->right, value);
+    if (id % 2 == 0)
+    {
+        root->left = insert_node(root->left, value, id);
     }
-
-    return root;
+    else
+    {
+        root->right = insert_node(root->right, value, id);
+    }
+    return (root);
 }
 
+
+/*Scorro la matrice semplicemente e gli passo i come id da inserire nei nodi*/
 t_tree *build_tree(char **mtx, int size)
 {
 	t_tree *root = NULL;
@@ -86,7 +88,7 @@ t_tree *build_tree(char **mtx, int size)
 	i = 0;
 	while (i < size)
 	{
-		root = insert_node(root, mtx[i]);
+		root = insert_node(root, mtx[i], i + 1);
 		i++;
 	}
 	return (root);
