@@ -115,6 +115,43 @@ void level_order_insert(t_tree **root, char **mtx, int *i) {
             break;
         }
 
-        // Se il sottoalbero sinistro è vuoto e c'è un valore nella matrice
+    	// Se il sottoalbero sinistro è vuoto e c'è un valore nella matrice
         if (current->left == NULL && mtx[*i] != NULL) {
-            // Crea un nuovo nodo e inseriscilo come
+            // Crea un nuovo nodo e inseriscilo come figlio sinistro
+            current->left = create_node(mtx[*i]);
+            printf("Inserting left child with value: %s\n", mtx[*i]);
+            (*i)++;
+            // Aggiungi il nuovo nodo alla coda per l'esplorazione successiva
+            enqueue(queue, current->left);
+        }
+
+        // Se il sottoalbero destro è vuoto e c'è un valore nella matrice
+        if (current->right == NULL && mtx[*i] != NULL) {
+            // Crea un nuovo nodo e inseriscilo come figlio destro
+            current->right = create_node(mtx[*i]);
+            printf("Inserting right child with value: %s\n", mtx[*i]);
+            (*i)++;
+            // Aggiungi il nuovo nodo alla coda per l'esplorazione successiva
+            enqueue(queue, current->right);
+        }
+    }
+
+    // Libera la memoria occupata dalla coda
+    free(queue);
+}
+
+int main() {
+    // Esempio di matrice con valori
+    char *matrix[] = {"3", "2", "GJS_DEBUG_TOPICS=JS ERROR;JS LOG", "USER=spiacent", NULL};
+
+    // Inizializza l'albero e l'indice
+    t_tree *root = NULL;
+    int i = 0;
+
+    // Chiama la funzione per l'inserimento per livelli
+    level_order_insert(&root, matrix, &i);
+
+    // Ora l'albero dovrebbe essere riempito correttamente
+
+    return 0;
+}
