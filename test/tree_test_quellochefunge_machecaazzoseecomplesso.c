@@ -159,9 +159,9 @@ t_tree *build_tree(char **mtx, int size)
 int	main(int ac, char **av)
 {
 	t_tree *root;
-	char **mtx;
+	char *mtx[] = {"|", "ls", "pwd", "-la", NULL, "file", NULL};
 
-	mtx = convert_av(av);
+	//mtx = convert_av(av);
 	root = build_tree(mtx, ac - 1);
 	inorderTraversal(root);
 

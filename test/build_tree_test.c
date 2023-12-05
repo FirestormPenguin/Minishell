@@ -61,18 +61,16 @@ sta di fatto che piu' o meno la base logica e' una roba simile*/
 t_tree *insert_node(t_tree *root, char **mtx, int *i)
 {
 	if (!root)
-    {
-        root = create_node(mtx[*i]);
-        printf("Inserting node with value: %s\n", mtx[*i]);
-        (*i)++;
-    }
-
-    if (!root->left && mtx[*i])
-    {
-        printf("Moving left, current value of i: %d\n", *i);
-        root->left = insert_node(root->left, mtx, i);
-    }
-
+	{
+		root = create_node(mtx[*i]);
+		printf("Inserting node with value: %s\n", mtx[*i]);
+		(*i)++;
+	}
+	if (!root->left && mtx[*i])
+	{
+		printf("Moving left, current value of i: %d\n", *i);
+		root->left = insert_node(root->left, mtx, i);
+	}
     if (!root->right && mtx[*i])
     {
         printf("Moving right, current value of i: %d\n", *i);
