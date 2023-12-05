@@ -7,20 +7,18 @@
 typedef struct s_tree
 {
 	char			*data;
-    int             id;
 
 	struct s_tree	*left;
 	struct s_tree	*right;
 }		t_tree;
 
 /*Solito create_node*/
-t_tree *create_node(char *value, int id)
+t_tree *create_node(char *value)
 {
   t_tree* tmp;
   
   tmp = malloc(sizeof(t_tree));
   tmp->data = strdup(value);
-  tmp->id = id;
   tmp->left = NULL;
   tmp->right = NULL;
   return (tmp);
@@ -31,7 +29,6 @@ void inorderTraversal(t_tree *node)
 {
     if (node != NULL)
 	{
-        printf("%d\t", node->id);;
 		printf("%s\n", node->data);
         inorderTraversal(node->left);
         inorderTraversal(node->right);
@@ -61,23 +58,28 @@ char **convert_av(char **av)
 /*Funzione ricorsiva che calcolo che se l' id e' pari inserisce
 nel nodo a sinstra, se no a destra, funziona ? boh, piu o meno,
 sta di fatto che piu' o meno la base logica e' una roba simile*/
-t_tree *insert_node(t_tree *root, char *value, int id)
+t_tree *insert_node(t_tree *root, char **mtx, int *i)
 {
-    if (root == NULL)
+	if (!root)
     {
-        return create_node(value, id);
+        root = create_node(mtx[*i]);
+        printf("Inserting node with value: %s\n", mtx[*i]);
+        (*i)++;
     }
-    if (id % 2 == 0)
-    {
-        root->left = insert_node(root->left, value, id);
-    }
-    else
-    {
-        root->right = insert_node(root->right, value, id);
-    }
-    return (root);
-}
 
+    if (!root->left && mtx[*i])
+    {
+        printf("Moving left, current value of i: %d\n", *i);
+        root->left = insert_node(root->left, mtx, i);
+    }
+
+    if (!root->right && mtx[*i])
+    {
+        printf("Moving right, current value of i: %d\n", *i);
+        root->right = insert_node(root->right, mtx, i);
+    }
+	return (root);
+}
 
 /*Scorro la matrice semplicemente e gli passo i come id da inserire nei nodi*/
 t_tree *build_tree(char **mtx, int size)
@@ -86,11 +88,8 @@ t_tree *build_tree(char **mtx, int size)
 	int i;
 
 	i = 0;
-	while (i < size)
-	{
-		root = insert_node(root, mtx[i], i + 1);
-		i++;
-	}
+	root = insert_node(root, mtx, &i);
+
 	return (root);
 }
 
