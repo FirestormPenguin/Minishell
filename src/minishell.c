@@ -39,50 +39,90 @@ void exe(char *str)
     }
 }
 
-/*funzione che builda i nodi relativi del tree partendo dalla
-matrice composta da due parti, realativamente a sinistra e destra
-il divisore*/
-void build_tree(char **mtx, t_tree *tree)
+void level_order_insert(t_tree **root, char **mtx, int *i)
 {
-    int i;
-    t_tree  *tmp;
+    Queue *queue;
+	t_tree *current;
 
-    tmp = tree;
-    i = -1;
-    while (mtx[++i])
-    {
-        insertLeft(tmp, mtx[i]);
-        if (mtx[i + 1])
-        {
-            insertRight(tmp, mtx[i + 1]);
-            i++;
+	queue = create_queue();
+    if (*root == NULL)
+	{
+        *root = create_node(mtx[*i]);
+        (*i)++;
+        enqueue(queue, *root);
+    }
+
+    while (1)
+	{
+        current = dequeue(queue);
+
+        if (current == NULL)
+            break; // Tutti i nodi esplorati
+        if (current->left == NULL && mtx[*i] != NULL)
+		{
+            current->left = create_node(mtx[*i]);
+            (*i)++;
+            enqueue(queue, current->left);
+        }
+        if (current->right == NULL && mtx[*i] != NULL)
+		{
+            current->right = create_node(mtx[*i]);
+            (*i)++;
+            enqueue(queue, current->right);
         }
     }
-    inorderTraversal(tree);
+	destroy_queue(queue);
 }
 
-void test(char *str)
+t_tree *build_tree(char **mtx)
+{
+	t_tree *root = NULL;
+	int i;
+
+	i = 0;
+	level_order_insert(&root, mtx, &i);
+
+	return (root);
+}
+
+char **reorder_mtx(char **mtx, int count, char *div)
+{
+    char **tmp;
+    int i;
+
+    tmp = (char**)malloc((count + 2) * sizeof(char*));
+    tmp[0] = div;
+    i = -1;
+    while (tmp[++i])
+    {
+        tmp[i + 1] = mtx[i];
+    }
+    return (tmp);
+}
+
+void tokenize_string(char *str)
 {
     char **mtx;
     int arg_count;
     t_tree *tree;
     char div[1];
-
-    char pipe = '|';
-    char space = ' ';
-    char minmaj = '>';
+    int i;
     
-    div[0] = pipe;
-    if (strchr(str, pipe) != NULL)
-    {
-        tree = create_tree(div);
-        mtx = tokenizer(str, &arg_count, div);
-    }
+    div[0] = '|';
+    i = -1;
+    if (strchr(str, '|') != NULL)
+        div[0] = '|';
+    else if (strchr(str, '>') != NULL)
+         div[0] = '>';
+    else if (strchr(str, '<') != NULL)
+        div[0] = '<';
     else
-    {
-        return ;
-    }
-    build_tree(mtx, tree);
+        return;
+    mtx = tokenizer(str, &arg_count, div);
+    mtx = reorder_mtx(mtx, arg_count, div);
+    tree = build_tree(mtx);
+    
+    inorderTraversal(tree);
 }
 
 void getInput()
@@ -101,7 +141,7 @@ void getInput()
         }
         else
         {
-            test(inputString);
+            tokenize_string(inputString);
             add_history(inputString);
             //exe(inputString);
             //printf("%s: command not found\n", inputString);

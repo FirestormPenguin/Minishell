@@ -145,7 +145,7 @@ void inorderTraversal(t_tree *node)
     }
 }
 
-t_tree *build_tree(char **mtx, int size)
+t_tree *build_tree(char **mtx)
 {
 	t_tree *root = NULL;
 	int i;
@@ -162,7 +162,7 @@ int	main(int ac, char **av)
 	char *mtx[] = {"|", "ls", "pwd", "-la", NULL, "file", NULL};
 
 	//mtx = convert_av(av);
-	root = build_tree(mtx, ac - 1);
+	root = build_tree(mtx);
 	inorderTraversal(root);
 
 	return (0);

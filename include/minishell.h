@@ -25,6 +25,19 @@ typedef struct s_tree
    struct s_tree *right;
 }     t_tree;
 
+typedef struct QueueNode
+{
+    t_tree *node;
+    struct QueueNode *next;
+} QueueNode;
+
+typedef struct
+{
+    QueueNode *front;
+    QueueNode *rear;
+} Queue;
+
+/*generic utils*/
 char     **ft_split(char const *s, char c);
 int      count_split(char const *str, char c);
 char	   *ft_strdup(const char *s1);
@@ -32,9 +45,16 @@ char	   *ft_strchr(const char *s, int c);
 int      ft_strcmp(const char *s1, const char *s2);
 char*    ft_strtok(char* str, const char* delim);
 
-t_tree   *create_tree(char *value);
+/*tree utils*/
+t_tree   *create_node(char *value);
 t_tree*  insertLeft(t_tree* root, char *value);
 t_tree*  insertRight(t_tree* root, char *value);
 void     inorderTraversal(t_tree *root);
+
+/*queue utils*/
+Queue *create_queue();
+void destroy_queue(Queue *queue);
+void enqueue(Queue *queue, t_tree *node);
+t_tree *dequeue(Queue *queue);
 
 char     **tokenizer(char *input, int *token_count, char *div);
