@@ -6,7 +6,7 @@
 /*   By: spiacent <spiacent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/07 16:46:17 by spiacent         ###   ########.fr       */
+/*   Updated: 2023/12/07 17:46:30 by spiacent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	tokenize_string(char *str)
 	t_tree	*tree;
 
 	mtx = tokenizer(str, &arg_count);
-	
 	int i = 0;
 	printf("\tcount %d\n", arg_count);
 	while (i < arg_count)

@@ -6,7 +6,7 @@
 /*   By: spiacent <spiacent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/07 16:28:28 by spiacent         ###   ########.fr       */
+/*   Updated: 2023/12/07 17:42:57 by spiacent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,3 +52,4 @@ t_tree	*build_tree(char **mtx);
 
 /*tokenizer*/
 char	**tokenizer(char *input, int *token_count);
+char	**splitStringWithDelimiters(const char *input, const char *delimiters, int *tokenCount);
