@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenizer.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: spiacent <spiacent@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
+/*   Updated: 2023/12/07 14:53:30 by spiacent         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 char **tokenizer(char *input, int *token_count, char *div)
@@ -20,7 +32,7 @@ char **tokenizer(char *input, int *token_count, char *div)
         count++;
         token = ft_strtok(NULL, div_copy);
     }
-    tokens = (char**)malloc((count + 1) * sizeof(char*));
+    tokens = malloc((count + 1) * sizeof(char **));
     token = ft_strtok(input, div_copy);
     while (token != NULL)
     {
@@ -35,3 +47,7 @@ char **tokenizer(char *input, int *token_count, char *div)
     free(input_copy);
     return (tokens);
 }
+
+/*gestire "" nel tokenizer
+fare lexer che controlla che il lessico sia corretto
+fare come matrice di una struct con value e tipologia*/

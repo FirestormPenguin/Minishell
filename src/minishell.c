@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirko <mirko@student.42.fr>                +#+  +:+       +#+        */
+/*   By: spiacent <spiacent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/29 18:09:03 by mirko            ###   ########.fr       */
+/*   Updated: 2023/12/07 14:14:56 by spiacent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,99 +39,13 @@ void exe(char *str)
     }
 }
 
-void level_order_insert(t_tree **root, char **mtx, int *i)
-{
-    Queue *queue;
-	t_tree *current;
-
-	queue = create_queue();
-    if (*root == NULL)
-	{
-        *root = create_node(mtx[*i]);
-        (*i)++;
-        enqueue(queue, *root);
-    }
-
-    while (1)
-	{
-        current = dequeue(queue);
-
-        if (current == NULL)
-            break; // Tutti i nodi esplorati
-        if (current->left == NULL && mtx[*i] != NULL)
-		{
-            current->left = create_node(mtx[*i]);
-            (*i)++;
-            enqueue(queue, current->left);
-        }
-        if (current->right == NULL && mtx[*i] != NULL)
-		{
-            current->right = create_node(mtx[*i]);
-            (*i)++;
-            enqueue(queue, current->right);
-        }
-    }
-	destroy_queue(queue);
-}
-
-t_tree *build_tree(char **mtx)
-{
-	t_tree *root = NULL;
-	int i;
-
-	i = 0;
-	level_order_insert(&root, mtx, &i);
-
-	return (root);
-}
-
-char **reorder_mtx(char **mtx, int count, char *div)
-{
-    char **tmp;
-    int i;
-
-    tmp = (char**)malloc((count + 2) * sizeof(char*));
-    tmp[0] = div;
-    i = -1;
-    while (tmp[++i])
-    {
-        tmp[i + 1] = mtx[i];
-    }
-    return (tmp);
-}
-
-void tokenize_string(char *str)
-{
-    char **mtx;
-    int arg_count;
-    t_tree *tree;
-    char div[1];
-    int i;
-    
-    div[0] = '|';
-    i = -1;
-    if (strchr(str, '|') != NULL)
-        div[0] = '|';
-    else if (strchr(str, '>') != NULL)
-         div[0] = '>';
-    else if (strchr(str, '<') != NULL)
-        div[0] = '<';
-    else
-        return;
-    mtx = tokenizer(str, &arg_count, div);
-    mtx = reorder_mtx(mtx, arg_count, div);
-    tree = build_tree(mtx);
-    
-    inorderTraversal(tree);
-}
-
 void getInput()
 {
     char *inputString;
    
     while (1)
     {
-        inputString = readline("Minishell: ");         
+        inputString = readline("Minishell: ");
         if (!inputString)
             break;
         if (ft_strcmp(inputString, "exit") == 0)
