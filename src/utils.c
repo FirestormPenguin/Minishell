@@ -135,32 +135,33 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char* ft_strtok(char* str, const char* delim) 
+char	*ft_strtok(char *str, const char *delim)
 {
-    static char	*current_str;
+	static char	*current_str;
+	char		*token_start;
 
-    if (str != NULL)
-        current_str = str;
+	if (str != NULL)
+		current_str = str;
 	else if (current_str == NULL)
-        return NULL;
-    while (*current_str != '\0' && ft_strchr(delim, *current_str) != NULL)
-        current_str++;
-    if (*current_str == '\0')
-	{
-        current_str = NULL;
-        return NULL;
-    }
-    char *token_start = current_str;
-    while (*current_str != '\0' && ft_strchr(delim, *current_str) == NULL)
-        current_str++;
-    if (*current_str == '\0')
-        current_str = NULL;
+		return (NULL);
+
+	token_start = current_str;
+	while (*current_str != '\0' && ft_strchr(delim, *current_str) != NULL)
+		current_str++;
+	if (*current_str == '\0')
+		current_str = NULL;
+
+	token_start = current_str;
+	while (*current_str != '\0' && ft_strchr(delim, *current_str) == NULL)
+		current_str++;
+	if (*current_str == '\0')
+		current_str = (NULL);
 	else
 	{
-        *current_str = '\0';
-        current_str++;
-    }
-    return (token_start);
+		*current_str = '\0';
+		current_str++;
+	}
+	return (token_start);
 }
 
 static int	cmp_char(char c1, char c2)
@@ -173,11 +174,13 @@ static int	cmp_char(char c1, char c2)
 int	ft_strcmp(const char *s1, const char *s2)
 {
 	size_t	i;
+	int		ret;
 
+	ret = 0;
 	i = 0;
 	while (s1[i] && s2[i])
 	{
-		if (cmp_char(s1[i], s2[i]))
+		if (cmp_char(s1[i], s2[i]) != 0)
 			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 		i++;
 	}

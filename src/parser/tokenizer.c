@@ -6,41 +6,40 @@
 /*   By: spiacent <spiacent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/07 14:53:30 by spiacent         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:46:11 by spiacent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char **tokenizer(char *input, int *token_count, char *div)
+char **tokenizer(char *input, int *token_count)
 {
     char    *input_copy;
-    char    *div_copy;
+    char    *div;
     int     count;
     char    *token;
     char    **tokens;
     int     i;
 
+	div = "| ";
     count = 0;
     i = 0;
-    div_copy = strdup(div);
-    strcat(div_copy, " ");
     input_copy = ft_strdup(input);
-    token = ft_strtok(input_copy, div_copy);
+    token = ft_strtok(input_copy, div);
     while (token != NULL)
     {
         count++;
-        token = ft_strtok(NULL, div_copy);
+        token = ft_strtok(NULL, div);
     }
     tokens = malloc((count + 1) * sizeof(char **));
-    token = ft_strtok(input, div_copy);
+    token = ft_strtok(input, div);
     while (token != NULL)
     {
         tokens[i] = ft_strdup(token);
         if (tokens[i] == NULL)
             exit(1);
         i++;
-        token = ft_strtok(NULL, div_copy);
+        token = ft_strtok(NULL, div);
     }
     tokens[i] = NULL;
     *token_count = count;

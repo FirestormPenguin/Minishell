@@ -6,7 +6,7 @@
 /*   By: spiacent <spiacent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/07 14:14:56 by spiacent         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:15:55 by spiacent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,9 @@ void exe(char *str)
     char    **mtx;
     char    **args;
     int     arg_count;
-    char    *div;
     
     int i = -1;
-    div = " \t\n|";
-    mtx = tokenizer(str, &arg_count, div);
+    mtx = tokenizer(str, &arg_count);
     args = mtx;
     strcat(path, mtx[0]);
     pid = fork();

@@ -6,7 +6,7 @@
 /*   By: spiacent <spiacent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/07 15:30:30 by spiacent         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:46:17 by spiacent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,21 +61,27 @@ void	tokenize_string(char *str)
 	char	**mtx;
 	int		arg_count;
 	t_tree	*tree;
-	char	div[1];
-	int		i;
 
-	div[0] = '|';
-	mtx = tokenizer(str, &arg_count, div);
-	args = fill_struct(mtx, arg_count);
-	check_type(args, arg_count);
+	mtx = tokenizer(str, &arg_count);
 	
-	i = 0;
+	int i = 0;
+	printf("\tcount %d\n", arg_count);
 	while (i < arg_count)
 	{
-		printf("str: %s\n", args[i].str);
-		printf("type: %d\n\n", args[i].type);
+		printf("str: %s\n", mtx[i]);
+		//printf("type: %d\n", args[i].type);
 		i++;
 	}
+	// args = fill_struct(mtx, arg_count);
+	// check_type(args, arg_count);
+	
+	// int i = 0;
+	// while (i < arg_count)
+	// {
+	// 	printf("str: %s\n", args[i].str);
+	// 	//printf("type: %d\n", args[i].type);
+	// 	i++;
+	// }
 	//tree = build_tree(args);
 
 	//inorderTraversal(tree);

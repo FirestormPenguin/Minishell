@@ -6,7 +6,7 @@
 /*   By: spiacent <spiacent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/07 15:03:37 by spiacent         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:28:28 by spiacent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int		count_split(char const *str, char c);
 char	*ft_strdup(const char *s1);
 char	*ft_strchr(const char *s, int c);
 int		ft_strcmp(const char *s1, const char *s2);
-char*	ft_strtok(char* str, const char* delim);
+char	*ft_strtok(char* str, const char* delim);
 
 /*tree utils*/
 t_tree	*create_node(t_args *args);
@@ -51,4 +51,4 @@ t_args	*fill_struct(char **mtx, int count);
 t_tree	*build_tree(char **mtx);
 
 /*tokenizer*/
-char	**tokenizer(char *input, int *token_count, char *div);
+char	**tokenizer(char *input, int *token_count);
