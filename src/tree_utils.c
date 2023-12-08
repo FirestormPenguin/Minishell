@@ -23,11 +23,27 @@ t_tree* insertRight(t_tree* root, t_args *args)
 	return (root->right);
 }
 
+// void inorderTraversal(t_tree *root)
+// {
+//     if (root != NULL)
+// 	{
+// 		printf("%s \n", root->data->str);
+//         inorderTraversal(root->left);
+//         inorderTraversal(root->right);
+//     }
+// }
+
 void inorderTraversal(t_tree *root)
 {
-    if (root != NULL)
+    if (root)
 	{
-		printf("%s \n", root->data->str);
+		printf("Root: %s \n", root->data->str);
+        if (root->left)
+            printf("Left Child: %s \n", root->left->data->str);
+        
+        if (root->right)
+            printf("Right Child: %s \n", root->right->data->str);
+        
         inorderTraversal(root->left);
         inorderTraversal(root->right);
     }
