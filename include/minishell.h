@@ -6,7 +6,7 @@
 /*   By: mirko <mirko@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/08 09:46:06 by mirko            ###   ########.fr       */
+/*   Updated: 2023/12/12 13:19:57 by mirko            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_tree
 	struct s_tree	*left;
 	struct s_tree	*right;
 }		t_tree;
+
 
 /*generic utils*/
 char	**ft_split(char const *s, char c);

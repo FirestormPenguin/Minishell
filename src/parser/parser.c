@@ -6,7 +6,7 @@
 /*   By: mirko <mirko@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/08 09:06:54 by mirko            ###   ########.fr       */
+/*   Updated: 2023/12/12 17:01:22 by mirko            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void check_type(t_args *args, int count)
 		else
 			args[i].type = 0;
 	}
+	//printf("type: %d\n", args[i].type);
 }
 
 void	tokenize_string(char *str)
@@ -64,24 +65,17 @@ void	tokenize_string(char *str)
 
 	mtx = tokenizer(str, &arg_count);
 	int i = 0;
-	printf("\tcount %d\n", arg_count);
+	if (mtx == NULL)
+		return ;
+	args = fill_struct(mtx, arg_count);
+	check_type(args, arg_count);
+	
 	while (i < arg_count)
 	{
-		printf("str: %s\n", mtx[i]);
-		//printf("type: %d\n", args[i].type);
+		printf("str: %s\n", args[i].str);
+		printf("type: %d\n", args[i].type);
 		i++;
 	}
-	// args = fill_struct(mtx, arg_count);
-	// check_type(args, arg_count);
-	
-	// int i = 0;
-	// while (i < arg_count)
-	// {
-	// 	printf("str: %s\n", args[i].str);
-	// 	//printf("type: %d\n", args[i].type);
-	// 	i++;
-	// }
 	//tree = build_tree(args);
-
 	//inorderTraversal(tree);
 }
