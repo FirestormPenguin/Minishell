@@ -6,7 +6,7 @@
 /*   By: mirko <mirko@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/12 13:19:57 by mirko            ###   ########.fr       */
+/*   Updated: 2023/12/15 12:41:35 by mirko            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <stdbool.h>
+
+/*Utility Macro*/
+#define MAX_TOKEN_LENGTH 50
 
 typedef struct s_args
 {
