@@ -1,132 +1,174 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mirko <mirko@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/12 17:01:22 by mirko            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../include/minishell.h"
+
+typedef struct s_parser
+{
+	char *input_copy;
+	int count;
+	char tmp_token[50000];
+	char **tokens;
+	int i1;
+	int i2;
+	int i3;
+	int in_quote;
+	int in_double_quote;
+}	t_parser;
+
+void	*ft_memset(void *b, int c, size_t len)
+{
+	size_t			i;
+	unsigned char	*ptr_b;
+
+	i = 0;
+	ptr_b = (unsigned char *)b;
+	while (i < len)
+		ptr_b[i++] = (unsigned char)c;
+	return (b);
+}
+
+void init_parser(t_parser *p, char *input)
+{
+	p->input_copy = ft_strdup(input);
+	p->count = 0;
+	ft_memset(p->tmp_token, '\0', sizeof(p->tmp_token));
+	p->tokens = malloc((strlen(input) + 1) * sizeof(char *));
+	p->i1 = 0;
+	p->i2 = 0;
+	p->i3 = 0;
+	p->in_quote = 0;
+	p->in_double_quote = 0; 
+}
+
+static int tokenize_single(t_parser *p)
+{
+	if (p->input_copy[p->i1] == '|')
+	{
+		p->tmp_token[p->i2++] = '|';
+		p->i1++;
+		return (1);
+	}
+	if (p->input_copy[p->i1] == '>' && p->input_copy[p->i1 + 1] != '>')
+	{
+		p->tmp_token[p->i2++] = '>';
+		p->i1++;
+		return (1);
+	}
+	if (p->input_copy[p->i1] == '<' && p->input_copy[p->i1 + 1] != '<')
+	{
+		p->tmp_token[p->i2++] = '<';
+		p->i1++;
+		return (1);
+	}
+	return (0);
+}
+
+static int tokenize_double(t_parser *p)
+{
+	if (p->input_copy[p->i1] == '>' && p->input_copy[p->i1 + 1] == '>')
+	{
+		p->tmp_token[p->i2] = '>';
+		p->tmp_token[p->i2 + 1] = '>';
+		p->i2 += 2;
+		p->i1 += 2;
+		return (1);
+	}
+	if (p->input_copy[p->i1] == '<' && p->input_copy[p->i1 + 1] == '<')
+	{
+		p->tmp_token[p->i2] = '<';
+		p->tmp_token[p->i2 + 1] = '<';
+		p->i2 += 2;
+		p->i1 += 2;
+		return (1);
+	}
+	return (0);
+}
+
+static int tokenize_quotes(t_parser *p)
+{
+	if (p->input_copy[p->i1] == '\'' && !p->in_double_quote)
+	{   
+		p->in_quote = 1;
+		p->i1++;
+		while (p->input_copy[p->i1])
+		{
+			if (p->input_copy[p->i1] == '\'')
+			{
+				p->in_quote = 0;
+				p->i1++;
+				return (1);
+			}
+			p->tmp_token[p->i2++] = p->input_copy[p->i1++];
+		}
+		if (p->in_quote == 0)
+			return (1);
+	}
+	return (0);
+}
+
+static int tokenize_double_quotes(t_parser *p)
+{
+	if (p->input_copy[p->i1] == '"' && !p->in_quote)
+	{   
+		p->in_double_quote = 1;
+		p->i1++;
+		while (p->input_copy[p->i1])
+		{
+			if (p->input_copy[p->i1] == '"')
+			{
+				p->in_double_quote = 0;
+				p->i1++;
+				return (1);
+			}
+			p->tmp_token[p->i2++] = p->input_copy[p->i1++];
+		}
+		if (p->in_double_quote == 0)
+			return (1);
+	}
+	return (0);
+}
+
+
+void tokenize_parser(t_parser *p)
+{
+	while (p->input_copy[p->i1])
+	{
+		if (tokenize_single(p))
+			break;
+		if (tokenize_double(p))
+			break;
+		if (tokenize_quotes(p))
+			break;
+		if (tokenize_double_quotes(p))
+			break;
+		p->tmp_token[p->i2++] = p->input_copy[p->i1++];
+		if (p->input_copy[p->i1] == ' ' || p->input_copy[p->i1] == '\t'
+			|| p->input_copy[p->i1] == '|' || p->input_copy[p->i1] == '>'
+			|| p->input_copy[p->i1] == '<')
+			break;
+	}
+}
 
 char **tokenizer(char *input, int *token_count)
 {
-    char *input_copy;
-    int count;
-    char tmp_token[50];
-    char **tokens;
-    int i1;
-    int i2;
-    int i3;
-    bool in_quote;
+	t_parser	p;
 
-    printf("Enter tokenizer\n");
-    input_copy = ft_strdup(input);
-	in_quote = 0; 
-    count = 0;
-    tokens = malloc((strlen(input) + 1) * sizeof(char *));
-    i1 = 0;
-    i3 = 0;
-    while (input_copy[i1])
-    {
+	init_parser(&p, input);
 
-        while (input_copy[i1] == ' ' || input_copy[i1] == '\t')
-        {
-            i1++;
-        }
-        i2 = 0;
-        while (input_copy[i1])
-        {
-            if (input_copy[i1] == ' ' || input_copy[i1] == '\t')
-            {
-                i1++;
-                break;
-            }
-            else if (input_copy[i1] == '|')
-            {
-                tmp_token[i2] = '|';
-                i2++;
-                i1++;
-                break;
-            }
-            else if (input_copy[i1] == '>' && input_copy[i1 + 1] != '>')
-            {
-                tmp_token[i2] = '>';
-                i2++;
-                i1++;
-                break;
-            }
-            else if (input_copy[i1] == '<' && !input_copy[i1 + 1] == '<')
-            {
-                tmp_token[i2] = '<';
-                i2++;
-                i1++;
-                break;
-            }
-            else if (input_copy[i1] == '>' && input_copy[i1 + 1] == '>')
-            {
-                tmp_token[i2] = '>';
-                tmp_token[i2 + 1] = '>';
-                i2++;
-                i2++;
-                i1++;
-                i1++;
-                break;
-            }
-            else if (input_copy[i1] == '<' && input_copy[i1 + 1] == '<')
-            {
-                tmp_token[i2] = '<';
-                tmp_token[i2 + 1] = '<';
-                i2++;
-                i2++;
-                i1++;
-                i1++;
-                break;
-            }
-            else if (input_copy[i1] == '"' || input_copy[i1] == '\'')
-            {   
-				in_quote = 1;
-				i1++;
-                while (input_copy[i1])
-                {
-					if (input_copy[i1] == '"' || input_copy[i1] == '\'')
-					{
-						in_quote = 0;
-						i1++;
-						break;
-					}
-                    tmp_token[i2] = input_copy[i1];
-                    i2++;
-					i1++;
-                }
-				if (in_quote == 0)
-					break;
-            }
-            else
-            {
-                tmp_token[i2] = input_copy[i1];
-				i2++;
-                i1++;
-                if (input_copy[i1] == ' ' || input_copy[i1] == '\t'
-                    || input_copy[i1] == '|' || input_copy[i1] == '>'
-                    || input_copy[i1] == '<')
-                    break;
-            }
-        }
-        tmp_token[i2] = '\0';
-        tokens[i3] = ft_strdup(tmp_token);
-        i3++;
-        count++;
-    }
-    *token_count = count;
-    tokens[count] = NULL;
-	if (in_quote == 1)
+	while (p.input_copy[p.i1])
+	{
+		while (p.input_copy[p.i1] == ' ' || p.input_copy[p.i1] == '\t')
+			p.i1++;
+		p.i2 = 0;
+		tokenize_parser(&p);
+		p.tmp_token[p.i2] = '\0';
+		p.tokens[p.i3++] = ft_strdup(p.tmp_token);
+		p.count++;
+	}
+	*token_count = p.count;
+	p.tokens[p.count] = NULL;
+	if (p.in_quote == 1)
 	{
 		printf("Error: unclosed quote\n");
 		return (NULL);
 	}
-    return (tokens);
+	return (p.tokens);
 }

@@ -6,9 +6,12 @@
 /*   By: mirko <mirko@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/15 12:41:35 by mirko            ###   ########.fr       */
+/*   Updated: 2023/12/19 12:43:47 by mirko            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef MINISHELL_H
+#define MINISHELL_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,7 +38,6 @@ typedef struct s_tree
 	struct s_tree	*right;
 }		t_tree;
 
-
 /*generic utils*/
 char	**ft_split(char const *s, char c);
 int		count_split(char const *str, char c);
@@ -58,3 +60,5 @@ t_tree	*build_tree(char **mtx);
 /*tokenizer*/
 char	**tokenizer(char *input, int *token_count);
 char	**splitStringWithDelimiters(const char *input, const char *delimiters, int *tokenCount);
+
+#endif
