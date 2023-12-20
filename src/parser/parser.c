@@ -32,7 +32,7 @@ t_args	*fill_struct(char **mtx, int count)
 	while (mtx[++i])
 	{
 		tmp[i].str = mtx[i];
-		tmp[i].type = 4;
+		tmp[i].type = EMPTY;
 	}
 	return (tmp);
 }
@@ -45,15 +45,15 @@ void check_type(t_args *args, int count)
 	while (++i < count)
 	{
 		if (ft_strcmp(args[i].str, "|") == 0)
-			args[i].type = 0;
+			args[i].type = PIPE;
 		else if (ft_strcmp(args[i].str, "<") == 0 || ft_strcmp(args[i].str, ">") == 0)
-			args[i].type = 1;
+			args[i].type = IN_OUT;
 		else if (ft_strcmp(args[i].str, ">>") == 0)
-			args[i].type = 2;
+			args[i].type = DOUBLE_OUT;
 		else if (ft_strcmp(args[i].str, "<<") == 0)
-			args[i].type = 3;
+			args[i].type = HERE_DOC;
 		else
-			args[i].type = 4;
+			args[i].type = WORD;
 	}
 }
 

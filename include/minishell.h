@@ -24,6 +24,12 @@
 
 /*Utility Macro*/
 #define MAX_TOKEN_LENGTH 50
+#define EMPTY 0
+#define WORD 1
+#define PIPE 2
+#define IN_OUT 3
+#define DOUBLE_OUT 4
+#define HERE_DOC 5
 
 typedef struct s_args
 {
