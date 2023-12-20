@@ -6,13 +6,14 @@
 /*   By: mirko <mirko@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/19 12:43:47 by mirko            ###   ########.fr       */
+/*   Updated: 2023/12/20 23:16:47 by mirko            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
+# include "../libft/include/libft.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -44,13 +45,26 @@ typedef struct s_tree
 	struct s_tree	*right;
 }		t_tree;
 
+typedef struct s_parser
+{
+	char *input_copy;
+	int count;
+	char tmp_token[50000];
+	char **tokens;
+	int i1;
+	int i2;
+	int i3;
+	int in_quote;
+	int in_double_quote;
+}	t_parser;
+
 /*generic utils*/
-char	**ft_split(char const *s, char c);
+// char	**ft_split(char const *s, char c);
 int		count_split(char const *str, char c);
-char	*ft_strdup(const char *s1);
-char	*ft_strchr(const char *s, int c);
-int		ft_strcmp(const char *s1, const char *s2);
-char	*ft_strtok(char* str, const char* delim);
+// char	*ft_strdup(const char *s1);
+// char	*ft_strchr(const char *s, int c);
+// int		ft_strcmp(const char *s1, const char *s2);
+// char	*ft_strtok(char* str, const char* delim);
 
 /*tree utils*/
 t_tree	*create_node(t_args *args);

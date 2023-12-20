@@ -1,12 +1,14 @@
 NAME = minishell
 CC = gcc
 INCLUDE = ./include
-#CFLAGS = -Wall -Wextra -Werror -lreadline -I./include
+# CFLAGS = -Wall -Wextra -Werror -lreadline -I./include
 CFLAGS = -lreadline -I./include
+SRC_DIR = ./src
+OBJ_DIR = ./obj
+LIBFT_DIR = ./libft
+LIBFT = $(LIBFT_DIR)/libft.a
 SRC = $(SRC_DIR)/minishell.c $(SRC_DIR)/utils.c $(SRC_DIR)/parser/tokenizer.c $(SRC_DIR)/tree_utils.c $(SRC_DIR)/parser/parser.c
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
-OBJ_DIR = ./obj
-SRC_DIR = ./src
 RM = rm -rf
 NORMI = norminette
 NORM_FOLDER = ./src
@@ -29,7 +31,9 @@ all: obj_dir $(NAME)
 
 $(NAME): $(OBJ)
 	@echo $(SEPARATOR)
-	@$(CC) $(OBJ) $(CFLAGS) -o $(NAME)
+	@make -s -C $(LIBFT_DIR)
+	@echo "$(BOLD)$(CYAN)  Compiled libft$(RESET)"
+	@$(CC) $(OBJ) $(CFLAGS) $(LIBFT) -o $(NAME)
 	@echo "$(BOLD)$(GREEN)  Compiled $(NAME) successfully$(RESET)"
 	@echo "$(BOLD)$(GREEN)  READY TO START!$(RESET)"
 	@echo $(SEPARATOR)
@@ -37,20 +41,25 @@ $(NAME): $(OBJ)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo "$(BOLD) $(GREEN)  Compiled $(CYAN) $<$(RESET)"
 
 obj_dir:
-	@echo "$(CYAN)  Compiling files$(PURPLE)$< $(GREEN)...$(RESET)"
 	@mkdir -p $(OBJ_DIR)
-	@echo "$(CYAN)  obj folder $(PURPLE)$< $(GREEN)created$(RESET)"
+	@echo "$(CYAN)  obj folder $(PURPLE)$(OBJ_DIR) $(GREEN)created$(RESET)"
+	@echo "$(CYAN)  Compiling files $(PURPLE)$(SRC_DIR) $(GREEN)...$(RESET)"
 
 clean:
 	@echo $(SEPARATOR)
 	@$(RM) $(OBJ_DIR)
-	@echo "$(BOLD)  $(UPurple)OBJ deleted$(RESET)"
+	@echo "$(BOLD)$(UPurple)  $(NAME) OBJ deleted$(RESET)"
+	@make -s -C $(LIBFT_DIR) clean
+	@echo "$(BOLD)$(UPurple)  libft OBJ deleted$(RESET)"
 
 fclean: clean
 	@$(RM) $(NAME)
-	@echo "$(BOLD)  $(UPurple)$(NAME) deleted$(RESET)"
+	@echo "$(BOLD)$(UPurple)  $(NAME) deleted$(RESET)"
+	@make -s -C $(LIBFT_DIR) fclean
+	@echo "$(BOLD)$(UPurple)  libft deleted$(RESET)"
 	@echo $(SEPARATOR)
 
 re: fclean all

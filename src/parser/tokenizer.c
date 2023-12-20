@@ -1,30 +1,5 @@
 #include "../../include/minishell.h"
 
-typedef struct s_parser
-{
-	char *input_copy;
-	int count;
-	char tmp_token[50000];
-	char **tokens;
-	int i1;
-	int i2;
-	int i3;
-	int in_quote;
-	int in_double_quote;
-}	t_parser;
-
-void	*ft_memset(void *b, int c, size_t len)
-{
-	size_t			i;
-	unsigned char	*ptr_b;
-
-	i = 0;
-	ptr_b = (unsigned char *)b;
-	while (i < len)
-		ptr_b[i++] = (unsigned char)c;
-	return (b);
-}
-
 void init_parser(t_parser *p, char *input)
 {
 	p->input_copy = ft_strdup(input);
