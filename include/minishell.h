@@ -59,6 +59,5 @@ t_tree	*build_tree(char **mtx);
 
 /*tokenizer*/
 char	**tokenizer(char *input, int *token_count);
-char	**splitStringWithDelimiters(const char *input, const char *delimiters, int *tokenCount);
 
 #endif

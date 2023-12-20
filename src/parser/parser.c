@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-t_tree	*build_tree(char **mtx)
+t_tree	*build_tree(char **args)
 {
 	t_tree *root = NULL;
 	int i;
@@ -32,7 +32,7 @@ t_args	*fill_struct(char **mtx, int count)
 	while (mtx[++i])
 	{
 		tmp[i].str = mtx[i];
-		tmp[i].type = 0;
+		tmp[i].type = 4;
 	}
 	return (tmp);
 }
@@ -45,15 +45,16 @@ void check_type(t_args *args, int count)
 	while (++i < count)
 	{
 		if (ft_strcmp(args[i].str, "|") == 0)
-			args[i].type = 1;
+			args[i].type = 0;
 		else if (ft_strcmp(args[i].str, "<") == 0 || ft_strcmp(args[i].str, ">") == 0)
+			args[i].type = 1;
+		else if (ft_strcmp(args[i].str, ">>") == 0)
 			args[i].type = 2;
-		else if (ft_strcmp(args[i].str, "<<") == 0 || ft_strcmp(args[i].str, ">>") == 0)
+		else if (ft_strcmp(args[i].str, "<<") == 0)
 			args[i].type = 3;
 		else
-			args[i].type = 0;
+			args[i].type = 4;
 	}
-	//printf("type: %d\n", args[i].type);
 }
 
 void	tokenize_string(char *str)
