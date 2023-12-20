@@ -6,7 +6,7 @@
 /*   By: mirko <mirko@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/20 23:16:47 by mirko            ###   ########.fr       */
+/*   Updated: 2023/12/20 23:46:11 by mirko            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 #include <stdbool.h>
 
 /*Utility Macro*/
-#define MAX_TOKEN_LENGTH 50
 #define EMPTY 0
 #define WORD 1
 #define PIPE 2
@@ -58,13 +57,11 @@ typedef struct s_parser
 	int in_double_quote;
 }	t_parser;
 
-/*generic utils*/
-// char	**ft_split(char const *s, char c);
-int		count_split(char const *str, char c);
-// char	*ft_strdup(const char *s1);
-// char	*ft_strchr(const char *s, int c);
-// int		ft_strcmp(const char *s1, const char *s2);
-// char	*ft_strtok(char* str, const char* delim);
+/*utils tokenizer*/
+int tokenize_single(t_parser *p);
+int tokenize_double(t_parser *p);
+int tokenize_quotes(t_parser *p);
+int tokenize_double_quotes(t_parser *p);
 
 /*tree utils*/
 t_tree	*create_node(t_args *args);

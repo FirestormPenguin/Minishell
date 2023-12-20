@@ -1,13 +1,21 @@
 NAME = minishell
-CC = gcc
 INCLUDE = ./include
+CC = gcc
 # CFLAGS = -Wall -Wextra -Werror -lreadline -I./include
 CFLAGS = -lreadline -I./include
 SRC_DIR = ./src
 OBJ_DIR = ./obj
+
 LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
-SRC = $(SRC_DIR)/minishell.c $(SRC_DIR)/utils.c $(SRC_DIR)/parser/tokenizer.c $(SRC_DIR)/tree_utils.c $(SRC_DIR)/parser/parser.c
+
+SRC = 	$(SRC_DIR)/minishell.c\
+		$(SRC_DIR)/utils.c\
+		$(SRC_DIR)/parser/tokenizer.c\
+		$(SRC_DIR)/tree_utils.c\
+		$(SRC_DIR)/parser/parser.c\
+		$(SRC_DIR)/parser/utils_tokenizer.c
+
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 RM = rm -rf
 NORMI = norminette
