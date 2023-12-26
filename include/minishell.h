@@ -39,7 +39,7 @@ typedef struct s_args
 
 typedef struct s_tree
 {
-	t_args			*data;
+	char			*data;
 	struct s_tree	*left;
 	struct s_tree	*right;
 }		t_tree;
@@ -72,7 +72,6 @@ void	inorderTraversal(t_tree *root);
 /*parser*/
 void	tokenize_string(char *str);
 t_args	*fill_struct(char **mtx, int count);
-t_tree	*build_tree(char **mtx);
 
 /*tokenizer*/
 char	**tokenizer(char *input, int *token_count);

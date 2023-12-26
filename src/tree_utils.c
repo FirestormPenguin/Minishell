@@ -5,7 +5,7 @@ t_tree *create_node(t_args *args)
   t_tree* tmp;
   
   tmp = malloc(sizeof(t_tree));
-  tmp->data = args;
+  tmp->data = args->str;
   tmp->left = NULL;
   tmp->right = NULL;
   return (tmp);
@@ -27,14 +27,26 @@ void inorderTraversal(t_tree *root)
 {
     if (root)
 	{
-		printf("Root: %s \n", root->data->str);
+		printf("Root: %s \n", root->data);
         if (root->left)
-            printf("Left Child: %s \n", root->left->data->str);
+            printf("Left Child: %s \n", root->left->data);
         
         if (root->right)
-            printf("Right Child: %s \n", root->right->data->str);
+            printf("Right Child: %s \n", root->right->data);
         
         inorderTraversal(root->left);
         inorderTraversal(root->right);
     }
 }
+
+// void inorderTraversal(t_tree *root)
+// {
+//     if (root)
+// 	{
+// 		printf("\t%s \n", root->data);
+//         if (root->left)
+//             inorderTraversal(root->left);
+//         if (root->right)
+//             inorderTraversal(root->right);
+//     }
+// }
