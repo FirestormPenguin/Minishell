@@ -24,12 +24,12 @@
 #include <stdbool.h>
 
 /*Utility Macro*/
-#define EMPTY 0
-#define WORD 1
-#define PIPE 2
-#define IN_OUT 3
-#define DOUBLE_OUT 4
-#define HERE_DOC 5
+#define TOKEN_EMPTY 0
+#define TOKEN_WORD 1
+#define TOKEN_PIPE 2
+#define TOKEN_REDIR 3
+#define TOKEN_DOUBLE_OUT 4
+#define TOKEN_HERE_DOC 5
 
 typedef struct s_args
 {
@@ -57,14 +57,14 @@ typedef struct s_parser
 	int in_double_quote;
 }	t_parser;
 
-/*utils tokenizer*/
+/*tokenizer utils*/
 int tokenize_single(t_parser *p);
 int tokenize_double(t_parser *p);
 int tokenize_quotes(t_parser *p);
 int tokenize_double_quotes(t_parser *p);
 
 /*tree utils*/
-t_tree	*create_node(t_args *args);
+t_tree	*create_node(char *str);
 t_tree*	insertLeft(t_tree* root, t_args *args);
 t_tree*	insertRight(t_tree* root, t_args *args);
 void	inorderTraversal(t_tree *root);
@@ -72,6 +72,9 @@ void	inorderTraversal(t_tree *root);
 /*parser*/
 void	tokenize_string(char *str);
 t_args	*fill_struct(char **mtx, int count);
+
+/*build tree*/
+t_tree	*build_tree(t_args *args);
 
 /*tokenizer*/
 char	**tokenizer(char *input, int *token_count);

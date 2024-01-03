@@ -10,7 +10,7 @@ void init_parser(t_parser *p, char *input)
 	p->i2 = 0;
 	p->i3 = 0;
 	p->in_quote = 0;
-	p->in_double_quote = 0; 
+	p->in_double_quote = 0;
 }
 
 void tokenize_parser(t_parser *p)
