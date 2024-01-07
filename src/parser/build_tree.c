@@ -22,9 +22,15 @@ t_tree *parseTokens(t_args *tokens)
     rootNode = create_node(tokens->str);
     tokens++;
     if (tokens->type == TOKEN_WORD)
+    {
+        rightNode = NULL;
         leftNode = parseTokens(tokens);
+    }
     else
+    {
+        leftNode = NULL;
         rightNode = parseTokens(tokens);
+    }
     rootNode->left = leftNode;
     rootNode->right = rightNode;
         return (rootNode);
