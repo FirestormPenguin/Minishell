@@ -74,8 +74,6 @@ void	tokenize_string(char *str)
 		printf("type: %d\n", args[i].type);
 		i++;
 	}
-	//i = -1;
-	//root = build_tree(args, pipe_count, &i);
 	root = build_tree(args);
 	printf("Attraversamento\n");
 	inorderTraversal(root);
