@@ -42,6 +42,7 @@ typedef struct s_tree
 	char			*data;
 	struct s_tree	*left;
 	struct s_tree	*right;
+	struct s_tree	*prev;
 }		t_tree;
 
 typedef struct s_parser

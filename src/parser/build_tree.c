@@ -12,32 +12,47 @@
 
 #include "../../include/minishell.h"
 
-t_tree *parseTokens(t_args *tokens)
+t_tree *parseTokens(t_args *tokens, t_tree *prevNode)
 {
     t_tree *rootNode;
     t_tree *leftNode;
     t_tree *rightNode;
+
     if (tokens == NULL)
         return (NULL);
     rootNode = create_node(tokens->str);
+    rootNode->prev = prevNode;
     tokens++;
-    if (tokens->type == TOKEN_WORD)
-    {
-        rightNode = NULL;
-        leftNode = parseTokens(tokens);
-    }
-    else
-    {
-        leftNode = NULL;
-        rightNode = parseTokens(tokens);
-    }
     rootNode->left = leftNode;
     rootNode->right = rightNode;
-        return (rootNode);
+
+    /*in questo if devo inserire uno scorrimento che ogni volta che
+    vuole inserire un nuovo token deve prima tornare ai nodi precedenti
+    e controllare se c'e' dello spazio libero, ergo, se il token e'
+    una parola vanno inseriti a sinsitra, mentre se e' un divisore
+    va a destra
+    Oppure una nuova funzione che sara' quella effettivamente ricorsiva*/
+    if (tokens->type == TOKEN_WORD)
+        leftNode = parseTokens(tokens, rootNode);
+    else
+        rightNode = parseTokens(tokens, rootNode);
+    return (rootNode);
 }
 
-t_tree	*build_tree(t_args *args)
+t_tree	*build_tree(t_args *tokens)
 {
-    t_tree *parsedTree = parseTokens(args);
-    return (parsedTree);
+    t_tree *rootNode;
+    t_tree *leftNode;
+    t_tree *rightNode;
+
+    rootNode = create_node("VOID");
+    rootNode->left = leftNode;
+    rootNode->right = rightNode;
+    rootNode->prev = NULL;
+    leftNode = parseTokens(tokens, rootNode);
+    rightNode = parseTokens(tokens, rootNode);
+    
+
+    parseTokens(args, rootNode);
+    return (rootNode);
 }
