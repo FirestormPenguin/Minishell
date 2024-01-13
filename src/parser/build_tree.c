@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-t_tree *insert_pipe(t_args *tokens, int pipe_count)
+t_tree  *insert_pipe(t_args *tokens, int pipe_count)
 {
     t_tree *rootNode;
     t_tree *node;
@@ -40,22 +40,41 @@ t_tree *insert_pipe(t_args *tokens, int pipe_count)
     return (rootNode);
 }
 
-t_tree *newNode(t_args *tokens, t_tree *prevNode)
+void    bottomTopTraversTree(t_tree *traversNode)
+{
+    while (traversNode)
+    {
+        traversNode = traversNode->prev;
+        if (traversNode->type == TOKEN_WORD);
+    }
+}
+
+t_tree  *parseTokens(t_args *tokens, t_tree *prevNode)
 {
     t_tree *newNode;
+    t_tree *leftNode;
+    t_tree *rightNode;
+
+    if (tokens == NULL)
+        return (NULL);
     newNode = create_node(tokens->str, tokens->type, prevNode);
     tokens++;
+    // if (tokens->type == TOKEN_WORD)
+    // {
+    //     leftNode = parseTokens(tokens, newNode);
+    //     rightNode = NULL;
+    // }
+    // else
+    // {
+    //     rightNode = parseTokens(tokens, newNode);
+    //     leftNode = NULL;
+    // }
+    // newNode->left = leftNode;
+    // newNode->right = rightNode;
+    return (newNode);
 }
 
-t_tree *parseTokens(t_args *tokens, t_tree *prevNode)
-{
-    if (tokens->type == TOKEN_WORD)
-        prevNode->left = newNode(tokens, prevNode);
-    else
-        prevNode->right = newNode(tokens, prevNode);
-}
-
-t_tree	*build_tree(t_args *tokens, int pipe_count)
+t_tree  *build_tree(t_args *tokens, int pipe_count)
 {
     t_tree *rootNode;
     
@@ -67,8 +86,7 @@ t_tree	*build_tree(t_args *tokens, int pipe_count)
     }
     else
         rootNode = insert_pipe(tokens, pipe_count);
-    
-    parseTokens(tokens, rootNode);
+    rootNode->left = parseTokens(tokens, rootNode);
     
     return (rootNode);
 }
