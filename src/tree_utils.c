@@ -1,26 +1,16 @@
 #include <../include/minishell.h>
 
-t_tree *create_node(char *str)
+t_tree *create_node(char *str, int type, t_tree *prevNode)
 {
   t_tree* tmp;
   
   tmp = malloc(sizeof(t_tree));
   tmp->data = str;
+  tmp->type = type;
   tmp->left = NULL;
   tmp->right = NULL;
+  tmp->prev = prevNode;
   return (tmp);
-}
-
-t_tree* insertLeft(t_tree* root, t_args *args)
-{
-	root->left = create_node(args->str);
-	return (root->left);
-}
-
-t_tree* insertRight(t_tree* root, t_args *args)
-{
-	root->right = create_node(args->str);
-	return (root->right);
 }
 
 // void inorderTraversal(t_tree *root)

@@ -12,47 +12,63 @@
 
 #include "../../include/minishell.h"
 
-t_tree *parseTokens(t_args *tokens, t_tree *prevNode)
+t_tree *insert_pipe(t_args *tokens, int pipe_count)
 {
     t_tree *rootNode;
-    t_tree *leftNode;
-    t_tree *rightNode;
+    t_tree *node;
+    int i;
 
-    if (tokens == NULL)
-        return (NULL);
-    rootNode = create_node(tokens->str);
-    rootNode->prev = prevNode;
-    tokens++;
-    rootNode->left = leftNode;
-    rootNode->right = rightNode;
-
-    /*in questo if devo inserire uno scorrimento che ogni volta che
-    vuole inserire un nuovo token deve prima tornare ai nodi precedenti
-    e controllare se c'e' dello spazio libero, ergo, se il token e'
-    una parola vanno inseriti a sinsitra, mentre se e' un divisore
-    va a destra
-    Oppure una nuova funzione che sara' quella effettivamente ricorsiva*/
-    if (tokens->type == TOKEN_WORD)
-        leftNode = parseTokens(tokens, rootNode);
-    else
-        rightNode = parseTokens(tokens, rootNode);
+    rootNode = NULL;
+	node = NULL;
+    i = 0;
+    while (pipe_count > 0)
+    {
+        if (i == 0)
+        {
+            node = create_node("|", TOKEN_PIPE, NULL);
+            rootNode = node;
+            i++;
+            pipe_count--;
+        }
+        else
+        {    
+            node->right = create_node("|", TOKEN_PIPE, node);
+            node = node->right;
+            pipe_count--;
+        }
+    }
     return (rootNode);
 }
 
-t_tree	*build_tree(t_args *tokens)
+t_tree *newNode(t_args *tokens, t_tree *prevNode)
+{
+    t_tree *newNode;
+    newNode = create_node(tokens->str, tokens->type, prevNode);
+    tokens++;
+}
+
+t_tree *parseTokens(t_args *tokens, t_tree *prevNode)
+{
+    if (tokens->type == TOKEN_WORD)
+        prevNode->left = newNode(tokens, prevNode);
+    else
+        prevNode->right = newNode(tokens, prevNode);
+}
+
+t_tree	*build_tree(t_args *tokens, int pipe_count)
 {
     t_tree *rootNode;
-    t_tree *leftNode;
-    t_tree *rightNode;
-
-    rootNode = create_node("VOID");
-    rootNode->left = leftNode;
-    rootNode->right = rightNode;
-    rootNode->prev = NULL;
-    leftNode = parseTokens(tokens, rootNode);
-    rightNode = parseTokens(tokens, rootNode);
     
-
-    parseTokens(args, rootNode);
+    rootNode = NULL;
+    if (pipe_count <= 0)
+    {
+        rootNode = create_node(tokens->str, tokens->type, NULL);
+        tokens++;
+    }
+    else
+        rootNode = insert_pipe(tokens, pipe_count);
+    
+    parseTokens(tokens, rootNode);
+    
     return (rootNode);
 }

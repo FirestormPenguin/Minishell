@@ -40,6 +40,7 @@ typedef struct s_args
 typedef struct s_tree
 {
 	char			*data;
+	int				type;
 	struct s_tree	*left;
 	struct s_tree	*right;
 	struct s_tree	*prev;
@@ -65,9 +66,7 @@ int tokenize_quotes(t_parser *p);
 int tokenize_double_quotes(t_parser *p);
 
 /*tree utils*/
-t_tree	*create_node(char *str);
-t_tree*	insertLeft(t_tree* root, t_args *args);
-t_tree*	insertRight(t_tree* root, t_args *args);
+t_tree	*create_node(char *str, int type, t_tree *prevNode);
 void	inorderTraversal(t_tree *root);
 
 /*parser*/
@@ -75,7 +74,7 @@ void	tokenize_string(char *str);
 t_args	*fill_struct(char **mtx, int count);
 
 /*build tree*/
-t_tree	*build_tree(t_args *args);
+t_tree	*build_tree(t_args *args, int pipe_count);
 
 /*tokenizer*/
 char	**tokenizer(char *input, int *token_count);
