@@ -52,25 +52,15 @@ void    bottomTopTraversTree(t_tree *traversNode)
 t_tree  *parseTokens(t_args *tokens, t_tree *prevNode)
 {
     t_tree *newNode;
-    t_tree *leftNode;
-    t_tree *rightNode;
 
     if (tokens == NULL)
         return (NULL);
     newNode = create_node(tokens->str, tokens->type, prevNode);
     tokens++;
-    // if (tokens->type == TOKEN_WORD)
-    // {
-    //     leftNode = parseTokens(tokens, newNode);
-    //     rightNode = NULL;
-    // }
-    // else
-    // {
-    //     rightNode = parseTokens(tokens, newNode);
-    //     leftNode = NULL;
-    // }
-    // newNode->left = leftNode;
-    // newNode->right = rightNode;
+    if (newNode->left == NULL)
+        newNode->left = parseTokens(tokens, newNode);
+    else
+        newNode->right = parseTokens(tokens, newNode);
     return (newNode);
 }
 
@@ -87,6 +77,5 @@ t_tree  *build_tree(t_args *tokens, int pipe_count)
     else
         rootNode = insert_pipe(tokens, pipe_count);
     rootNode->left = parseTokens(tokens, rootNode);
-    
     return (rootNode);
 }
