@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirko <mirko@student.42.fr>                +#+  +:+       +#+        */
+/*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/20 23:46:11 by mirko            ###   ########.fr       */
+/*   Updated: 2024/01/17 16:04:54 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_tree
 {
 	char			*data;
 	int				type;
+	struct s_tree	*parent;
 	struct s_tree	*left;
 	struct s_tree	*right;
 	struct s_tree	*prev;
@@ -66,7 +67,7 @@ int tokenize_quotes(t_parser *p);
 int tokenize_double_quotes(t_parser *p);
 
 /*tree utils*/
-t_tree	*create_node(char *str, int type, t_tree *prevNode);
+t_tree	*create_node(char *str, int type, t_tree *prevNode, t_tree *rootNode);
 void	inorderTraversal(t_tree *root);
 
 /*parser*/
