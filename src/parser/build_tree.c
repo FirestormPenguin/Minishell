@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/01/17 16:40:23 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/01/18 15:06:01 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,26 @@ t_tree	*insert_pipe(t_args *tokens, int pipe_count)
 	return (rootNode);
 }
 
-void	bottomTopTraversTree(t_tree *traversNode)
-{
-	while (traversNode)
-	{
-		traversNode = traversNode->prev;
-	}
-}
-
-t_tree  *parseTokens(t_args *tokens, t_tree *prevNode, t_tree *rootNode)
+t_tree  *parseTokens(t_args *tokens, t_tree *prevNode, t_tree *rootNode, int token_count, int deleted_pipe)
 {
 	t_tree *newNode;
 	t_tree *tmp;
 
-	if (tokens == NULL)
+	if (token_count <= 0)
 		return (NULL);
 	newNode = create_node(tokens->str, tokens->type, prevNode, rootNode);
 	tokens++;
+	token_count--;
+	if (tokens->type == TOKEN_PIPE && deleted_pipe == 0)
+	{
+		tokens++;
+		token_count--;
+		deleted_pipe = 1;
+	}
 	if (tokens->type == TOKEN_WORD)
-		newNode->left = parseTokens(tokens, newNode, rootNode);
+		newNode->left = parseTokens(tokens, newNode, rootNode, token_count, deleted_pipe);
 	else if (tokens->type != TOKEN_WORD && rootNode->right == NULL)
-		rootNode->right = parseTokens(tokens, rootNode, rootNode);
+		rootNode->right = parseTokens(tokens, rootNode, rootNode, token_count, deleted_pipe);
 	else if (tokens->type != TOKEN_WORD)
 	{
 		tmp = rootNode->right;
@@ -68,28 +67,30 @@ t_tree  *parseTokens(t_args *tokens, t_tree *prevNode, t_tree *rootNode)
 		{
 			tmp = tmp->right;
 		}
-		tmp = parseTokens(tokens, tmp->prev, rootNode);
+		tmp = parseTokens(tokens, tmp->prev, rootNode, token_count, deleted_pipe);
 	}
-	
 	return (newNode);
 }
 
-t_tree  *build_tree(t_args *tokens, int pipe_count)
+t_tree  *build_tree(t_args *tokens, int pipe_count, int token_count)
 {
 	t_tree *rootNode;
+	int		deleted_pipe;
 
 	rootNode = NULL;
+	deleted_pipe = 0;
 	if (pipe_count <= 0)
 	{
 		rootNode = create_node(tokens->str, tokens->type, NULL, NULL);
 		tokens++;
+		token_count--;
 	}
 	else
 		rootNode = insert_pipe(tokens, pipe_count);
 	rootNode->parent = rootNode;
 	if (tokens->type == TOKEN_WORD)
-		rootNode->left = parseTokens(tokens, rootNode, rootNode);
-	else if (tokens->type != TOKEN_WORD)
-		rootNode->right = parseTokens(tokens, rootNode, rootNode);
+		rootNode->left = parseTokens(tokens, rootNode, rootNode, token_count, deleted_pipe);
+	else
+		rootNode->right = parseTokens(tokens, rootNode, rootNode, token_count, deleted_pipe);
 	return (rootNode);
 }

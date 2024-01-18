@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/01/17 16:04:54 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/01/18 14:47:30 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	tokenize_string(char *str);
 t_args	*fill_struct(char **mtx, int count);
 
 /*build tree*/
-t_tree	*build_tree(t_args *args, int pipe_count);
+t_tree	*build_tree(t_args *args, int pipe_count, int token_count);
 
 /*tokenizer*/
 char	**tokenizer(char *input, int *token_count);

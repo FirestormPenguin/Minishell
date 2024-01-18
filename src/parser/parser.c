@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirko <mirko@student.42.fr>                +#+  +:+       +#+        */
+/*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/12 17:01:22 by mirko            ###   ########.fr       */
+/*   Updated: 2024/01/18 14:58:44 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,12 @@ void	tokenize_string(char *str)
 		return ;
 	args = fill_struct(mtx, arg_count);
 	check_type(args, arg_count, &pipe_count);
-	while (i < arg_count)
-	{
-		printf("str: %s\n", args[i].str);
-		printf("type: %d\n", args[i].type);
-		i++;
-	}
-	root = build_tree(args, pipe_count);
-	printf("Attraversamento\n");
+	// while (i < arg_count)
+	// {
+	// 	printf("str: %s\n", args[i].str);
+	// 	printf("type: %d\n", args[i].type);
+	// 	i++;
+	// }
+	root = build_tree(args, pipe_count, arg_count);
 	inorderTraversal(root);
 }

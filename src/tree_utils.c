@@ -14,25 +14,13 @@ t_tree *create_node(char *str, int type, t_tree *prevNode, t_tree *rootNode)
   return (tmp);
 }
 
-// void inorderTraversal(t_tree *root)
-// {
-//     if (root)
-// 	{
-// 		printf("Root: %s \n", root->data);
-//         if (root->left)
-//             printf("Left Child: %s \n", root->left->data);
-//         if (root->right)
-//             printf("Right Child: %s \n", root->right->data);
-//         inorderTraversal(root->left);
-//         inorderTraversal(root->right);
-//     }
-// }
-
 void inorderTraversal(t_tree *root)
 {
     if (root)
 	{
-		printf("\t%s \n", root->data);
+		printf("\n\tstr: %s\n", root->data);
+		if (root->prev)
+			printf("\tprev: %s\n", root->prev->data);
         if (root->left)
             inorderTraversal(root->left);
         if (root->right)
