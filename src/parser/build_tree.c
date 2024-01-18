@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/01/18 15:09:07 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/01/18 16:20:18 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,15 @@ t_tree  *parseTokens(t_args *tokens, t_tree *prevNode, t_tree *rootNode, int tok
 	}
 	if (tokens->type == TOKEN_WORD)
 		newNode->left = parseTokens(tokens, newNode, rootNode, token_count, deleted_pipe);
-	else if (tokens->type != TOKEN_WORD && rootNode->right == NULL)
-		rootNode->right = parseTokens(tokens, rootNode, rootNode, token_count, deleted_pipe);
-	else if (tokens->type != TOKEN_WORD)
+	// else if (tokens->type != TOKEN_WORD && rootNode->right == NULL)
+	// 	rootNode->right = parseTokens(tokens, rootNode, rootNode, token_count, deleted_pipe);
+	else
 	{
 		/*questa parte funziona solo per la prima volta in cui trova un token non word,
 		la seconda volta termina direttamente l'esecuzione, da sistemare*/
+		printf("enter\n");
 		tmp = rootNode->right;
-		while (rootNode->right != NULL)
+		while (tmp != NULL)
 		{
 			tmp = tmp->right;
 		}
