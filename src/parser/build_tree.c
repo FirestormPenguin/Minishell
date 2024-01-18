@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/01/18 15:06:01 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/01/18 15:09:07 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ t_tree  *parseTokens(t_args *tokens, t_tree *prevNode, t_tree *rootNode, int tok
 	token_count--;
 	if (tokens->type == TOKEN_PIPE && deleted_pipe == 0)
 	{
+		/*questa parte funziona ma bisogna far si che non solo salti la pipe ma anche
+		che faccia tornare l'esecuzione come fosse un normale token non word*/
 		tokens++;
 		token_count--;
 		deleted_pipe = 1;
@@ -62,6 +64,8 @@ t_tree  *parseTokens(t_args *tokens, t_tree *prevNode, t_tree *rootNode, int tok
 		rootNode->right = parseTokens(tokens, rootNode, rootNode, token_count, deleted_pipe);
 	else if (tokens->type != TOKEN_WORD)
 	{
+		/*questa parte funziona solo per la prima volta in cui trova un token non word,
+		la seconda volta termina direttamente l'esecuzione, da sistemare*/
 		tmp = rootNode->right;
 		while (rootNode->right != NULL)
 		{
