@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/01/18 16:20:18 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/01/19 16:27:30 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,17 @@ t_tree	*insert_pipe(t_args *tokens, int pipe_count)
 	return (rootNode);
 }
 
+void assignTmp(t_tree *tmp, t_tree *rootNode)
+{
+	if (rootNode)
+	{
+		if (rootNode->right != NULL)
+			assignTmp(tmp, rootNode->right);
+		else
+			rootNode->right = tmp;
+	}
+}
+
 t_tree  *parseTokens(t_args *tokens, t_tree *prevNode, t_tree *rootNode, int token_count, int deleted_pipe)
 {
 	t_tree *newNode;
@@ -48,31 +59,29 @@ t_tree  *parseTokens(t_args *tokens, t_tree *prevNode, t_tree *rootNode, int tok
 	if (token_count <= 0)
 		return (NULL);
 	newNode = create_node(tokens->str, tokens->type, prevNode, rootNode);
+	if (newNode->type != TOKEN_WORD)
+		assignTmp(newNode, rootNode);
 	tokens++;
 	token_count--;
-	if (tokens->type == TOKEN_PIPE && deleted_pipe == 0)
-	{
-		/*questa parte funziona ma bisogna far si che non solo salti la pipe ma anche
-		che faccia tornare l'esecuzione come fosse un normale token non word*/
-		tokens++;
-		token_count--;
-		deleted_pipe = 1;
-	}
+	// if (tokens->type == TOKEN_PIPE && deleted_pipe == 0)
+	// {
+	// 	/*questa parte funziona ma bisogna far si che non solo salti la pipe ma anche
+	// 	che faccia tornare l'esecuzione come fosse un normale token non word*/
+	// 	tokens++;
+	// 	token_count--;
+	// 	deleted_pipe = 1;
+	// }
 	if (tokens->type == TOKEN_WORD)
 		newNode->left = parseTokens(tokens, newNode, rootNode, token_count, deleted_pipe);
-	// else if (tokens->type != TOKEN_WORD && rootNode->right == NULL)
-	// 	rootNode->right = parseTokens(tokens, rootNode, rootNode, token_count, deleted_pipe);
 	else
 	{
-		/*questa parte funziona solo per la prima volta in cui trova un token non word,
-		la seconda volta termina direttamente l'esecuzione, da sistemare*/
-		printf("enter\n");
-		tmp = rootNode->right;
-		while (tmp != NULL)
+		tmp = rootNode;
+		while (tmp->right != NULL)
 		{
 			tmp = tmp->right;
 		}
-		tmp = parseTokens(tokens, tmp->prev, rootNode, token_count, deleted_pipe);
+		tmp->right = parseTokens(tokens, tmp, rootNode, token_count, deleted_pipe);
+		// assignTmp(tmp, rootNode);
 	}
 	return (newNode);
 }
