@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/01/19 16:59:16 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/01/24 16:28:52 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,12 @@ void assignNotWord(t_tree *newNode, t_tree *rootNode, int deleted_pipe)
 		else
 			rootNode->right = newNode;
 	}
-	/*non funge bene, da sistemare in generale*/
-	else if (rootNode && rootNode->type == TOKEN_PIPE && deleted_pipe == 0)
+	else if (rootNode && rootNode->type == TOKEN_PIPE && deleted_pipe == 0 )
 	{
 		if (rootNode->left)
-			assignNotWord(newNode, rootNode->left, deleted_pipe);
+			assignNotWord(newNode, rootNode->right, deleted_pipe);
+		else
+			rootNode->right = newNode;
 	}
 }
 
@@ -69,8 +70,6 @@ t_tree  *parseTokens(t_args *tokens, t_tree *prevNode, t_tree *rootNode, int tok
 		assignNotWord(newNode, rootNode, deleted_pipe);
 	tokens++;
 	token_count--;
-		/*questa parte funziona ma bisogna far si che non solo salti la pipe ma anche
-		che faccia tornare l'esecuzione come fosse un normale token non word*/
 	if (tokens->type == TOKEN_PIPE && deleted_pipe == 0)
 	{
 		tokens++;
@@ -81,7 +80,10 @@ t_tree  *parseTokens(t_args *tokens, t_tree *prevNode, t_tree *rootNode, int tok
 		newNode->left = parseTokens(tokens, newNode, rootNode, token_count, deleted_pipe);
 	else
 	{
-		tmp = rootNode;
+		if (rootNode->type == TOKEN_PIPE && deleted_pipe == 0)
+			tmp = rootNode->left;
+		else
+			tmp = rootNode;
 		while (tmp->right != NULL)
 		{
 			tmp = tmp->right;

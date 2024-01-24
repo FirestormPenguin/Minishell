@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/01/18 14:47:30 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/01/24 18:28:05 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,27 @@
 #define TOKEN_DOUBLE_OUT 4
 #define TOKEN_HERE_DOC 5
 
+#define WORD 0
+#define PIPE 1
+#define MIN 2
+#define OUT 3
+#define IN 4
+#define DOUBLE_OUT 5
+#define HERE_DOC 6
+
+/*Struct*/
 typedef struct s_args
 {
 	char	*str;
 	int		type;
 }		t_args;
+
+typedef struct s_list
+{
+	char			**mtx;
+	int				type;
+	struct t_list	*next;
+}		t_list;
 
 typedef struct s_tree
 {
