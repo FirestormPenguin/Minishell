@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/01/26 18:15:45 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/01/26 18:36:34 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ t_list	*init_list(char **mtx)
 	list_h = NULL;
 	list = NULL;
 	tmp_type = WORD;
+	next_type = WORD;
 	while (mtx[i])
 	{
 		if (i == 0)
@@ -67,10 +68,14 @@ t_list	*init_list(char **mtx)
 			while (mtx[i])
 			{
 				list->mtx[j] = mtx[i];
+				printf ("\t%s\n", list->mtx[j]);
 				j++;
 				i++;
 				if (check_type(mtx[i]) != 0)
+				{
+					i++;
 					break;
+				}
 			}
 			list_h = list;
 		}
@@ -81,10 +86,14 @@ t_list	*init_list(char **mtx)
 			while (mtx[i])
 			{
 				list->mtx[j] = *mtx[i];
+				printf ("\t%s\n", list->mtx[j]);
 				j++;
 				i++;
 				if (check_type(mtx[i]) != 0)
+				{
+					i++;
 					break;
+				}
 			}
 			list = list->next;
 		}
@@ -99,9 +108,13 @@ void scroll_list(t_list *node)
 	while (node)
 	{
 		i = -1;
-		//printf ("nodo numero: %d\n", i);
+		printf ("nodo nuovo\n");
 		while (node->mtx[++i])
+		{
+			if (node->mtx[i] == NULL)
+				break ;
 			printf("\t%s\n", node->mtx[i]);
+		}
 		node = node->next;
 	}
 }
