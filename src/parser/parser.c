@@ -6,102 +6,122 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/01/24 18:47:33 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/01/26 15:57:06 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_args	*fill_struct(char **mtx, int count)
-{
-	t_args	*tmp;
-	int		i;
+// t_args	*fill_struct(char **mtx, int count)
+// {
+// 	t_args	*tmp;
+// 	int		i;
 
-	i = -1;
-	tmp = malloc((count) * sizeof(t_args));
-	while (mtx[++i])
-	{
-		tmp[i].str = mtx[i];
-		tmp[i].type = TOKEN_EMPTY;
-	}
-	return (tmp);
+// 	i = -1;
+// 	tmp = malloc((count) * sizeof(t_args));
+// 	while (mtx[++i])
+// 	{
+// 		tmp[i].str = mtx[i];
+// 		tmp[i].type = TOKEN_EMPTY;
+// 	}
+// 	return (tmp);
+// }
+
+// void check_type(t_args *args, int count)
+// {
+// 	int i;
+
+// 	i = -1;
+// 	while (++i < count)
+// 	{
+// 		if (ft_strcmp(args[i].str, "|") == 0)
+// 			args[i].type = TOKEN_PIPE;
+// 		else if (ft_strcmp(args[i].str, "<") == 0 || ft_strcmp(args[i].str, ">") == 0)
+// 			args[i].type = TOKEN_REDIR;
+// 		else if (ft_strcmp(args[i].str, ">>") == 0)
+// 			args[i].type = TOKEN_DOUBLE_OUT;
+// 		else if (ft_strcmp(args[i].str, "<<") == 0)
+// 			args[i].type = TOKEN_HERE_DOC;
+// 		else
+// 			args[i].type = TOKEN_WORD;
+// 	}
+// }
+
+int check_type(char *str)
+{
+	int type;
+
+	type = 0;
+	if (ft_strcmp(str, "|") == 0)
+		type = PIPE;
+	else if (ft_strcmp(str, "<") == 0)
+		type = IN;
+	else if (ft_strcmp(str, ">") == 0)
+		type = OUT;
+	else if (ft_strcmp(str, ">>") == 0)
+		type = DOUBLE_OUT;
+	else if (ft_strcmp(str, "<<") == 0)
+		type = HERE_DOC;
+	else
+		type = WORD;
+	return (type);
 }
 
-void check_type(t_args *args, int count)
-{
-	int i;
-
-	i = -1;
-	while (++i < count)
-	{
-		if (ft_strcmp(args[i].str, "|") == 0)
-			args[i].type = TOKEN_PIPE;
-		else if (ft_strcmp(args[i].str, "<") == 0 || ft_strcmp(args[i].str, ">") == 0)
-			args[i].type = TOKEN_REDIR;
-		else if (ft_strcmp(args[i].str, ">>") == 0)
-			args[i].type = TOKEN_DOUBLE_OUT;
-		else if (ft_strcmp(args[i].str, "<<") == 0)
-			args[i].type = TOKEN_HERE_DOC;
-		else
-			args[i].type = TOKEN_WORD;
-	}
-}
-
-static t_list	*ft_lstnew(int *i, t_args *tokens, int type)
+static t_list	*ft_lstnew(char ***mtx)
 {
 	t_list	*tmp_node;
 	char	**tmp_mtx;
-	int j;
+	int		i;
 
-	j = 0;
+	i = 0;
 	tmp_node = NULL;
 	tmp_node = malloc(sizeof(t_list));
-	tmp_node->type = type;
+	tmp_node->type = NULL;
+	// tmp_node->type = check_type((char *)*mtx - 1);
 	tmp_node->next = NULL;
-
-	while (j)
+	printf ("test\n");
+	while (*mtx)
 	{
-		tmp_mtx[j] = tokens[*i].str;
-		*i++;
-		j++;
-		if (tokens[*i].type != TOKEN_WORD || tokens[*i].str == NULL)
+		tmp_node->mtx[i] = *mtx;
+		i++;
+		*mtx++;
+		if (check_type((char *)*mtx) != 0)
 		{
-			*i++;
+			*mtx++;
 			break;
 		}
 	}
-	tmp_mtx = malloc(sizeof(char *) * j);
+	tmp_mtx = malloc(sizeof(char *) * i);
 	tmp_node->mtx = tmp_mtx;
 	return (tmp_node);
 }
 
-t_list	*init_list(t_args *tokens, int tokens_count)
+t_list	*init_list(char **mtx)
 {
 	int		i;
-	t_list	*list_h;
+	t_list	**list_h;
 	t_list	*list;
 	int		tmp_type;
 
-	i = -1;
+	i = 0;
 	list_h = NULL;
 	list = NULL;
 	tmp_type = WORD;
-	while (++i <= tokens_count)
+	while (mtx)
 	{
-		if (tokens->type != TOKEN_WORD)
-			tmp_type = tokens->type;
 		if (i == 0)
 		{
-			list = ft_lstnew(&i, tokens, tmp_type);
-			list_h = list;
+			list = ft_lstnew(&mtx);
+			*list_h = list;
 		}
 		else
 		{
-			list->next = ft_lstnew(&i, tokens, tmp_type);
+			list->next = ft_lstnew(&mtx);
 			list = list->next;
 		}
+		i++;
 	}
-	return (list_h);
+	return (*list_h);
 }
 
 void scroll_list(t_list *node)
@@ -120,16 +140,16 @@ void scroll_list(t_list *node)
 
 void	tokenize_string(char *str)
 {
-	t_args	*tokens;
-	t_list	*parent_node;
+	// t_args	*tokens;
+	t_list	**parent_node;
 	char	**mtx;
 	int		arg_count;
 
 	mtx = tokenizer(str, &arg_count);
 	if (mtx == NULL)
 		return ;
-	tokens = fill_struct(mtx, arg_count);
-	check_type(tokens, arg_count);
-	parent_node = init_list(tokens, arg_count);
-	scroll_list(parent_node);
+	parent_node = init_list(mtx);
+	// tokens = fill_struct(mtx, arg_count);
+	// check_type(tokens, arg_count);
+	// scroll_list(parent_node);
 }

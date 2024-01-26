@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/01/24 18:28:05 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/01/26 15:18:27 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,19 @@
 #include <stdbool.h>
 
 /*Utility Macro*/
-#define TOKEN_EMPTY 0
-#define TOKEN_WORD 1
-#define TOKEN_PIPE 2
-#define TOKEN_REDIR 3
-#define TOKEN_DOUBLE_OUT 4
-#define TOKEN_HERE_DOC 5
+// #define TOKEN_EMPTY 0
+// #define TOKEN_WORD 1
+// #define TOKEN_PIPE 2
+// #define TOKEN_REDIR 3
+// #define TOKEN_DOUBLE_OUT 4
+// #define TOKEN_HERE_DOC 5
 
 #define WORD 0
 #define PIPE 1
-#define MIN 2
+#define IN 2
 #define OUT 3
-#define IN 4
-#define DOUBLE_OUT 5
-#define HERE_DOC 6
+#define DOUBLE_OUT 4
+#define HERE_DOC 5
 
 /*Struct*/
 typedef struct s_args
