@@ -10,8 +10,10 @@ static int	cmp_char(char c1, char c2)
 int	ft_strcmp(const char *s1, const char *s2)
 {
 	size_t	i;
-	
+
 	i = 0;
+	if (s1 == NULL)
+		return (0);
 	while (s1[i] || s2[i])
 	{
 		if ((!s1[i] && s2[i]) || (s1[i] && !s2[i]))

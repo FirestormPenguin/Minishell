@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/01/26 15:57:06 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/01/26 17:35:50 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ static t_list	*ft_lstnew(char ***mtx)
 	tmp_node->type = NULL;
 	// tmp_node->type = check_type((char *)*mtx - 1);
 	tmp_node->next = NULL;
-	printf ("test\n");
 	while (*mtx)
 	{
+		printf ("\t");
 		tmp_node->mtx[i] = *mtx;
 		i++;
 		*mtx++;
@@ -138,6 +138,16 @@ void scroll_list(t_list *node)
 	}
 }
 
+void	scroll_mtx(char ***mtx)
+{
+	int i = 0;
+	while (*mtx != NULL)
+	{
+		printf("\tmtx: %s\n", **mtx);
+		mtx++;
+	}
+}
+
 void	tokenize_string(char *str)
 {
 	// t_args	*tokens;
@@ -148,7 +158,8 @@ void	tokenize_string(char *str)
 	mtx = tokenizer(str, &arg_count);
 	if (mtx == NULL)
 		return ;
-	parent_node = init_list(mtx);
+	scroll_mtx(&mtx);
+	//parent_node = init_list(mtx);
 	// tokens = fill_struct(mtx, arg_count);
 	// check_type(tokens, arg_count);
 	// scroll_list(parent_node);
