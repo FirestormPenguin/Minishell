@@ -6,11 +6,46 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/01/24 16:28:52 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/01/26 18:16:00 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+t_args	*fill_struct(char **mtx, int count)
+{
+	t_args	*tmp;
+	int		i;
+
+	i = -1;
+	tmp = malloc((count) * sizeof(t_args));
+	while (mtx[++i])
+	{
+		tmp[i].str = mtx[i];
+		tmp[i].type = TOKEN_EMPTY;
+	}
+	return (tmp);
+}
+
+void check_type(t_args *args, int count)
+{
+	int i;
+
+	i = -1;
+	while (++i < count)
+	{
+		if (ft_strcmp(args[i].str, "|") == 0)
+			args[i].type = TOKEN_PIPE;
+		else if (ft_strcmp(args[i].str, "<") == 0 || ft_strcmp(args[i].str, ">") == 0)
+			args[i].type = TOKEN_REDIR;
+		else if (ft_strcmp(args[i].str, ">>") == 0)
+			args[i].type = TOKEN_DOUBLE_OUT;
+		else if (ft_strcmp(args[i].str, "<<") == 0)
+			args[i].type = TOKEN_HERE_DOC;
+		else
+			args[i].type = TOKEN_WORD;
+	}
+}
 
 t_tree	*insert_pipe(t_args *tokens, int pipe_count)
 {

@@ -1,6 +1,6 @@
 NAME = minishell
 INCLUDE = ./include
-CC = gcc
+CC = gcc -g
 # CFLAGS = -Wall -Wextra -Werror -lreadline -I./include
 CFLAGS = -lreadline -I./include
 SRC_DIR = ./src

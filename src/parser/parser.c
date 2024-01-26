@@ -6,46 +6,11 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/01/26 17:35:50 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/01/26 18:15:45 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-// t_args	*fill_struct(char **mtx, int count)
-// {
-// 	t_args	*tmp;
-// 	int		i;
-
-// 	i = -1;
-// 	tmp = malloc((count) * sizeof(t_args));
-// 	while (mtx[++i])
-// 	{
-// 		tmp[i].str = mtx[i];
-// 		tmp[i].type = TOKEN_EMPTY;
-// 	}
-// 	return (tmp);
-// }
-
-// void check_type(t_args *args, int count)
-// {
-// 	int i;
-
-// 	i = -1;
-// 	while (++i < count)
-// 	{
-// 		if (ft_strcmp(args[i].str, "|") == 0)
-// 			args[i].type = TOKEN_PIPE;
-// 		else if (ft_strcmp(args[i].str, "<") == 0 || ft_strcmp(args[i].str, ">") == 0)
-// 			args[i].type = TOKEN_REDIR;
-// 		else if (ft_strcmp(args[i].str, ">>") == 0)
-// 			args[i].type = TOKEN_DOUBLE_OUT;
-// 		else if (ft_strcmp(args[i].str, "<<") == 0)
-// 			args[i].type = TOKEN_HERE_DOC;
-// 		else
-// 			args[i].type = TOKEN_WORD;
-// 	}
-// }
 
 int check_type(char *str)
 {
@@ -67,39 +32,25 @@ int check_type(char *str)
 	return (type);
 }
 
-static t_list	*ft_lstnew(char ***mtx)
+static t_list	*ft_lstnew()
 {
 	t_list	*tmp_node;
-	char	**tmp_mtx;
 	int		i;
 
 	i = 0;
 	tmp_node = NULL;
 	tmp_node = malloc(sizeof(t_list));
-	tmp_node->type = NULL;
-	// tmp_node->type = check_type((char *)*mtx - 1);
+	tmp_node->mtx = malloc (sizeof(char *) * 50);
+	tmp_node->type = 0;
 	tmp_node->next = NULL;
-	while (*mtx)
-	{
-		printf ("\t");
-		tmp_node->mtx[i] = *mtx;
-		i++;
-		*mtx++;
-		if (check_type((char *)*mtx) != 0)
-		{
-			*mtx++;
-			break;
-		}
-	}
-	tmp_mtx = malloc(sizeof(char *) * i);
-	tmp_node->mtx = tmp_mtx;
 	return (tmp_node);
 }
 
 t_list	*init_list(char **mtx)
 {
 	int		i;
-	t_list	**list_h;
+	int		j;
+	t_list	*list_h;
 	t_list	*list;
 	int		tmp_type;
 
@@ -107,21 +58,38 @@ t_list	*init_list(char **mtx)
 	list_h = NULL;
 	list = NULL;
 	tmp_type = WORD;
-	while (mtx)
+	while (mtx[i])
 	{
 		if (i == 0)
 		{
-			list = ft_lstnew(&mtx);
-			*list_h = list;
+			j = 0;
+			list = ft_lstnew();
+			while (mtx[i])
+			{
+				list->mtx[j] = mtx[i];
+				j++;
+				i++;
+				if (check_type(mtx[i]) != 0)
+					break;
+			}
+			list_h = list;
 		}
 		else
 		{
-			list->next = ft_lstnew(&mtx);
+			j = 0;
+			list->next = ft_lstnew();
+			while (mtx[i])
+			{
+				list->mtx[j] = *mtx[i];
+				j++;
+				i++;
+				if (check_type(mtx[i]) != 0)
+					break;
+			}
 			list = list->next;
 		}
-		i++;
 	}
-	return (*list_h);
+	return (list_h);
 }
 
 void scroll_list(t_list *node)
@@ -131,26 +99,15 @@ void scroll_list(t_list *node)
 	while (node)
 	{
 		i = -1;
+		//printf ("nodo numero: %d\n", i);
 		while (node->mtx[++i])
-			printf("mtx %s\n", node->mtx[i]);
-		printf("\n");
+			printf("\t%s\n", node->mtx[i]);
 		node = node->next;
-	}
-}
-
-void	scroll_mtx(char ***mtx)
-{
-	int i = 0;
-	while (*mtx != NULL)
-	{
-		printf("\tmtx: %s\n", **mtx);
-		mtx++;
 	}
 }
 
 void	tokenize_string(char *str)
 {
-	// t_args	*tokens;
 	t_list	**parent_node;
 	char	**mtx;
 	int		arg_count;
@@ -158,9 +115,6 @@ void	tokenize_string(char *str)
 	mtx = tokenizer(str, &arg_count);
 	if (mtx == NULL)
 		return ;
-	scroll_mtx(&mtx);
-	//parent_node = init_list(mtx);
-	// tokens = fill_struct(mtx, arg_count);
-	// check_type(tokens, arg_count);
-	// scroll_list(parent_node);
+	parent_node = init_list(mtx);
+	scroll_list(parent_node);
 }
