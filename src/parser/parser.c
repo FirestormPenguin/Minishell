@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/01/26 18:36:34 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/01/29 15:09:43 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int check_type(char *str)
 	int type;
 
 	type = 0;
+	if (!str)
+		return (WORD);
 	if (ft_strcmp(str, "|") == 0)
 		type = PIPE;
 	else if (ft_strcmp(str, "<") == 0)
@@ -40,7 +42,7 @@ static t_list	*ft_lstnew()
 	i = 0;
 	tmp_node = NULL;
 	tmp_node = malloc(sizeof(t_list));
-	tmp_node->mtx = malloc (sizeof(char *) * 50);
+	tmp_node->mtx = malloc (sizeof(char *) * 100);
 	tmp_node->type = 0;
 	tmp_node->next = NULL;
 	return (tmp_node);
@@ -52,27 +54,32 @@ t_list	*init_list(char **mtx)
 	int		j;
 	t_list	*list_h;
 	t_list	*list;
-	int		tmp_type;
+	int		next_type;
 
 	i = 0;
 	list_h = NULL;
 	list = NULL;
-	tmp_type = WORD;
 	next_type = WORD;
 	while (mtx[i])
 	{
 		if (i == 0)
 		{
+			if (check_type(mtx[i]) != WORD)
+			{
+				next_type = check_type(mtx[i]);
+				i++;
+			}
 			j = 0;
 			list = ft_lstnew();
+			list->type = next_type;
 			while (mtx[i])
 			{
 				list->mtx[j] = mtx[i];
-				printf ("\t%s\n", list->mtx[j]);
 				j++;
 				i++;
-				if (check_type(mtx[i]) != 0)
+				if (check_type(mtx[i]) != WORD)
 				{
+					next_type = check_type(mtx[i]);
 					i++;
 					break;
 				}
@@ -83,14 +90,15 @@ t_list	*init_list(char **mtx)
 		{
 			j = 0;
 			list->next = ft_lstnew();
+			list->next->type = next_type;
 			while (mtx[i])
 			{
-				list->mtx[j] = *mtx[i];
-				printf ("\t%s\n", list->mtx[j]);
+				list->next->mtx[j] = mtx[i];
 				j++;
 				i++;
-				if (check_type(mtx[i]) != 0)
+				if (check_type(mtx[i]) != WORD)
 				{
+					next_type = check_type(mtx[i]);
 					i++;
 					break;
 				}
@@ -109,6 +117,7 @@ void scroll_list(t_list *node)
 	{
 		i = -1;
 		printf ("nodo nuovo\n");
+		printf("\ttype : %d\n", node->type);
 		while (node->mtx[++i])
 		{
 			if (node->mtx[i] == NULL)

@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/01/26 15:18:27 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/01/29 14:31:07 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_list
 {
 	char			**mtx;
 	int				type;
-	struct t_list	*next;
+	struct s_list	*next;
 }		t_list;
 
 typedef struct s_tree
