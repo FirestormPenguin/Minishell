@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/01/29 14:31:07 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/01/29 16:42:23 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,6 @@
 #include <stdbool.h>
 
 /*Utility Macro*/
-// #define TOKEN_EMPTY 0
-// #define TOKEN_WORD 1
-// #define TOKEN_PIPE 2
-// #define TOKEN_REDIR 3
-// #define TOKEN_DOUBLE_OUT 4
-// #define TOKEN_HERE_DOC 5
-
 #define WORD 0
 #define PIPE 1
 #define IN 2
@@ -52,16 +45,6 @@ typedef struct s_list
 	struct s_list	*next;
 }		t_list;
 
-typedef struct s_tree
-{
-	char			*data;
-	int				type;
-	struct s_tree	*parent;
-	struct s_tree	*left;
-	struct s_tree	*right;
-	struct s_tree	*prev;
-}		t_tree;
-
 typedef struct s_parser
 {
 	char *input_copy;
@@ -76,21 +59,16 @@ typedef struct s_parser
 }	t_parser;
 
 /*tokenizer utils*/
-int tokenize_single(t_parser *p);
-int tokenize_double(t_parser *p);
-int tokenize_quotes(t_parser *p);
-int tokenize_double_quotes(t_parser *p);
-
-/*tree utils*/
-t_tree	*create_node(char *str, int type, t_tree *prevNode, t_tree *rootNode);
-void	inorderTraversal(t_tree *root);
+int		tokenize_single(t_parser *p);
+int		tokenize_double(t_parser *p);
+int		tokenize_quotes(t_parser *p);
+int		tokenize_double_quotes(t_parser *p);
 
 /*parser*/
-void	tokenize_string(char *str);
+t_list	*tokenize_string(char *str);
 t_args	*fill_struct(char **mtx, int count);
-
-/*build tree*/
-t_tree	*build_tree(t_args *args, int pipe_count, int token_count);
+int		check_type(char *str);
+void	scroll_list(t_list *node);
 
 /*tokenizer*/
 char	**tokenizer(char *input, int *token_count);
