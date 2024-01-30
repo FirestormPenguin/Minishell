@@ -17,8 +17,7 @@ void exe(t_list *list)
 	pid_t	pid;
 	int		status;
 	char	*path;
-	int		i;
-	char	**args;
+	int		i;	
 
 	path = malloc (sizeof(char) * 50);
 	while (list)
@@ -32,12 +31,6 @@ void exe(t_list *list)
 		else
 		{
 			strcat(path, list->mtx[0]);
-			while (list->mtx[i])
-			{
-				args[i] = list->mtx[i];
-				i++;
-			}
-			args[i] = NULL;
 			pid = fork();
 			if (pid)
 			{
@@ -45,7 +38,7 @@ void exe(t_list *list)
 			}
 			else
 			{
-				execve(path, (char *const *)args, NULL);
+				execve(path, (char *const *)list->mtx, NULL);
 				exit(0);
 			}
 		}
