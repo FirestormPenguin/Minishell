@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/01/29 16:41:29 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/01/31 15:17:18 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void exe(t_list *list)
 	pid_t	pid;
 	int		status;
 	char	*path;
-	int		i;	
+	int		i;
 
 	path = malloc (sizeof(char) * 50);
 	while (list)
@@ -44,6 +44,7 @@ void exe(t_list *list)
 		}
 		list = list->next;
 	}
+	free (path);
 }
 
 void getInput()
