@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/01/29 16:42:23 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/02/01 17:18:13 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 #define MINISHELL_H
 
 # include "../libft/include/libft.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/wait.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <string.h>
+# include <sys/wait.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <stdbool.h>
+#include <fcntl.h>
 
 /*Utility Macro*/
 #define WORD 0
@@ -72,5 +73,8 @@ void	scroll_list(t_list *node);
 
 /*tokenizer*/
 char	**tokenizer(char *input, int *token_count);
+
+/*redirections*/
+void	redirections(t_list *list);
 
 #endif
