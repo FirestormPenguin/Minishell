@@ -14,14 +14,14 @@
 
 void	free_all(char *path, char **args)
 {
-	int	i;
+	// int	i;
 
-	i = -1;
-	while (args[++i])
-	{
-		if (args[i])
-			free(args[i]);
-	}
+	// i = -1;
+	// while (args[++i])
+	// {
+	// 	if (args[i])
+	// 		free(args[i]);
+	// }
 	free (args);
 	free(path);
 }
@@ -34,11 +34,15 @@ void exe(t_list *list)
 	int		i;
 	int		j;
 	char	**args;
+	int		saved_stdout;
+	int		saved_stdin;
 
-	path = malloc (sizeof(char) * 50);
-	args = malloc (sizeof(char *) * 50);
+	saved_stdout = dup(STDOUT_FILENO);
+	saved_stdin = dup(STDIN_FILENO);
 	while (list)
 	{
+		path = malloc (sizeof(char) * 50);
+		args = malloc (sizeof(char *) * 50);
 		i = 0;
 		j = 0;
 		strcpy(path, "/bin/");
@@ -47,7 +51,7 @@ void exe(t_list *list)
 			printf("parse error near '%s'\n", list->mtx[i]);
 			return ;
 		}
-		if (list->type != WORD)
+		if (list->type != WORD && list->type != PIPE)
 		{
 			redirections(list);
 			i++;
@@ -66,19 +70,25 @@ void exe(t_list *list)
 			j++;
 		}
 		args[j] = NULL;
+		
 		pid = fork();
 		if (pid)
 		{
 			waitpid(-1, &status, WUNTRACED);
+			dup2(saved_stdout, STDOUT_FILENO);
+			dup2(saved_stdin, STDIN_FILENO);
+			list = list->next;
+			free_all(path, args);
 		}
 		else
 		{
 			execve(path, (char *const *)args, NULL);
-			exit(0);
+			perror("execve");
+			break ;
 		}
-		list = list->next;
 	}
-	free_all(path, args);
+	close(saved_stdout);
+	close(saved_stdin);
 }
 
 void getInput()
