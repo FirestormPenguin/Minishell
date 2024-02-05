@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:45:33 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/05 16:21:13 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/02/05 17:14:12 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,20 @@
 
 int	check_error_redirection(t_list *list)
 {
-	if (list->type != WORD && check_type(list->mtx[0]) != WORD)
+	while (list)
 	{
-		printf("parse error near '%s'\n", list->mtx[0]);
-		return (1);
+		if (list->type != WORD && check_type(list->mtx[0]) != WORD)
+		{
+			printf("parse error near '%s'\n", list->mtx[0]);
+			return (1);
+		}
+		list = list->next;
 	}
 	return (0);
 }
 
 int setup_redirection(t_list *list)
 {
-	if (check_error_redirection(list) == 1)
-			return (1);
 	while (list)
 	{
 		if (list->type != WORD && list->type != PIPE)
@@ -37,7 +39,15 @@ int setup_redirection(t_list *list)
 	return (0);
 }
 
-char **fill_args(t_list *list, char **args, int i)
+void	init_vars(char **path, char ***args, int *i)
+{
+	*path = malloc (sizeof(char) * 50);
+	*args = malloc (sizeof(char *) * 50);
+	*i = 0;
+	strcpy(*path, "/bin/");
+}
+
+char	**fill_args(t_list *list, char **args, int i)
 {
 	int j;
 	
@@ -51,6 +61,16 @@ char **fill_args(t_list *list, char **args, int i)
 		}
 	args[j] = NULL;
 	return (args);
+}
+
+int	check_mtx(t_list *list, char *path, char **args, int i)
+{
+	if (!list->mtx[i])
+	{
+		free_all(path, args);
+		return (1);
+	}
+	return (0);
 }
 
 /*original exe

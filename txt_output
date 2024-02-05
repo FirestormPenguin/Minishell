@@ -1,1 +1,9 @@
-233
+Makefile
+include
+libft
+minishell
+obj
+src
+test
+txt_input
+txt_output

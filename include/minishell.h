@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/05 16:25:25 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/02/05 17:12:47 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ t_list	*forking(t_list *list, pid_t pid, int status, char *path, char **args, in
 int		check_error_redirection(t_list *list);
 int		setup_redirection(t_list *list);
 void	init_vars(char **path, char ***args, int *i);
+char	**fill_args(t_list *list, char **args, int i);
+int		check_mtx(t_list *list, char *path, char **args, int i);
 
 /*redirections*/
 void	redirections(t_list *list);
