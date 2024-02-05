@@ -28,10 +28,12 @@ static	t_list	*ft_lstnew(void)
 
 static	t_list	*create_node(char **mtx, int *i, int *next_type)
 {
-	int j = 0;
-	t_list *list = ft_lstnew();
-	list->type = *next_type;
+	int			j;
+	t_list		*list;
 
+	j = 0;
+	list = ft_lstnew();
+	list->type = *next_type;
 	while (mtx[*i])
 	{
 		list->mtx[j] = mtx[*i];
@@ -41,29 +43,38 @@ static	t_list	*create_node(char **mtx, int *i, int *next_type)
 		{
 			*next_type = check_type(mtx[*i]);
 			(*i)++;
-			break;
+			break ;
 		}
 	}
-	return list;
+	return (list);
+}
+
+void	init_first_node(t_list **list, char **mtx, int *i, int *next_type)
+{
+	if (check_type(mtx[*i]) != WORD)
+	{
+		*next_type = check_type(mtx[*i]);
+		(*i)++;
+	}
+	*list = create_node(mtx, i, next_type);
 }
 
 t_list	*init_list(char **mtx)
 {
-	int i = 0;
-	t_list *list_h = NULL;
-	t_list *list = NULL;
-	int next_type = WORD;
+	int		i;
+	t_list	*list_h;
+	t_list	*list;
+	int		next_type;
 
+	i = 0;
+	list_h = NULL;
+	list = NULL;
+	next_type = WORD;
 	while (mtx[i])
 	{
 		if (i == 0)
 		{
-			if (check_type(mtx[i]) != WORD)
-			{
-				next_type = check_type(mtx[i]);
-				i++;
-			}
-			list = create_node(mtx, &i, &next_type);
+			init_first_node(&list, mtx, &i, &next_type);
 			list_h = list;
 		}
 		else
