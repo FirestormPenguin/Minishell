@@ -47,14 +47,7 @@ int main(int ac, char **av, char **envp)
 	//print_env_copy(&all);
 	getInput(&all);
 
-	//fix: Creare funzione separata
-	int i = 0;
-	while (all.env[i] != NULL)
-	{
-		free(all.env[i]);
-		i++;
-	}
-	free(all.env);
+    free_env(&all);
 
 	return 0;
 }

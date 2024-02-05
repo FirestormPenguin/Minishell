@@ -105,5 +105,6 @@ void	redirections(t_list *list);
 /*Enviromenrt*/
 int		copy_env(char **env, t_env4mini *all);
 void	print_env_copy(t_env4mini *all);
+void	free_env(t_env4mini *all);
 
 #endif

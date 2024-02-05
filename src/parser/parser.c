@@ -49,7 +49,7 @@ static	t_list	*create_node(char **mtx, int *i, int *next_type)
 	return (list);
 }
 
-void	init_first_node(t_list **list, char **mtx, int *i, int *next_type)
+void	init_first_node(t_list **list, char **mtx, int *i, int *next_type) //**list? CHAT WTFK?
 {
 	if (check_type(mtx[*i]) != WORD)
 	{
