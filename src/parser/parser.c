@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-static t_list	*ft_lstnew()
+static	t_list	*ft_lstnew(void)
 {
 	t_list	*tmp_node;
 	int		i;
@@ -26,18 +26,34 @@ static t_list	*ft_lstnew()
 	return (tmp_node);
 }
 
+static	t_list	*create_node(char **mtx, int *i, int *next_type)
+{
+	int j = 0;
+	t_list *list = ft_lstnew();
+	list->type = *next_type;
+
+	while (mtx[*i])
+	{
+		list->mtx[j] = mtx[*i];
+		j++;
+		(*i)++;
+		if (check_type(mtx[*i]) != WORD)
+		{
+			*next_type = check_type(mtx[*i]);
+			(*i)++;
+			break;
+		}
+	}
+	return list;
+}
+
 t_list	*init_list(char **mtx)
 {
-	int		i;
-	int		j;
-	t_list	*list_h;
-	t_list	*list;
-	int		next_type;
+	int i = 0;
+	t_list *list_h = NULL;
+	t_list *list = NULL;
+	int next_type = WORD;
 
-	i = 0;
-	list_h = NULL;
-	list = NULL;
-	next_type = WORD;
 	while (mtx[i])
 	{
 		if (i == 0)
@@ -47,40 +63,12 @@ t_list	*init_list(char **mtx)
 				next_type = check_type(mtx[i]);
 				i++;
 			}
-			j = 0;
-			list = ft_lstnew();
-			list->type = next_type;
-			while (mtx[i])
-			{
-				list->mtx[j] = mtx[i];
-				j++;
-				i++;
-				if (check_type(mtx[i]) != WORD)
-				{
-					next_type = check_type(mtx[i]);
-					i++;
-					break;
-				}
-			}
+			list = create_node(mtx, &i, &next_type);
 			list_h = list;
 		}
 		else
 		{
-			j = 0;
-			list->next = ft_lstnew();
-			list->next->type = next_type;
-			while (mtx[i])
-			{
-				list->next->mtx[j] = mtx[i];
-				j++;
-				i++;
-				if (check_type(mtx[i]) != WORD)
-				{
-					next_type = check_type(mtx[i]);
-					i++;
-					break;
-				}
-			}
+			list->next = create_node(mtx, &i, &next_type);
 			list = list->next;
 		}
 	}

@@ -43,8 +43,6 @@ void check_type(t_args *args, int count, int *pipe_count)
 	*pipe_count = tmp_pipe_count;
 }
 
-#include <../include/minishell.h>
-
 t_tree *create_node(char *str, int type, t_tree *prevNode, t_tree *rootNode)
 {
   t_tree* tmp;
@@ -72,3 +70,64 @@ void inorderTraversal(t_tree *root)
             inorderTraversal(root->right);
     }
 }
+
+t_list	*init_list(char **mtx)
+{
+	int		i;
+	int		j;
+	t_list	*list_h;
+	t_list	*list;
+	int		next_type;
+
+	i = 0;
+	list_h = NULL;
+	list = NULL;
+	next_type = WORD;
+	while (mtx[i])
+	{
+		if (i == 0)
+		{
+			if (check_type(mtx[i]) != WORD)
+			{
+				next_type = check_type(mtx[i]);
+				i++;
+			}
+			j = 0;
+			list = ft_lstnew();
+			list->type = next_type;
+			while (mtx[i])
+			{
+				list->mtx[j] = mtx[i];
+				j++;
+				i++;
+				if (check_type(mtx[i]) != WORD)
+				{
+					next_type = check_type(mtx[i]);
+					i++;
+					break;
+				}
+			}
+			list_h = list;
+		}
+		else
+		{
+			j = 0;
+			list->next = ft_lstnew();
+			list->next->type = next_type;
+			while (mtx[i])
+			{
+				list->next->mtx[j] = mtx[i];
+				j++;
+				i++;
+				if (check_type(mtx[i]) != WORD)
+				{
+					next_type = check_type(mtx[i]);
+					i++;
+					break;
+				}
+			}
+			list = list->next;
+		}
+	}
+	return (list_h);
+} //init_list 05/02/24
