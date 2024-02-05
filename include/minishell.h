@@ -59,6 +59,11 @@ typedef struct s_parser
 	int in_double_quote;
 }	t_parser;
 
+typedef	struct	s_env4mini
+{
+	char	**env;
+}	t_env4mini;
+
 /*tokenizer utils*/
 int		tokenize_single(t_parser *p);
 int		tokenize_double(t_parser *p);
@@ -77,4 +82,7 @@ char	**tokenizer(char *input, int *token_count);
 /*redirections*/
 void	redirections(t_list *list);
 
+/*Enviromenrt*/
+int		copy_env(char **env, t_env4mini *all);
+void	print_env_copy(t_env4mini *all);
 #endif
