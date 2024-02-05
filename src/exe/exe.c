@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:23:54 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/05 17:16:54 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/02/05 17:27:03 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ void handle_pipe(t_list *list, char *path, char **args, int saved_stdin, int sav
 t_list	*forking(t_list *list, pid_t pid, int status, char *path, char **args, int saved_stdin, int saved_stdout, t_env4mini *all)
 {
 	pid = fork();
-	if (pid) {
+	if (pid)
+	{
 		waitpid(-1, &status, WUNTRACED);
 		dup2(saved_stdout, STDOUT_FILENO);
 		dup2(saved_stdin, STDIN_FILENO);

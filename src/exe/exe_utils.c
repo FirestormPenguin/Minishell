@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:45:33 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/05 17:14:12 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/02/05 17:46:35 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ int	check_error_redirection(t_list *list)
 	while (list)
 	{
 		if (list->type != WORD && check_type(list->mtx[0]) != WORD)
+		{
+			printf("parse error near '%s'\n", list->mtx[0]);
+			return (1);
+		}
+		else if (ft_strcmp(list->mtx[0], "\n") == 0 || ft_strcmp(list->mtx[0], " ") == 0 || ft_strcmp(list->mtx[0], "") == 0)
 		{
 			printf("parse error near '%s'\n", list->mtx[0]);
 			return (1);
