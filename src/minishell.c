@@ -38,7 +38,8 @@ void exe(t_list *list, t_env4mini *all) {
     
     saved_stdout = dup(STDOUT_FILENO);
 	saved_stdin = dup(STDIN_FILENO);
-    while (list) {
+    while (list) 
+    {
         path = malloc (sizeof(char) * 50);
 		args = malloc (sizeof(char *) * 50);
         i = 0;
@@ -79,8 +80,8 @@ void exe(t_list *list, t_env4mini *all) {
         else
 		{
 			execve(path, (char *const *)args, all->env);
-			//perror("execve");
-			break ;
+			perror("execve");
+            exit(1);
 		}
     }
     close(saved_stdout);
@@ -91,8 +92,10 @@ void getInput(t_env4mini *all) {
     char *inputString;
     t_list *node;
 
-    while (1) {
+    while (1) 
+    {
         inputString = readline("Minishell: ");
+        printf("%s\n", inputString);
         if (!inputString)
             break;
         if (!ft_strcmp(inputString, "exit")) 
@@ -102,15 +105,16 @@ void getInput(t_env4mini *all) {
         } 
         else
         {
-        node = tokenize_string(inputString);
-        add_history(inputString);
-        exe(node, all);
+            node = tokenize_string(inputString);
+            add_history(inputString);
+            exe(node, all);
         }
         free(inputString);
     }
 }
 
-int main(int ac, char **av, char **envp) {
+int main(int ac, char **av, char **envp) 
+{
 	(void)ac;
 	(void)av;
 	t_env4mini all;

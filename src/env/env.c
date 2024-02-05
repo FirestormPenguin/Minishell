@@ -1,8 +1,8 @@
 #include "../../include/minishell.h"
 
 // Funzione per copiare le variabili d'ambiente
-int copy_env(char **env, t_env4mini *all) {
-
+int copy_env(char **env, t_env4mini *all) 
+{
     int env_size = 0;
     int i = 0;
     
@@ -15,7 +15,7 @@ int copy_env(char **env, t_env4mini *all) {
 
     if (all->env == NULL) {
         perror("Memory allocation error");
-        exit(EXIT_FAILURE);
+        return 0;
     }
 
     // Copia ogni stringa delle variabili d'ambiente in all->env
@@ -23,7 +23,7 @@ int copy_env(char **env, t_env4mini *all) {
         all->env[i] = strdup(env[i]);
         if (all->env[i] == NULL) {
             perror("Memory allocation error");
-            exit(EXIT_FAILURE);
+            return 0;
         }
         i++;
     }
@@ -35,7 +35,8 @@ int copy_env(char **env, t_env4mini *all) {
 }
 
 // Funzione per stampare le variabili d'ambiente copiate
-void print_env_copy(t_env4mini *all) {
+void print_env_copy(t_env4mini *all)
+{
     int i = 0;
     while (all->env[i] != NULL) {
         printf("%s\n", all->env[i]);
