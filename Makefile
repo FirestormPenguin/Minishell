@@ -15,8 +15,9 @@ SRC = 	$(SRC_DIR)/minishell.c\
 		$(SRC_DIR)/parser/parser.c\
 		$(SRC_DIR)/parser/utils_tokenizer.c\
 		$(SRC_DIR)/parser/utils_parser.c\
-		$(SRC_DIR)/env/env.c\
-		$(SRC_DIR)/redirections.c
+		$(SRC_DIR)/exe/exe.c\
+		$(SRC_DIR)/exe/redirections.c\
+		$(SRC_DIR)/env/env.c
 
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 RM = rm -rf

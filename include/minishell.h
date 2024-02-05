@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/01 17:18:13 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/02/05 16:25:25 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,20 +64,38 @@ typedef	struct	s_env4mini
 	char	**env;
 }	t_env4mini;
 
+/*main*/
+void getInput(t_env4mini *all);
+
+/*utils*/
+void	free_all(char *path, char **args);
+
+/*parser*/
+t_list	*parser(char *str);
+t_list	*init_list(char **mtx);
+static t_list	*ft_lstnew();
+
+/*parser utils*/
+int		check_type(char *str);
+void	scroll_list(t_list *node);
+
+/*tokenizer*/
+char	**tokenizer(char *input, int *token_count);
+
 /*tokenizer utils*/
 int		tokenize_single(t_parser *p);
 int		tokenize_double(t_parser *p);
 int		tokenize_quotes(t_parser *p);
 int		tokenize_double_quotes(t_parser *p);
 
-/*parser*/
-t_list	*tokenize_string(char *str);
-t_args	*fill_struct(char **mtx, int count);
-int		check_type(char *str);
-void	scroll_list(t_list *node);
+/*exe*/
+void	exe(t_list *list, t_env4mini *all);
+t_list	*forking(t_list *list, pid_t pid, int status, char *path, char **args, int saved_stdin, int saved_stdout, t_env4mini *all);
 
-/*tokenizer*/
-char	**tokenizer(char *input, int *token_count);
+/*exe utils*/
+int		check_error_redirection(t_list *list);
+int		setup_redirection(t_list *list);
+void	init_vars(char **path, char ***args, int *i);
 
 /*redirections*/
 void	redirections(t_list *list);
@@ -85,4 +103,5 @@ void	redirections(t_list *list);
 /*Enviromenrt*/
 int		copy_env(char **env, t_env4mini *all);
 void	print_env_copy(t_env4mini *all);
+
 #endif

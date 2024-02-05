@@ -6,11 +6,11 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/01 17:55:06 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/02/05 15:27:41 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <../include/minishell.h>
+#include "../../include/minishell.h"
 
 void	input(t_list *list)
 {
@@ -29,10 +29,10 @@ void output(t_list *list)
 	int output_fd;
 
 	output_fd = open(list->mtx[0], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-    if (output_fd == -1)
-        perror("open");
-    if (dup2(output_fd, STDOUT_FILENO) == -1)
-        perror("dup2");
+	if (output_fd == -1)
+		perror("open");
+	if (dup2(output_fd, STDOUT_FILENO) == -1)
+		perror("dup2");
 	close(output_fd);
 }
 
@@ -41,7 +41,7 @@ void append (t_list *list)
 	int fd_append;
 
 	fd_append = open(list->mtx[0], O_WRONLY | O_CREAT | O_APPEND, 0644);
-    if (fd_append == -1)
+	if (fd_append == -1)
 		perror("open");
 
 	if (dup2(fd_append, STDOUT_FILENO) == -1)

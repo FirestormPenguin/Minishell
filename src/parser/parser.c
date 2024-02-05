@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/01 13:08:25 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/02/05 13:31:41 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_list	*init_list(char **mtx)
 	return (list_h);
 }
 
-t_list	*tokenize_string(char *str)
+t_list	*parser(char *str)
 {
 	t_list	*list_head;
 	char	**mtx;
@@ -97,6 +97,5 @@ t_list	*tokenize_string(char *str)
 	if (mtx == NULL)
 		return (NULL);
 	list_head = init_list(mtx);
-	//scroll_list(list_head);
 	return (list_head);
 }
