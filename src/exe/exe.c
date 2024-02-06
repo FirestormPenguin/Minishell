@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:23:54 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/06 19:50:30 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/06 23:27:24 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void handle_pipe(t_list *list, char *path, char **args, int saved_stdin, int sav
 		waitpid(pid, &status, 0);
 		dup2(saved_stdout, STDOUT_FILENO);
 		dup2(saved_stdin, STDIN_FILENO);
-		free_all(path, args);
+		free_all_generic(path, args);
 	}
 	else
 	{
@@ -59,7 +59,7 @@ t_list	*forking(t_list *list, pid_t pid, int status, char *path, char **args, in
 		waitpid(-1, &status, WUNTRACED);
 		dup2(saved_stdout, STDOUT_FILENO);
 		dup2(saved_stdin, STDIN_FILENO);
-		free_all(path, args);
+		free_all_generic(path, args);
 		list = list->next;
 	}
 	else
@@ -86,7 +86,7 @@ void	while_exe(t_list *list, char *path, char**args, int saved_stdin, int saved_
 		args = fill_args(list, args, i);
 		if (args && args[0]) {
             if (ft_strcmp(args[0], "exit") == 0) {
-                exit(0);
+				free_exit(0);
                 return;
             }
 			else if (ft_strcmp(args[0], "echo") == 0) {

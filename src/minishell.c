@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/06 19:15:07 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/06 20:32:55 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,6 @@ void getInput(t_env4mini *all)
         inputString = readline("Minishell: ");
         if (!inputString)
             break;
-/*         if (!ft_strcmp(inputString, "exit")) 
-        {
-            free(inputString);
-            break;
-        }  */
         else
         {
             list = parser(inputString);

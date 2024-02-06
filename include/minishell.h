@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/06 19:49:55 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/06 23:28:37 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@
 #define OUT 3
 #define DOUBLE_OUT 4
 #define HERE_DOC 5
+#define SET_ACTUAL 10
+#define GET_ARGS 11
+#define GET_LIST 12
+#define GET_PARSER 13
+#define GET_ENV 14
 
 /*Struct*/
 typedef struct s_args
@@ -64,11 +69,21 @@ typedef	struct	s_env4mini
 	char	**env;
 }	t_env4mini;
 
+typedef	struct	s_struct_pointers 
+{
+	t_args		*args_ptr;
+    t_list		*list_ptr;
+    t_parser	*parser_ptr;
+    t_env4mini	*env_ptr;
+}	t_struct_pointers;
+
 /*Main*/
 void getInput(t_env4mini *all);
 
 /*Utils*/
-void	free_all(char *path, char **args);
+void	*struct_box(t_struct_pointers *ptr_struct, int operation);
+void	free_all_generic(char *path, char **args);
+void 	free_exit(int exit_code);
 
 /*Parser*/
 t_list	*parser(char *str);
