@@ -1,45 +1,67 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mivendit <mivendit@student.42roma.it>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/06 00:00:04 by mivendit          #+#    #+#             */
+/*   Updated: 2024/02/06 00:00:04 by mivendit         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
-// Funzione per copiare le variabili d'ambiente
-int copy_env(char **env, t_env4mini *all) 
+static	void	malloc_perror(void)
 {
-    int env_size = 0;
-    int i = 0;
-    
-    // Calcola la dimensione dell'array di stringhe delle variabili d'ambiente
-    while (env[env_size] != NULL)
-        env_size++;
-
-    // Alloca dinamicamente memoria per la copia delle variabili d'ambiente in all->env
-    all->env = (char **)malloc((env_size + 1) * sizeof(char *));
-
-    if (all->env == NULL) {
-        perror("Memory allocation error");
-        return 0;
-    }
-
-    // Copia ogni stringa delle variabili d'ambiente in all->env
-    while (env[i] != NULL) {
-        all->env[i] = strdup(env[i]);
-        if (all->env[i] == NULL) {
-            perror("Memory allocation error");
-            return 0;
-        }
-        i++;
-    }
-
-    // Imposta l'ultimo elemento di all->env a NULL per indicare la fine dell'array
-    all->env[i] = NULL;
-
-    return 1;
+	perror("Memory allocation error");
+	exit(1);
 }
 
-// Funzione per stampare le variabili d'ambiente copiate
-void print_env_copy(t_env4mini *all)
+int	copy_env(char **env, t_env4mini *all)
 {
-    int i = 0;
-    while (all->env[i] != NULL) {
-        printf("%s\n", all->env[i]);
-        i++;
-    }
+	int	env_size;
+	int	i;
+
+	i = 0;
+	env_size = 0;
+	while (env[env_size] != NULL)
+		env_size++;
+	all->env = (char **)malloc((env_size + 1) * sizeof(char *));
+	if (all->env == NULL)
+		malloc_perror();
+	while (env[i] != NULL)
+	{
+		all->env[i] = strdup(env[i]);
+		if (all->env[i] == NULL)
+			malloc_perror();
+		i++;
+	}
+	all->env[i] = NULL;
+	return (1);
+}
+
+void	free_env(t_env4mini *all)
+{
+	int	i;
+
+	i = 0;
+	while (all->env[i] != NULL)
+	{
+		free(all->env[i]);
+		i++;
+	}
+	free(all->env);
+}
+
+void	print_env_copy(t_env4mini *all)
+{
+	int	i;
+
+	i = 0;
+	while (all->env[i] != NULL)
+	{
+		printf("%s\n", all->env[i]);
+		i++;
+	}
 }

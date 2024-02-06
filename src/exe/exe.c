@@ -6,11 +6,14 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:23:54 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/05 17:27:03 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/02/06 13:49:49 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+//ogni funzione deve avere al massimo 4 argomenti brudda :_)
+//non sono cazzi miei >:(
 
 void handle_pipe(t_list *list, char *path, char **args, int saved_stdin, int saved_stdout, t_env4mini *all)
 {

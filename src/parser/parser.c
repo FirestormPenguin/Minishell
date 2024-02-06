@@ -6,13 +6,13 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/05 13:31:41 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/02/06 13:48:46 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static t_list	*ft_lstnew()
+static	t_list	*ft_lstnew(void)
 {
 	t_list	*tmp_node;
 	int		i;
@@ -26,10 +26,42 @@ static t_list	*ft_lstnew()
 	return (tmp_node);
 }
 
+static	t_list	*create_node(char **mtx, int *i, int *next_type)
+{
+	int			j;
+	t_list		*list;
+
+	j = 0;
+	list = ft_lstnew();
+	list->type = *next_type;
+	while (mtx[*i])
+	{
+		list->mtx[j] = mtx[*i];
+		j++;
+		(*i)++;
+		if (check_type(mtx[*i]) != WORD)
+		{
+			*next_type = check_type(mtx[*i]);
+			(*i)++;
+			break ;
+		}
+	}
+	return (list);
+}
+
+void	init_first_node(t_list **list, char **mtx, int *i, int *next_type)
+{
+	if (check_type(mtx[*i]) != WORD)
+	{
+		*next_type = check_type(mtx[*i]);
+		(*i)++;
+	}
+	*list = create_node(mtx, i, next_type);
+}
+
 t_list	*init_list(char **mtx)
 {
 	int		i;
-	int		j;
 	t_list	*list_h;
 	t_list	*list;
 	int		next_type;
@@ -42,45 +74,12 @@ t_list	*init_list(char **mtx)
 	{
 		if (i == 0)
 		{
-			if (check_type(mtx[i]) != WORD)
-			{
-				next_type = check_type(mtx[i]);
-				i++;
-			}
-			j = 0;
-			list = ft_lstnew();
-			list->type = next_type;
-			while (mtx[i])
-			{
-				list->mtx[j] = mtx[i];
-				j++;
-				i++;
-				if (check_type(mtx[i]) != WORD)
-				{
-					next_type = check_type(mtx[i]);
-					i++;
-					break;
-				}
-			}
+			init_first_node(&list, mtx, &i, &next_type);
 			list_h = list;
 		}
 		else
 		{
-			j = 0;
-			list->next = ft_lstnew();
-			list->next->type = next_type;
-			while (mtx[i])
-			{
-				list->next->mtx[j] = mtx[i];
-				j++;
-				i++;
-				if (check_type(mtx[i]) != WORD)
-				{
-					next_type = check_type(mtx[i]);
-					i++;
-					break;
-				}
-			}
+			list->next = create_node(mtx, &i, &next_type);
 			list = list->next;
 		}
 	}
@@ -97,5 +96,6 @@ t_list	*parser(char *str)
 	if (mtx == NULL)
 		return (NULL);
 	list_head = init_list(mtx);
+	scroll_list(list_head);
 	return (list_head);
 }

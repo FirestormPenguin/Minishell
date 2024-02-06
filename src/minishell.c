@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/05 15:42:03 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/02/06 00:17:18 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+//add built in func: deleted for fixing
 
 void getInput(t_env4mini *all)
 {
@@ -47,14 +49,7 @@ int main(int ac, char **av, char **envp)
 	//print_env_copy(&all);
 	getInput(&all);
 
-	//fix: Creare funzione separata
-	int i = 0;
-	while (all.env[i] != NULL)
-	{
-		free(all.env[i]);
-		i++;
-	}
-	free(all.env);
+    free_env(&all);
 
 	return 0;
 }
