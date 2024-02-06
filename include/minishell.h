@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/05 17:12:47 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/02/06 19:49:55 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdbool.h>
-#include <fcntl.h>
+# include <fcntl.h>
 
 /*Utility Macro*/
 #define WORD 0
@@ -64,47 +64,50 @@ typedef	struct	s_env4mini
 	char	**env;
 }	t_env4mini;
 
-/*main*/
+/*Main*/
 void getInput(t_env4mini *all);
 
-/*utils*/
+/*Utils*/
 void	free_all(char *path, char **args);
 
-/*parser*/
+/*Parser*/
 t_list	*parser(char *str);
 t_list	*init_list(char **mtx);
 static t_list	*ft_lstnew();
 
-/*parser utils*/
+/*Parser Utils*/
 int		check_type(char *str);
 void	scroll_list(t_list *node);
 
-/*tokenizer*/
+/*Tokenizer*/
 char	**tokenizer(char *input, int *token_count);
 
-/*tokenizer utils*/
+/*Tokenizer Utils*/
 int		tokenize_single(t_parser *p);
 int		tokenize_double(t_parser *p);
 int		tokenize_quotes(t_parser *p);
 int		tokenize_double_quotes(t_parser *p);
 
-/*exe*/
+/*Exe*/
 void	exe(t_list *list, t_env4mini *all);
 t_list	*forking(t_list *list, pid_t pid, int status, char *path, char **args, int saved_stdin, int saved_stdout, t_env4mini *all);
 
-/*exe utils*/
+/*Exe Utils*/
 int		check_error_redirection(t_list *list);
 int		setup_redirection(t_list *list);
 void	init_vars(char **path, char ***args, int *i);
 char	**fill_args(t_list *list, char **args, int i);
 int		check_mtx(t_list *list, char *path, char **args, int i);
 
-/*redirections*/
+/*Redirections*/
 void	redirections(t_list *list);
 
 /*Enviromenrt*/
 int		copy_env(char **env, t_env4mini *all);
 void	print_env_copy(t_env4mini *all);
 void	free_env(t_env4mini *all);
+
+/*Built-in Func*/
+int		ft_echo(char **command_string);
 
 #endif

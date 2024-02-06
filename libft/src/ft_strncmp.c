@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 15:36:12 by mivendit          #+#    #+#             */
-/*   Updated: 2024/02/06 15:36:12 by mivendit         ###   ########.fr       */
+/*   Created: 2024/02/06 17:24:02 by mivendit          #+#    #+#             */
+/*   Updated: 2024/02/06 17:24:02 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+# include "../include/libft.h"
 
-int	ft_pwd(void)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	char	pwd[4096];
+	size_t	i;
 
-	if (getcwd(pwd, sizeof(pwd)))
-		printf("%s\n", pwd);
-	else
-		printf("minshell: the path is broken");
-	
-	return(0);
+	i = 0;
+	if (!n)
+		return (0);
+	while (s1[i] && s2[i] && i < n && s1[i] == s2[i])
+		i++;
+	if (i == n)
+		i--;
+	return ((unsigned char) s1[i] - (unsigned char) s2[i]);
 }

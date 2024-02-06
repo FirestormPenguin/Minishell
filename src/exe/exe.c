@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:23:54 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/06 14:58:47 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/02/06 19:50:30 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,16 @@ void	while_exe(t_list *list, char *path, char**args, int saved_stdin, int saved_
 			return ;
 		strcat(path, list->mtx[i]);
 		args = fill_args(list, args, i);
+		if (args && args[0]) {
+            if (ft_strcmp(args[0], "exit") == 0) {
+                exit(0);
+                return;
+            }
+			else if (ft_strcmp(args[0], "echo") == 0) {
+                ft_echo(args);
+                return;
+            }
+        }
 		// if (list->type == PIPE)
 		// {
 		// 	handle_pipe(list, path, args, saved_stdin, saved_stdout, all);
@@ -110,4 +120,5 @@ void	exe(t_list *list, t_env4mini *all)
 		while_exe(list, path, args, saved_stdin, saved_stdout, pid, status, all, i);
 	close(saved_stdout);
 	close(saved_stdin);
+
 }
