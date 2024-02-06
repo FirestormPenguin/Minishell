@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/06 13:48:46 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/02/06 14:24:50 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,6 @@ t_list	*parser(char *str)
 	if (mtx == NULL)
 		return (NULL);
 	list_head = init_list(mtx);
-	scroll_list(list_head);
+	//scroll_list(list_head);
 	return (list_head);
 }

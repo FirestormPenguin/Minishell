@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:23:54 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/06 14:08:31 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/02/06 14:58:47 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 //ogni funzione deve avere al massimo 4 argomenti brudda :_)
 //non sono cazzi miei >:(
-//non sto capendo i git ho paura di fare casini
 
 void handle_pipe(t_list *list, char *path, char **args, int saved_stdin, int saved_stdout, t_env4mini *all)
 {
@@ -22,8 +21,8 @@ void handle_pipe(t_list *list, char *path, char **args, int saved_stdin, int sav
 	int		pipe_fd[2];
 	int		status;
 
-	if (setup_redirection (list->next) == 1)
-			return ;
+	// if (setup_redirection (list->next) == 1)
+	// 		return ;
 	if (pipe(pipe_fd) == -1)
 	{
 		perror("pipe");
@@ -76,8 +75,8 @@ void	while_exe(t_list *list, char *path, char**args, int saved_stdin, int saved_
 {
 	while (list) 
 	{
-		if (setup_redirection (list) == 1)
-			return ;
+		// if (setup_redirection (list) == 1)
+		// 	return ;
 		init_vars(&path, &args, &i);
 		if (list->type != WORD && list->type != PIPE)
 			i++;
@@ -85,12 +84,12 @@ void	while_exe(t_list *list, char *path, char**args, int saved_stdin, int saved_
 			return ;
 		strcat(path, list->mtx[i]);
 		args = fill_args(list, args, i);
-		if (list->type == PIPE)
-		{
-			handle_pipe(list, path, args, saved_stdin, saved_stdout, all);
-			list = list->next;
-			continue ;
-		}
+		// if (list->type == PIPE)
+		// {
+		// 	handle_pipe(list, path, args, saved_stdin, saved_stdout, all);
+		// 	list = list->next;
+		// 	continue ;
+		// }
 		list = forking(list, pid, status, path, args, saved_stdin, saved_stdout, all);
 	}
 }
@@ -107,9 +106,8 @@ void	exe(t_list *list, t_env4mini *all)
 
 	saved_stdout = dup(STDOUT_FILENO);
 	saved_stdin = dup(STDIN_FILENO);
-	if (check_error_redirection(list) == 0)
+	if (check_error_redirection(list) == 0 && setup_redirection(list) == 0)
 		while_exe(list, path, args, saved_stdin, saved_stdout, pid, status, all, i);
 	close(saved_stdout);
 	close(saved_stdin);
 }
-

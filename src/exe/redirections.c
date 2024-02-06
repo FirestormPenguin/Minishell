@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/05 15:27:41 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/02/06 14:25:55 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,21 +67,13 @@ void here_doc(t_list *list)
 void	redirections(t_list *list)
 {
 	if (list->type == IN && list->mtx[0])
-	{
 		input (list);
-	}
 	else if (list->type == OUT && list->mtx[0])
-	{
 		output(list);
-	}
 	else if (list->type == DOUBLE_OUT && list->mtx[0])
-	{
 		append(list);
-	}
 	else if (list->type == HERE_DOC && list->mtx[0])
-	{
 		here_doc(list);
-	}
 	else
 		printf ("redirection/pipe error!\n");
 }
