@@ -1,5 +1,5 @@
 /* ************************************************************************** */
-/*                                                                            */
+/*                                                                         */
 /*                                                        :::      ::::::::   */
 /*   exe.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
@@ -14,6 +14,7 @@
 
 //ogni funzione deve avere al massimo 4 argomenti brudda :_)
 //non sono cazzi miei >:(
+//risolti i non-cazzi-tuoi ;)
 
 void	handle_pipe(t_list *list, t_process *proc)
 {
