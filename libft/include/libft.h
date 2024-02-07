@@ -13,5 +13,7 @@ char	*ft_strtok(char *str, const char *delim);
 int		ft_strcmp(const char *s1, const char *s2);
 void	*ft_memset(void *b, int c, size_t len);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
-
+int		ft_atoi (const char *str);
+int		ft_isdigit(int c);
+int		ft_isstrdigit(char *str);
 #endif

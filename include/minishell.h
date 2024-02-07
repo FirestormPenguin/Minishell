@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/07 12:31:12 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/07 22:48:07 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,5 +135,6 @@ void	free_env(t_env4mini *all);
 
 /*Built-in Func*/
 int		ft_echo(char **command_string);
+void	ft_exit(char **args);
 
 #endif

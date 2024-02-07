@@ -78,7 +78,7 @@ void	while_exe(t_list *list, t_process *proc, int i)
 		proc->args = fill_args(list, proc->args, i);
 		if (proc->args && proc->args[0]) {
 			if (ft_strcmp(proc->args[0], "exit") == 0) {
-				free_exit(0);
+				ft_exit(proc->args);
 				return;
 			}
 			else if (ft_strcmp(proc->args[0], "echo") == 0) {
