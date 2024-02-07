@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/06 23:28:37 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/07 12:31:12 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,17 @@ typedef	struct	s_env4mini
 	char	**env;
 }	t_env4mini;
 
+typedef struct s_process
+{
+    pid_t       pid;
+    int         status;
+    char        *path;
+    char        **args;
+    int         saved_stdin;
+    int         saved_stdout;
+    t_env4mini  *all;
+}               t_process;
+
 typedef	struct	s_struct_pointers 
 {
 	t_args		*args_ptr;
@@ -105,7 +116,7 @@ int		tokenize_double_quotes(t_parser *p);
 
 /*Exe*/
 void	exe(t_list *list, t_env4mini *all);
-t_list	*forking(t_list *list, pid_t pid, int status, char *path, char **args, int saved_stdin, int saved_stdout, t_env4mini *all);
+t_list	*forking(t_list *list, t_process *proc);
 
 /*Exe Utils*/
 int		check_error_redirection(t_list *list);

@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 13:27:21 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/06 23:26:16 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/07 12:09:37 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,5 +121,5 @@ void free_exit(int exit_code)
         free_parser(ptr_struct->parser_ptr);
         free_env4mini(ptr_struct->env_ptr);
     }
-    exit(exit_code);
+    exit(exit_code % 256);
 }

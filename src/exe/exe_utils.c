@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:45:33 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/06 23:27:00 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/06 23:32:33 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,73 +78,3 @@ int	check_mtx(t_list *list, char *path, char **args, int i)
 	return (0);
 }
 
-/*original exe
-void exe(t_list *list, t_env4mini *all)
-{
-	pid_t	pid;
-	int		status;
-	char	*path;
-	char	**args;
-	int		i;
-	int		j;
-	int		saved_stdout;
-	int		saved_stdin;
-
-	saved_stdout = dup(STDOUT_FILENO);
-	saved_stdin = dup(STDIN_FILENO);
-	setup_redirection (list);
-	while (list) 
-	{
-		path = malloc (sizeof(char) * 50);
-		args = malloc (sizeof(char *) * 50);
-		i = 0;
-		j = 0;
-		strcpy(path, "/bin/");
-		if (list->type != WORD && check_type(list->mtx[i]) != WORD)
-		{
-			printf("parse error near '%s'\n", list->mtx[i]);
-			return ;
-		}
-		if (list->type != WORD && list->type != PIPE)
-		{
-			i++;
-		}
-		else if (list->type == PIPE)
-		{
-			handle_pipe(list, all);
-			list = list->next;
-			continue ;
-		}
-		if (!list->mtx[i])
-		{
-			free_all(path, args);
-			return ;
-		}
-		strcat(path, list->mtx[i]);
-		while (list->mtx[i])
-		{
-			args[j] = malloc (sizeof(char) * 50);
-			strcpy(args[j], list->mtx[i]);
-			i++;
-			j++;
-		}
-		args[j] = NULL;
-		
-		pid = fork();
-		if (pid) {
-			waitpid(-1, &status, WUNTRACED);
-			dup2(saved_stdout, STDOUT_FILENO);
-			dup2(saved_stdin, STDIN_FILENO);
-			list = list->next;
-			free_all(path, args);
-		}
-		else
-		{
-			execve(path, (char *const *)args, all->env);
-			perror("execve");
-			exit(1);
-		}
-	}
-	close(saved_stdout);
-	close(saved_stdin);
-}*/
