@@ -12,6 +12,12 @@
 
 #include "../../include/minishell.h"
 
+void	reset_stdin_stdout(t_process *proc)
+{
+	dup2(proc->saved_stdout, STDOUT_FILENO);
+	dup2(proc->saved_stdin, STDIN_FILENO);
+}
+
 int	check_error_redirection(t_list *list)
 {
 	while (list)
@@ -31,12 +37,12 @@ int	check_error_redirection(t_list *list)
 	return (0);
 }
 
-int setup_redirection(t_list *list)
+int setup_redirection(t_list *list, t_process *proc)
 {
 	while (list)
 	{
 		if (list->type != WORD && list->type != PIPE)
-			redirections(list);
+			redirections(list, proc);
 		else if (list->type == PIPE)
 			return (0);
 		list = list->next;

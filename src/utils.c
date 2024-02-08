@@ -41,6 +41,8 @@ void	free_all_generic(char *path, char **args)
 		free (args);
 	if (path)
 		free (path);
+    if (access("HERE_DOC", F_OK) != -1)
+        unlink("HERE_DOC");
 }
 
 void	free_args(t_args *args)

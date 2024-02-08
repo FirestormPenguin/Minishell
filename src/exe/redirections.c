@@ -12,11 +12,11 @@
 
 #include "../../include/minishell.h"
 
-void	input(t_list *list)
+void	input(char *str)
 {
 	int input_fd;
 
-	input_fd = open(list->mtx[0], O_RDONLY);
+	input_fd = open(str, O_RDONLY);
 	if (input_fd == -1)
 		perror("open");
 	if (dup2(input_fd, STDIN_FILENO) == -1)
@@ -24,11 +24,11 @@ void	input(t_list *list)
 	close(input_fd);
 }
 
-void output(t_list *list)
+void output(char *str)
 {
 	int output_fd;
 
-	output_fd = open(list->mtx[0], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	output_fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (output_fd == -1)
 		perror("open");
 	if (dup2(output_fd, STDOUT_FILENO) == -1)
@@ -36,11 +36,11 @@ void output(t_list *list)
 	close(output_fd);
 }
 
-void append (t_list *list)
+void append (char *str)
 {
 	int fd_append;
 
-	fd_append = open(list->mtx[0], O_WRONLY | O_CREAT | O_APPEND, 0644);
+	fd_append = open(str, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd_append == -1)
 		perror("open");
 
@@ -49,31 +49,47 @@ void append (t_list *list)
 	close(fd_append);
 }
 
-/*da finire, non funziona*/
-void here_doc(t_list *list)
+void write_into_fd(char *str)
 {
-	char *input_line;
+	int	fd;
+	size_t len;
 
-	input_line = NULL;
-	while (1)
-	{
-		input_line = readline("");
-		if (ft_strcmp(input_line, list->mtx[0]) == 0)
-			break;
-		free(input_line);
-	}
+	fd = open("HERE_DOC", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	len = strlen(str);
+	write(fd, str, len);
+	close (fd);
 }
 
-void	redirections(t_list *list)
+void here_doc(char *str, t_process *proc)
+{
+	char	*input_line;
+	char	*tmp_str;
+
+	input_line = NULL;
+	tmp_str = calloc(1000, sizeof(char *));
+	while (1)
+	{
+		input_line = readline("> ");
+		if (ft_strcmp(input_line, str) == 0)
+			break;
+		strcat(tmp_str, input_line);
+		strcat(tmp_str, "\n");
+		free(input_line);
+	}
+	write_into_fd(tmp_str);
+	input("HERE_DOC");
+}
+
+void	redirections(t_list *list, t_process *proc)
 {
 	if (list->type == IN && list->mtx[0])
-		input (list);
+		input (list->mtx[0]);
 	else if (list->type == OUT && list->mtx[0])
-		output(list);
+		output(list->mtx[0]);
 	else if (list->type == DOUBLE_OUT && list->mtx[0])
-		append(list);
+		append(list->mtx[0]);
 	else if (list->type == HERE_DOC && list->mtx[0])
-		here_doc(list);
+		here_doc(list->mtx[0], proc);
 	else
 		printf ("redirection/pipe error!\n");
 }

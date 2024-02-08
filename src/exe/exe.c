@@ -41,12 +41,6 @@ void	handle_pipe(t_list *list, t_process *proc)
 	}
 }
 
-void	reset_stdin_stdout(t_process *proc)
-{
-	dup2(proc->saved_stdout, STDOUT_FILENO);
-	dup2(proc->saved_stdin, STDIN_FILENO);
-}
-
 t_list	*forking(t_list *list, t_process *proc)
 {
 	proc->pid = fork();
@@ -146,14 +140,14 @@ void	while_exe(t_list *list, t_process *proc, int i)
 
 void	exe(t_list *list, t_env4mini *all)
 {
-	t_process proc;
-	int		i;
+	t_process	proc;
+	int			i;
 
 	i = 0;
 	proc.saved_stdout = dup(STDOUT_FILENO);
 	proc.saved_stdin = dup(STDIN_FILENO);
 	proc.all = all;
-	if (check_error_redirection(list) == 0 && setup_redirection(list) == 0)
+	if (check_error_redirection(list) == 0 && setup_redirection(list, &proc) == 0)
 		while_exe(list, &proc, i);
 	close(proc.saved_stdout);
 	close(proc.saved_stdin);

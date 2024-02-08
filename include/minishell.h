@@ -23,6 +23,7 @@
 # include <readline/history.h>
 # include <stdbool.h>
 # include <fcntl.h>
+# include <limits.h>
 
 /*Utility Macro*/
 #define WORD 0
@@ -124,13 +125,14 @@ t_list	*forking(t_list *list, t_process *proc);
 
 /*Exe Utils*/
 int		check_error_redirection(t_list *list);
-int		setup_redirection(t_list *list);
+int		setup_redirection(t_list *list, t_process *proc);
 void	init_vars(char **path, char ***args, int *i);
 char	**fill_args(t_list *list, char **args, int i);
 int		check_mtx(t_list *list, char *path, char **args, int i);
+void	reset_stdin_stdout(t_process *proc);
 
 /*Redirections*/
-void	redirections(t_list *list);
+void	redirections(t_list *list, t_process *proc);
 
 /*Enviromenrt*/
 int		copy_env(char **env, t_env4mini *all);
