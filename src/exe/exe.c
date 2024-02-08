@@ -75,7 +75,7 @@ in modo corretto, allora diventava inutilizzabile ogni volta che cercavi di tonr
 
 void	while_exe(t_list *list, t_process *proc, int i)
 {
-	while (list) 
+	while (list)
 	{
 		init_vars(&(proc->path), &(proc->args), &i);
 		if (list->type != WORD && list->type != PIPE)
@@ -83,7 +83,10 @@ void	while_exe(t_list *list, t_process *proc, int i)
 		/*printf("prev proc->path: %s\n", proc->path);
 		printf("prev proc->args[1]: %s\n", proc->args[1]);*/
 		if (check_mtx(list, proc->path, proc->args, i) == 1)
+		{
+			reset_stdin_stdout(proc);
 			return ;
+		}	
 		strcat(proc->path, list->mtx[i]);
 		/*printf("proc->path: %s\n", proc->path);
 		printf("proc->args[1]: %s\n", proc->args[1]);*/
@@ -114,7 +117,7 @@ void	while_exe(t_list *list, t_process *proc, int i)
 				reset_stdin_stdout(proc);
 				list = list->next;
 			}
-			else if (ft_strcmp(proc->args[0], "cd") == 0 )
+			else if (ft_strcmp(proc->args[0], "cd") == 0)
 			{
 				ft_cd(proc->args, proc->all);
 				reset_stdin_stdout(proc);
