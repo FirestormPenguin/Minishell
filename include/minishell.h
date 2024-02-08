@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/07 22:48:07 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/08 08:44:12 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@
 #define GET_LIST 12
 #define GET_PARSER 13
 #define GET_ENV 14
+
+/*Exit Macro*/
+#define EXIT_SUCCESS 0
+#define EXIT_FAILURE 1
 
 /*Struct*/
 typedef struct s_args
@@ -136,5 +140,8 @@ void	free_env(t_env4mini *all);
 /*Built-in Func*/
 int		ft_echo(char **command_string);
 void	ft_exit(char **args);
+int		ft_pwd(void);
+int		ft_env(char **env);
+int		ft_cd (char **args, t_env4mini *all);
 
 #endif

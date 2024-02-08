@@ -24,11 +24,13 @@ void ft_exit(char **args)
             exit_value = ft_atoi(args[1]) % 256;
             if (args[2])
             {
+                printf("arg 1; %s\n", args[1]);
                 printf("minishell: exit: too many arguments\n");
             }
         }
         else
-        {
+        {   
+            printf("arg 1; %s\n", args[1]);
             printf("minishell: exit: numeric argument required\n");
             exit_value = 2;
         }

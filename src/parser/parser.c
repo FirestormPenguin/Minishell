@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/06 14:24:50 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/02/08 10:15:09 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ static	t_list	*create_node(char **mtx, int *i, int *next_type)
 			break ;
 		}
 	}
+	list->mtx[j] = NULL; /* questa è l'aggiunta, forse l'ho tolta io come uno scemotto
+							ma non ricordo ci fosse dal principio */
 	return (list);
 }
 

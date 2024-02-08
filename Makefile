@@ -20,7 +20,10 @@ SRC = 	$(SRC_DIR)/minishell.c\
 		$(SRC_DIR)/exe/redirections.c\
 		$(SRC_DIR)/env/env.c\
 		$(SRC_DIR)/builtins/ft_exit.c\
-		$(SRC_DIR)/builtins/ft_echo.c
+		$(SRC_DIR)/builtins/ft_echo.c\
+		$(SRC_DIR)/builtins/ft_pwd.c\
+		$(SRC_DIR)/builtins/ft_env.c\
+		$(SRC_DIR)/builtins/ft_cd.c\
 
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 RM = rm -rf
