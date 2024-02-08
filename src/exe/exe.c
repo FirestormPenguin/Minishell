@@ -41,14 +41,19 @@ void	handle_pipe(t_list *list, t_process *proc)
 	}
 }
 
+void	reset_stdin_stdout(t_process *proc)
+{
+	dup2(proc->saved_stdout, STDOUT_FILENO);
+	dup2(proc->saved_stdin, STDIN_FILENO);
+}
+
 t_list	*forking(t_list *list, t_process *proc)
 {
 	proc->pid = fork();
 	if (proc->pid)
 	{
 		waitpid(-1, &(proc->status), WUNTRACED);
-		dup2(proc->saved_stdout, STDOUT_FILENO);
-		dup2(proc->saved_stdin, STDIN_FILENO);
+		reset_stdin_stdout(proc);
 		free_all_generic(proc->path, proc->args);
 		list = list->next;
 	}
@@ -94,26 +99,31 @@ void	while_exe(t_list *list, t_process *proc, int i)
 			if (ft_strcmp(proc->args[0], "exit") == 0)
 			{
 				ft_exit(proc->args);
+				reset_stdin_stdout(proc);
 				list = list->next;
 			}
 			else if (ft_strcmp(proc->args[0], "echo") == 0)
 			{
 				ft_echo(proc->args);
+				reset_stdin_stdout(proc);
 				list = list->next;
 			}
 			else if (ft_strcmp(proc->args[0], "pwd") == 0)
 			{
 				ft_pwd();
+				reset_stdin_stdout(proc);
 				list = list->next;
 			}
 			else if (ft_strcmp(proc->args[0], "env") == 0)
 			{
 				ft_env(proc->all->env);
+				reset_stdin_stdout(proc);
 				list = list->next;
 			}
 			else if (ft_strcmp(proc->args[0], "cd") == 0 )
 			{
 				ft_cd(proc->args, proc->all);
+				reset_stdin_stdout(proc);
 				list = list->next;
 			}
 			/*else if (ft_strcmp(proc->args[0], "export") == 0)
