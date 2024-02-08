@@ -98,11 +98,12 @@ char **fill_args(t_list *list, char **args, int i)
     return args;
 }
 
-int	check_mtx(t_list *list, char *path, char **args, int i)
+int	check_mtx(t_list *list, t_process *proc, int i)
 {
 	if (!list->mtx[i])
 	{
-		free_all_generic(path, args);
+		reset_stdin_stdout(proc);
+		free_all_generic(proc->path, proc->args);
 		return (1);
 	}
 	return (0);

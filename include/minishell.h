@@ -128,7 +128,7 @@ int		check_error_redirection(t_list *list);
 int		setup_redirection(t_list *list, t_process *proc);
 void	init_vars(char **path, char ***args, int *i);
 char	**fill_args(t_list *list, char **args, int i);
-int		check_mtx(t_list *list, char *path, char **args, int i);
+int		check_mtx(t_list *list, t_process *proc, int i);
 void	reset_stdin_stdout(t_process *proc);
 
 /*Redirections*/

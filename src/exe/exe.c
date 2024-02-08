@@ -82,11 +82,8 @@ void	while_exe(t_list *list, t_process *proc, int i)
 			i++;
 		/*printf("prev proc->path: %s\n", proc->path);
 		printf("prev proc->args[1]: %s\n", proc->args[1]);*/
-		if (check_mtx(list, proc->path, proc->args, i) == 1)
-		{
-			reset_stdin_stdout(proc);
+		if (check_mtx(list, proc, i) == 1)
 			return ;
-		}	
 		strcat(proc->path, list->mtx[i]);
 		/*printf("proc->path: %s\n", proc->path);
 		printf("proc->args[1]: %s\n", proc->args[1]);*/
