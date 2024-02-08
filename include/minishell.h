@@ -134,6 +134,9 @@ void	reset_stdin_stdout(t_process *proc);
 /*Redirections*/
 void	redirections(t_list *list, t_process *proc);
 
+/*Redirections_utils*/
+void write_into_fd(char *str);
+
 /*Enviromenrt*/
 int		copy_env(char **env, t_env4mini *all);
 void	print_env_copy(t_env4mini *all);
