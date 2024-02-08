@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:45:33 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/08 10:20:52 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/08 21:16:50 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int setup_redirection(t_list *list, t_process *proc)
 void init_vars(char **path, char ***args, int *i)
 {
     *path = malloc(sizeof(char) * 50);
-    *args = calloc(50, sizeof(char *));  /* usato calloc per allocare memoria ( == malloc) ma in più inizializza i point a NULL */
+    *args = ft_calloc(50, sizeof(char *));  /* usato calloc per allocare memoria ( == malloc) ma in più inizializza i point a NULL */
     *i = 0;
     strcpy(*path, "/bin/");
 }

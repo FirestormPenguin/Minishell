@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/06 14:25:55 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/02/08 21:17:00 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void here_doc(char *str, t_process *proc)
 	char	*tmp_str;
 
 	input_line = NULL;
-	tmp_str = calloc(1000, sizeof(char *));
+	tmp_str = ft_calloc(1000, sizeof(char *));
 	while (1)
 	{
 		input_line = readline("> ");
