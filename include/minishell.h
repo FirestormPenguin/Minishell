@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/08 08:44:12 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/08 22:05:40 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,5 +148,6 @@ void	ft_exit(char **args);
 int		ft_pwd(void);
 int		ft_env(char **env);
 int		ft_cd (char **args, t_env4mini *all);
+void	ft_export(char **args, t_env4mini *all);
 
 #endif

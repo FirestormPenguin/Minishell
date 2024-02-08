@@ -6,13 +6,11 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/06 20:32:55 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/08 21:30:26 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-//add built in func: deleted for fixing
 
 void getInput(t_env4mini *all)
 {

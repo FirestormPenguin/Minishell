@@ -120,15 +120,14 @@ void	while_exe(t_list *list, t_process *proc, int i)
 				reset_stdin_stdout(proc);
 				list = list->next;
 			}
-			/*else if (ft_strcmp(proc->args[0], "export") == 0)
+			else if (ft_strcmp(proc->args[0], "export") == 0)
 			{
 				ft_export(proc->args, proc->all);
-				return;
+				return ;
 			}
-			else if (ft_strcmp(proc->args[0], "unset") == 0)
+			/*else if (ft_strcmp(proc->args[0], "unset") == 0)
 			{
 				ft_unset(proc->args, proc->all);
-				return;
 			} */
 			else
 			{

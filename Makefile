@@ -25,6 +25,7 @@ SRC = 	$(SRC_DIR)/minishell.c\
 		$(SRC_DIR)/builtins/ft_pwd.c\
 		$(SRC_DIR)/builtins/ft_env.c\
 		$(SRC_DIR)/builtins/ft_cd.c\
+		$(SRC_DIR)/builtins/ft_export.c\
 
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 RM = rm -rf
