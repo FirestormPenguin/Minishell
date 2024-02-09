@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:45:33 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/09 15:25:32 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/09 16:12:16 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	reset_stdin_stdout(t_process *proc)
 int	check_error_redirection(t_list *list)
 {
 	while (list)
-	{
+	{	
 		if (list->type != WORD && check_type(list->mtx[0]) != WORD)
 		{
 			printf("parse error near '%s'\n", list->mtx[0]);
