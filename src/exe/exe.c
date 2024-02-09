@@ -53,6 +53,7 @@ t_list	*forking(t_list *list, t_process *proc)
 	}
 	else
 	{
+		//printf("proc->path: %s\n", proc->path);
 		if (access(proc->path, X_OK) == 0)
 		{
 			execve(proc->path, (char *const *)(proc->args), proc->all->env);
@@ -67,27 +68,21 @@ t_list	*forking(t_list *list, t_process *proc)
 	return (list);
 }
 
-/* Debug per ft_cd, ho notato che in create_node nel parser l'array di liste non 
-temrinava correttamente con NULL come dovrebbe essere, ra va bene, prima però la built-in
-cd si rompeva perché dopo la prima chiamata di funzione e il change directory, in qualsiasi
-caso veniva riempito args[1] con un dati compromessi visto che l'array non terminava 
-in modo corretto, allora diventava inutilizzabile ogni volta che cercavi di tonrare ad $HOME*/
-
 void	while_exe(t_list *list, t_process *proc, int i)
 {
 	while (list)
 	{
-		init_vars(&(proc->path), &(proc->args), &i);
+		init_vars(proc, &i, proc->all);
 		if (list->type != WORD && list->type != PIPE)
 			i++;
 		/*printf("prev proc->path: %s\n", proc->path);
 		printf("prev proc->args[1]: %s\n", proc->args[1]);*/
 		if (check_mtx(list, proc, i) == 1)
 			return ;
-		strcat(proc->path, list->mtx[i]);
 		/*printf("proc->path: %s\n", proc->path);
 		printf("proc->args[1]: %s\n", proc->args[1]);*/
 		proc->args = fill_args(list, proc->args, i);
+		strcpy(proc->path, path_finder(proc->args, proc->all));
 		if (proc->args && proc->args[0])
 		{
 			if (ft_strcmp(proc->args[0], "exit") == 0)

@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/08 22:05:40 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/09 15:23:43 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,9 @@ typedef struct s_process
     t_env4mini  *all;
 }               t_process;
 
-typedef	struct	s_struct_pointers 
+
+
+typedef	struct	s_struct_pointers
 {
 	t_args		*args_ptr;
     t_list		*list_ptr;
@@ -126,7 +128,7 @@ t_list	*forking(t_list *list, t_process *proc);
 /*Exe Utils*/
 int		check_error_redirection(t_list *list);
 int		setup_redirection(t_list *list, t_process *proc);
-void	init_vars(char **path, char ***args, int *i);
+void	init_vars(t_process *proc, int *i, t_env4mini *all);
 char	**fill_args(t_list *list, char **args, int i);
 int		check_mtx(t_list *list, t_process *proc, int i);
 void	reset_stdin_stdout(t_process *proc);
@@ -150,4 +152,5 @@ int		ft_env(char **env);
 int		ft_cd (char **args, t_env4mini *all);
 void	ft_export(char **args, t_env4mini *all);
 
+char	*path_finder(char **cmd, t_env4mini *all);
 #endif

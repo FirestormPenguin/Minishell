@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/08 21:30:26 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/09 11:55:56 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void getInput(t_env4mini *all)
     char *inputString;
     t_list *list;
 
-    while (1) 
+    while (1)
     {
         inputString = readline("Minishell: ");
         if (!inputString)
@@ -32,12 +32,12 @@ void getInput(t_env4mini *all)
     }
 }
 
-int main(int ac, char **av, char **envp) 
+int main(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
 	t_env4mini all;
-	
+
 	copy_env(envp, &all);
 	//print_env_copy(&all);
 	getInput(&all);

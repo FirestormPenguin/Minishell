@@ -6,13 +6,11 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 13:27:21 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/07 12:55:59 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/09 14:39:12 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-/* funzione per raccogliere dati da tutte le strutture del codice */
 
 void	*struct_box(t_struct_pointers *ptr_struct, int operation)
 {
@@ -47,7 +45,7 @@ void	free_all_generic(char *path, char **args)
 
 void	free_args(t_args *args)
 {
-    if (args) 
+    if (args)
 	{
         if (args->str)
             free(args->str);
@@ -55,7 +53,7 @@ void	free_args(t_args *args)
     }
 }
 
-void	free_list(t_list *list) 
+void	free_list(t_list *list)
 {
 	int i;
 
@@ -77,11 +75,11 @@ void	free_parser(t_parser *parser)
 	int	i;
 
 	i = 0;
-    if (parser) 
+    if (parser)
 	{
         if (parser->input_copy)
             free(parser->input_copy);
-        if (parser->tokens) 
+        if (parser->tokens)
 		{
 			while(parser->tokens[i])
 			{

@@ -36,11 +36,11 @@ int	ft_cd(char **args, t_env4mini *all)
 {
     char *home = get_env_value("HOME", all);
 
-    printf("args[0]: %s\n", args[0]);
+    //printf("args[0]: %s\n", args[0]);
 
     if (args[1] != NULL && !ft_strcmp(args[1], "$HOME"))
     {
-        printf("args[1]: %s\n", args[1]);
+        //printf("args[1]: %s\n", args[1]);
         home = get_env_value("HOME", all);
         if (home == NULL || chdir(home) == -1)
         {
@@ -51,7 +51,7 @@ int	ft_cd(char **args, t_env4mini *all)
     else if (!args[1])
     {
         home = get_env_value("HOME", all);
-        printf("home: %s\n", home);
+        //printf("home: %s\n", home);
         if (home == NULL || chdir(home) == -1)
         {
             args[1] = home;
@@ -61,8 +61,8 @@ int	ft_cd(char **args, t_env4mini *all)
     }
     else
     {
-        printf("args[1]: %s\n", args[1]);
-        printf("home: %s\n", home);
+        //printf("args[1]: %s\n", args[1]);
+        //printf("home: %s\n", home);
         if (chdir(args[1]) == -1)
         {
             printf("minishell: cd: %s: No such file or directory\n", args[1]);

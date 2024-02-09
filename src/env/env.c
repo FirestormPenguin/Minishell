@@ -32,7 +32,7 @@ int	copy_env(char **env, t_env4mini *all)
 		malloc_perror();
 	while (env[i] != NULL)
 	{
-		all->env[i] = strdup(env[i]);
+		all->env[i] = ft_strdup(env[i]);
 		if (all->env[i] == NULL)
 			malloc_perror();
 		i++;
