@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:45:33 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/10 13:38:25 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/12 02:51:40 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,23 +65,23 @@ void free_double_pointer(char **ptr)
 
 char *ft_getenv(char *name, char **env)
 {
-	int i;
-	int len;
+    int i;
+    int len;
 
-	if (name == NULL || env == NULL) {
+    i = 0;
+    len = ft_strlen(name);
+    if (name == NULL || env == NULL) {
         printf("name or env is NULL\n");
         return NULL;
     }
-	
-	i = 0;
-	len = ft_strlen(name);
-	while (env[i])
-	{
-		if (ft_strncmp(env[i], name, len) == 0)
-			return (&env[i][len + 1]);
-		i++;
-	}
-	return (NULL);
+
+    while (env[i])
+    {
+        if (ft_strncmp(env[i], name, len) == 0 && env[i][len] == '=')
+            return (&env[i][len + 1]);
+        i++;
+    }
+    return (NULL);
 }
 
 char *path_finder(char **cmd, t_env4mini *all)

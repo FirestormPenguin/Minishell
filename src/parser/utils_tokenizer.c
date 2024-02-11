@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 13:27:44 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/11 11:42:05 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/12 03:36:20 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,35 +94,45 @@ char *get_var_name(t_parser *p)
 
 int tokenize_double_quotes(t_parser *p)
 {
-	char *var;
-	char *var_content;
+    char *var;
+    char *input_expanded;
 
-	var_content = calloc(50, sizeof(char *));
-	if (p->input_copy[p->i1] == '"' && !p->in_quote)
-	{
-		p->in_double_quote = 1;
-		p->i1++;
-		while (p->input_copy[p->i1])
-		{
-			if (p->input_copy[p->i1] == '"')
-			{
-				p->in_double_quote = 0;
-				p->i1++;
-				return (1);
-			}
-			if (p->input_copy[p->i1] == '$')
-			{
-				var = get_var_name(p);
-				var_content = ft_getenv(var, p->cp_env->env);
-				printf("%s\n", var_content);
-				//var_content = ft_getenv(var, p->cp_env->env);
-				return (1);
-			}
-			p->tmp_token[p->i2++] = p->input_copy[p->i1++];
-		}
-		if (p->in_double_quote == 0)
-			return (1);
-	}
-	return (0);
+    input_expanded = calloc(50, sizeof(char *));
+    if (p->input_copy[p->i1] == '"' && !p->in_quote)
+    {
+        p->in_double_quote = 1;
+        p->i1++;
+        while (p->input_copy[p->i1])
+        {
+            if (p->input_copy[p->i1] == '"')
+            {
+                p->in_double_quote = 0;
+                p->i1++;
+                return (1);
+            }
+            if (p->input_copy[p->i1] == '$')
+            {
+                var = get_var_name(p);
+                //printf("input cpy : %s\n", p->input_copy);
+                char *var_value = ft_getenv(var, p->cp_env->env);
+                if (var_value != NULL)
+				{
+					int i = 0;
+					while(i < strlen(var_value))
+                    {
+                        p->tmp_token[p->i2++] = var_value[i];
+						i++;
+                    }
+                }
+                free(var);
+            }
+            else
+            {
+                p->tmp_token[p->i2++] = p->input_copy[p->i1++];
+            }
+        }
+        if (p->in_double_quote == 0)
+            return (1);
+    }
+    return (0);
 }
-
