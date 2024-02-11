@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/08 21:17:00 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/09 16:50:53 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void append (char *str)
 	fd_append = open(str, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd_append == -1)
 		perror("open");
-
 	if (dup2(fd_append, STDOUT_FILENO) == -1)
 		perror("dup2");
 	close(fd_append);

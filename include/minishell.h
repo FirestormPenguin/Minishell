@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/09 15:23:43 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/11 11:36:21 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,11 @@ typedef struct s_list
 	struct s_list	*next;
 }		t_list;
 
+typedef	struct	s_env4mini
+{
+	char	**env;
+}	t_env4mini;
+
 typedef struct s_parser
 {
 	char *input_copy;
@@ -67,12 +72,9 @@ typedef struct s_parser
 	int i3;
 	int in_quote;
 	int in_double_quote;
+	t_env4mini *cp_env;
 }	t_parser;
 
-typedef	struct	s_env4mini
-{
-	char	**env;
-}	t_env4mini;
 
 typedef struct s_process
 {
@@ -96,7 +98,7 @@ typedef	struct	s_struct_pointers
 }	t_struct_pointers;
 
 /*Main*/
-void getInput(t_env4mini *all);
+void getInput(t_env4mini *all, t_parser *pars);
 
 /*Utils*/
 void	*struct_box(t_struct_pointers *ptr_struct, int operation);
@@ -104,7 +106,7 @@ void	free_all_generic(char *path, char **args);
 void 	free_exit(int exit_code);
 
 /*Parser*/
-t_list	*parser(char *str);
+t_list	*parser(char *str, t_parser *pars);
 t_list	*init_list(char **mtx);
 static t_list	*ft_lstnew();
 
@@ -113,7 +115,7 @@ int		check_type(char *str);
 void	scroll_list(t_list *node);
 
 /*Tokenizer*/
-char	**tokenizer(char *input, int *token_count);
+char	**tokenizer(char *input, int *token_count, t_parser *pars);
 
 /*Tokenizer Utils*/
 int		tokenize_single(t_parser *p);
@@ -153,4 +155,5 @@ int		ft_cd (char **args, t_env4mini *all);
 void	ft_export(char **args, t_env4mini *all);
 
 char	*path_finder(char **cmd, t_env4mini *all);
+char	*ft_getenv(char *name, char **env);
 #endif

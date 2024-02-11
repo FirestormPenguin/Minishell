@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:45:33 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/09 16:12:16 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/10 13:38:25 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	reset_stdin_stdout(t_process *proc)
 int	check_error_redirection(t_list *list)
 {
 	while (list)
-	{	
+	{
 		if (list->type != WORD && check_type(list->mtx[0]) != WORD)
 		{
 			printf("parse error near '%s'\n", list->mtx[0]);
@@ -68,6 +68,11 @@ char *ft_getenv(char *name, char **env)
 	int i;
 	int len;
 
+	if (name == NULL || env == NULL) {
+        printf("name or env is NULL\n");
+        return NULL;
+    }
+	
 	i = 0;
 	len = ft_strlen(name);
 	while (env[i])
@@ -127,7 +132,8 @@ char **fill_args(t_list *list, char **args, int i)
 	while (list->mtx[i])
 	{
 		args[j] = malloc(strlen(list->mtx[i]) + 1);
-		if (!args[j]) {
+		if (!args[j])
+		{
 			perror("malloc failed");
 			exit(EXIT_FAILURE);
 		}

@@ -6,13 +6,13 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/09 11:55:56 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/11 11:41:03 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void getInput(t_env4mini *all)
+void getInput(t_env4mini *all, t_parser *pars)
 {
     char *inputString;
     t_list *list;
@@ -24,7 +24,7 @@ void getInput(t_env4mini *all)
             break;
         else
         {
-            list = parser(inputString);
+            list = parser(inputString, pars);
             add_history(inputString);
             exe(list, all);
         }
@@ -36,13 +36,16 @@ int main(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
-	t_env4mini all;
+	t_env4mini *all = ft_calloc(1, sizeof(t_env4mini));
+    t_parser pars;
 
-	copy_env(envp, &all);
-	//print_env_copy(&all);
-	getInput(&all);
+	copy_env(envp, all);
+    pars.cp_env = all;
+	//print_env_copy(pars.cp_env);
+	getInput(all, &pars);
 
-    free_env(&all);
+    free_env(all);
+    free(all);
 
 	return 0;
 }

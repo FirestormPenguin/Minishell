@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 13:27:36 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/05 13:27:39 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/02/11 11:36:37 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void init_parser(t_parser *p, char *input)
 	p->i3 = 0;
 	p->in_quote = 0;
 	p->in_double_quote = 0;
+    return;
 }
 
 void tokenize_parser(t_parser *p)
@@ -45,28 +46,28 @@ void tokenize_parser(t_parser *p)
 	}
 }
 
-char **tokenizer(char *input, int *token_count)
+char **tokenizer(char *input, int *token_count, t_parser *p)
 {
-	t_parser	p;
+	//t_parser	p;
 
-	init_parser(&p, input);
+	init_parser(p, input);
 
-	while (p.input_copy[p.i1])
+	while (p->input_copy[p->i1])
 	{
-		while (p.input_copy[p.i1] == ' ' || p.input_copy[p.i1] == '\t')
-			p.i1++;
-		p.i2 = 0;
-		tokenize_parser(&p);
-		p.tmp_token[p.i2] = '\0';
-		p.tokens[p.i3++] = ft_strdup(p.tmp_token);
-		p.count++;
+		while (p->input_copy[p->i1] == ' ' || p->input_copy[p->i1] == '\t')
+			p->i1++;
+		p->i2 = 0;
+		tokenize_parser(p);
+		p->tmp_token[p->i2] = '\0';
+		p->tokens[p->i3++] = ft_strdup(p->tmp_token);
+		p->count++;
 	}
-	*token_count = p.count;
-	p.tokens[p.count] = NULL;
-	if (p.in_quote == 1)
+	*token_count = p->count;
+	p->tokens[p->count] = NULL;
+	if (p->in_quote == 1)
 	{
 		printf("Error: unclosed quote\n");
 		return (NULL);
 	}
-	return (p.tokens);
+	return (p->tokens);
 }

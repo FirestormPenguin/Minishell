@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/09 15:55:40 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/11 11:32:04 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,13 @@ t_list	*init_list(char **mtx)
 	return (list_h);
 }
 
-t_list	*parser(char *str)
+t_list	*parser(char *str, t_parser *pars)
 {
 	t_list	*list_head;
 	char	**mtx;
 	int		arg_count;
 
-	mtx = tokenizer(str, &arg_count);
+	mtx = tokenizer(str, &arg_count, pars);
 	if (mtx == NULL)
 		return (NULL);
 	list_head = init_list(mtx);
