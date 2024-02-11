@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 13:27:44 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/12 03:36:20 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/12 03:48:44 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,30 @@ char *get_var_name(t_parser *p)
 	return (var);
 }
 
+void base_expander(t_parser *p)
+{
+	char *var;
+
+	var = get_var_name(p);
+    //printf("input cpy : %s\n", p->input_copy);
+    char *var_value = ft_getenv(var, p->cp_env->env);
+    if (var_value != NULL)
+	{
+		int i = 0;
+		while(i < strlen(var_value))
+        {
+        	p->tmp_token[p->i2++] = var_value[i];
+			i++;
+        }
+    }
+    free(var);
+	return ;
+}
+
 int tokenize_double_quotes(t_parser *p)
 {
-    char *var;
-    char *input_expanded;
+    //char *var;
 
-    input_expanded = calloc(50, sizeof(char *));
     if (p->input_copy[p->i1] == '"' && !p->in_quote)
     {
         p->in_double_quote = 1;
@@ -112,19 +130,7 @@ int tokenize_double_quotes(t_parser *p)
             }
             if (p->input_copy[p->i1] == '$')
             {
-                var = get_var_name(p);
-                //printf("input cpy : %s\n", p->input_copy);
-                char *var_value = ft_getenv(var, p->cp_env->env);
-                if (var_value != NULL)
-				{
-					int i = 0;
-					while(i < strlen(var_value))
-                    {
-                        p->tmp_token[p->i2++] = var_value[i];
-						i++;
-                    }
-                }
-                free(var);
+                base_expander(p);
             }
             else
             {
