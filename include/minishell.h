@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/12 03:51:06 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:13:17 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,23 +78,23 @@ typedef struct s_parser
 
 typedef struct s_process
 {
-    pid_t       pid;
-    int         status;
-    char        *path;
-    char        **args;
-    int         saved_stdin;
-    int         saved_stdout;
-    t_env4mini  *all;
-}               t_process;
+	pid_t		pid;
+	int			status;
+	char		*path;
+	char		**args;
+	int			saved_stdin;
+	int			saved_stdout;
+	t_env4mini  *all;
+}	t_process;
 
 
 
 typedef	struct	s_struct_pointers
 {
 	t_args		*args_ptr;
-    t_list		*list_ptr;
-    t_parser	*parser_ptr;
-    t_env4mini	*env_ptr;
+	t_list		*list_ptr;
+	t_parser	*parser_ptr;
+	t_env4mini	*env_ptr;
 }	t_struct_pointers;
 
 /*Main*/
@@ -131,7 +131,7 @@ t_list	*forking(t_list *list, t_process *proc);
 int		check_error_redirection(t_list *list);
 int		setup_redirection(t_list *list, t_process *proc);
 void	init_vars(t_process *proc, int *i, t_env4mini *all);
-char	**fill_args(t_list *list, char **args, int i);
+t_list	*fill_args(t_list *list, t_process *proc, int i);
 int		check_mtx(t_list *list, t_process *proc, int i);
 void	reset_stdin_stdout(t_process *proc);
 

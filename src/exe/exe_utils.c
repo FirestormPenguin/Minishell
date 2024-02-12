@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:45:33 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/12 02:51:40 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:09:26 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	reset_stdin_stdout(t_process *proc)
 {
+	
 	dup2(proc->saved_stdout, STDOUT_FILENO);
 	dup2(proc->saved_stdin, STDIN_FILENO);
 }
@@ -126,23 +127,36 @@ void init_vars(t_process *proc, int *i, t_env4mini *all)
 	*i = 0;
 }
 
-char **fill_args(t_list *list, char **args, int i)
+t_list *fill_args(t_list *list, t_process *proc, int i)
 {
-	int j = 0;
-	while (list->mtx[i])
+	int j;
+	
+	j = 0;
+	while (list)
 	{
-		args[j] = malloc(strlen(list->mtx[i]) + 1);
-		if (!args[j])
+		if (list->type == PIPE)
+			break;
+		i = 0;
+		if (list->type != WORD && list->type != PIPE)
+			i++;
+		if (check_mtx(list, proc, i) == 1)
+			return (NULL);
+		while (list->mtx[i])
 		{
-			perror("malloc failed");
-			exit(EXIT_FAILURE);
+			proc->args[j] = malloc(strlen(list->mtx[i]) + 1);
+			if (!proc->args[j])
+			{
+				perror("malloc failed");
+				exit(EXIT_FAILURE);
+			}
+			strcpy(proc->args[j], list->mtx[i]);
+			i++;
+			j++;
 		}
-		strcpy(args[j], list->mtx[i]);
-		i++;
-		j++;
+		list = list->next;
 	}
-	args[j] = NULL;
-	return args;
+	proc->args[j] = NULL;
+	return (list);
 }
 
 int	check_mtx(t_list *list, t_process *proc, int i)

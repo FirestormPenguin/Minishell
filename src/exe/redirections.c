@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/09 16:50:53 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:04:39 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void here_doc(char *str, t_process *proc)
 
 void	redirections(t_list *list, t_process *proc)
 {
+	reset_stdin_stdout(proc);
 	if (list->type == IN && list->mtx[0])
 		input (list->mtx[0]);
 	else if (list->type == OUT && list->mtx[0])

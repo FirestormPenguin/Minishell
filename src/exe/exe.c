@@ -26,7 +26,6 @@ void	handle_pipe(t_list *list, t_process *proc)
 	{
 		close(pipe_fd[1]);
 		dup2(pipe_fd[0], STDIN_FILENO);
-		close(pipe_fd[0]);
 		waitpid(proc->pid, &(proc->status), 0);
 		dup2(proc->saved_stdout, STDOUT_FILENO);
 		dup2(proc->saved_stdin, STDIN_FILENO);
@@ -36,7 +35,6 @@ void	handle_pipe(t_list *list, t_process *proc)
 	{
 		close(pipe_fd[0]);
 		dup2(pipe_fd[1], STDOUT_FILENO);
-		close(pipe_fd[1]);
 		exit(1);
 	}
 }
@@ -72,55 +70,56 @@ void	while_exe(t_list *list, t_process *proc, int i)
 	while (list)
 	{
 		init_vars(proc, &i, proc->all);
-		if (list->type != WORD && list->type != PIPE)
-			i++;
-		/*printf("prev proc->path: %s\n", proc->path);
-		printf("prev proc->args[1]: %s\n", proc->args[1]);*/
-		if (check_mtx(list, proc, i) == 1)
-			return ;
-		/*printf("proc->path: %s\n", proc->path);
-		printf("proc->args[1]: %s\n", proc->args[1]);*/
-		proc->args = fill_args(list, proc->args, i);
+		list = fill_args(list, proc, i);
 		strcpy(proc->path, path_finder(proc->args, proc->all));
-		//printf("proc->path: %s\n", proc->path);
 		if (proc->args && proc->args[i])
 		{
-			if (ft_strcmp(proc->args[i], "exit") == 0)
+			if (ft_strcmp(proc->args[0], "exit") == 0)
 			{
 				ft_exit(proc->args);
 				reset_stdin_stdout(proc);
+				if (list == NULL)
+					break;
 				list = list->next;
 			}
-			else if (ft_strcmp(proc->args[i], "echo") == 0)
+			else if (ft_strcmp(proc->args[0], "echo") == 0)
 			{
 				ft_echo(proc->args);
 				reset_stdin_stdout(proc);
+				if (list == NULL)
+					break;
 				list = list->next;
 			}
-			else if (ft_strcmp(proc->args[i], "pwd") == 0)
+			else if (ft_strcmp(proc->args[0], "pwd") == 0)
 			{
 				ft_pwd();
 				reset_stdin_stdout(proc);
+				if (list == NULL)
+					break;
 				list = list->next;
 			}
-			else if (ft_strcmp(proc->args[i], "env") == 0)
+			else if (ft_strcmp(proc->args[0], "env") == 0)
 			{
 				ft_env(proc->all->env);
 				reset_stdin_stdout(proc);
+				if (list == NULL)
+					break;
 				list = list->next;
 			}
-			else if (ft_strcmp(proc->args[i], "cd") == 0)
+			else if (ft_strcmp(proc->args[0], "cd") == 0)
 			{
 				ft_cd(proc->args, proc->all);
 				reset_stdin_stdout(proc);
+				if (list == NULL)
+					break;
 				list = list->next;
 			}
-			else if (ft_strcmp(proc->args[i], "export") == 0)
+			else if (ft_strcmp(proc->args[0], "export") == 0)
 			{
 				ft_export(proc->args, proc->all);
 				return ;
 			}
-			/*else if (ft_strcmp(proc->args[i], "unset") == 0)
+			/*else if (ft_strcmp(proc->args[0], "unset") == 0)
 			{
 				ft_unset(proc->args, proc->all);
 			} */
