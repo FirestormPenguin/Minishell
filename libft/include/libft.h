@@ -21,4 +21,5 @@ void	*ft_calloc(size_t num, size_t size);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	ft_putstr(char *s);
 void    ft_qsort(char **arr, int low, int high);
+char    *ft_itoa(int n);
 #endif

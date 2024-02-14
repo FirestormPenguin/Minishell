@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 13:27:36 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/12 03:59:02 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/14 18:07:19 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void tokenize_parser(t_parser *p)
 			break;
 		if (tokenize_double_quotes(p))
 			break;
-		if (p->input_copy[p->i1] == '$')
+		if (p->input_copy[p->i1] == '$' && p->input_copy[p->i1+1] != '$')
                 base_expander(p);
         else
             p->tmp_token[p->i2++] = p->input_copy[p->i1++];

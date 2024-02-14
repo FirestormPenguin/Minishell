@@ -6,11 +6,13 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/11 11:41:03 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/14 15:11:40 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int last_exit_code;
 
 void getInput(t_env4mini *all, t_parser *pars)
 {
@@ -36,6 +38,8 @@ int main(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
+
+    last_exit_code = 0;
 	t_env4mini *all = ft_calloc(1, sizeof(t_env4mini));
     t_parser pars;
 

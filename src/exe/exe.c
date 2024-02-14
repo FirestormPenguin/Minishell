@@ -45,6 +45,10 @@ t_list	*forking(t_list *list, t_process *proc)
 	if (proc->pid)
 	{
 		waitpid(-1, &(proc->status), WUNTRACED);
+		if (WIFEXITED(proc->status))
+			last_exit_code = WEXITSTATUS(proc->status);
+		else
+			last_exit_code = -1;
 		reset_stdin_stdout(proc);
 		free_all_generic(proc->path, proc->args);
 		if (list == NULL)
@@ -57,12 +61,13 @@ t_list	*forking(t_list *list, t_process *proc)
 		{
 			execve(proc->path, (char *const *)(proc->args), proc->all->env);
 			perror("execve");
+			exit(1);
 		}
 		else
 		{
 			printf("%s: command not found\n", proc->args[0]);
+			exit(127);
 		}
-		exit(1);
 	}
 	return (list);
 }
@@ -87,6 +92,7 @@ void	while_exe(t_list *list, t_process *proc, int i)
 			else if (ft_strcmp(proc->args[0], "echo") == 0)
 			{
 				ft_echo(proc->args);
+				last_exit_code = 0;
 				reset_stdin_stdout(proc);
 				if (list == NULL)
 					break;
@@ -95,6 +101,7 @@ void	while_exe(t_list *list, t_process *proc, int i)
 			else if (ft_strcmp(proc->args[0], "pwd") == 0)
 			{
 				ft_pwd();
+				last_exit_code = 0;
 				reset_stdin_stdout(proc);
 				if (list == NULL)
 					break;
@@ -103,6 +110,7 @@ void	while_exe(t_list *list, t_process *proc, int i)
 			else if (ft_strcmp(proc->args[0], "env") == 0)
 			{
 				ft_env(proc->all->env);
+				last_exit_code = 0;
 				reset_stdin_stdout(proc);
 				if (list == NULL)
 					break;
@@ -111,6 +119,7 @@ void	while_exe(t_list *list, t_process *proc, int i)
 			else if (ft_strcmp(proc->args[0], "cd") == 0)
 			{
 				ft_cd(proc->args, proc->all);
+				last_exit_code = 0;
 				reset_stdin_stdout(proc);
 				if (list == NULL)
 					break;
@@ -119,6 +128,7 @@ void	while_exe(t_list *list, t_process *proc, int i)
 			else if (ft_strcmp(proc->args[0], "export") == 0)
 			{
 				ft_export(proc->args, proc->all);
+				last_exit_code = 0;
 				return ;
 			}
 			/*else if (ft_strcmp(proc->args[0], "unset") == 0)
