@@ -47,6 +47,8 @@ t_list	*forking(t_list *list, t_process *proc)
 		waitpid(-1, &(proc->status), WUNTRACED);
 		reset_stdin_stdout(proc);
 		free_all_generic(proc->path, proc->args);
+		if (list == NULL)
+			return (NULL);
 		list = list->next;
 	}
 	else
@@ -125,8 +127,6 @@ void	while_exe(t_list *list, t_process *proc, int i)
 			} */
 			else
 			{
-				if (list == NULL)
-					break;
 				list = forking(list, proc);
 			}
 		}
