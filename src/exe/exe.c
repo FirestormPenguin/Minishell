@@ -125,6 +125,8 @@ void	while_exe(t_list *list, t_process *proc, int i)
 			} */
 			else
 			{
+				if (list == NULL)
+					break;
 				list = forking(list, proc);
 			}
 		}
