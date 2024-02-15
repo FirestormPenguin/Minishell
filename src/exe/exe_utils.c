@@ -14,8 +14,8 @@
 
 void	reset_stdin_stdout(t_process *proc)
 {
-	dup2(proc->saved_stdout, STDOUT_FILENO);
 	dup2(proc->saved_stdin, STDIN_FILENO);
+	dup2(proc->saved_stdout, STDOUT_FILENO);
 }
 
 int	check_error_redirection(t_list *list)
@@ -139,8 +139,8 @@ t_list *fill_args(t_list *list, t_process *proc, int i)
 		i = 0;
 		if (list->type != WORD && list->type != PIPE)
 			i++;
-		if (check_mtx(list, proc, i) == 1)
-			return (NULL);
+		// if (check_mtx(list, proc, i) == 1)
+		// 	break;
 		while (list->mtx[i])
 		{
 			proc->args[j] = malloc(strlen(list->mtx[i]) + 1);
