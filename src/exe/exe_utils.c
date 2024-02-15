@@ -110,6 +110,7 @@ char *path_finder(char **cmd, t_env4mini *all)
 			free(absol);
 			return (path);
 		}
+		//printf ("path : %s\n", path);
 		free(path);
 		i++;
 	}

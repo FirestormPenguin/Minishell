@@ -12,14 +12,6 @@
 
 #include "../../include/minishell.h"
 
-static int scroll_list_in_while(t_list *list, t_process *proc)
-{
-	reset_stdin_stdout(proc);
-	if (list != NULL)
-		return (1);
-	return (0);
-}
-
 void	handle_pipe(t_list *list, t_process *proc)
 {
 	int		pipe_fd[2];
@@ -47,6 +39,14 @@ void	handle_pipe(t_list *list, t_process *proc)
 	}
 }
 
+static int scroll_list_in_while(t_list *list, t_process *proc)
+{
+	reset_stdin_stdout(proc);
+	if (list != NULL)
+		return (1);
+	return (0);
+}
+
 t_list	*forking(t_list *list, t_process *proc)
 {
 	proc->pid = fork();
@@ -57,11 +57,11 @@ t_list	*forking(t_list *list, t_process *proc)
 			last_exit_code = WEXITSTATUS(proc->status);
 		else
 			last_exit_code = -1;
-		reset_stdin_stdout(proc);
+		// reset_stdin_stdout(proc);
 		free_all_generic(proc->path, proc->args);
 		if (list == NULL)
 			return (NULL);
-		list = list->next;
+		// list = list->next;
 	}
 	else
 	{
