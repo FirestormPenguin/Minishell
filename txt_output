@@ -1,0 +1,10 @@
+Makefile
+cat
+include
+libft
+minishell
+obj
+src
+test
+txt_input
+txt_output

@@ -65,23 +65,23 @@ void free_double_pointer(char **ptr)
 
 char *ft_getenv(char *name, char **env)
 {
-    int i;
-    int len;
+	int i;
+	int len;
 
-    i = 0;
-    len = ft_strlen(name);
-    if (name == NULL || env == NULL) {
-        printf("name or env is NULL\n");
-        return NULL;
-    }
+	i = 0;
+	len = ft_strlen(name);
+	if (name == NULL || env == NULL) {
+		printf("name or env is NULL\n");
+		return NULL;
+	}
 
-    while (env[i])
-    {
-        if (ft_strncmp(env[i], name, len) == 0 && env[i][len] == '=')
-            return (&env[i][len + 1]);
-        i++;
-    }
-    return (NULL);
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], name, len) == 0 && env[i][len] == '=')
+			return (&env[i][len + 1]);
+		i++;
+	}
+	return (NULL);
 }
 
 char *path_finder(char **cmd, t_env4mini *all)
@@ -139,8 +139,6 @@ t_list *fill_args(t_list *list, t_process *proc, int i)
 		i = 0;
 		if (list->type != WORD && list->type != PIPE)
 			i++;
-		// if (check_mtx(list, proc, i) == 1)
-		// 	break;
 		while (list->mtx[i])
 		{
 			proc->args[j] = malloc(strlen(list->mtx[i]) + 1);
@@ -155,18 +153,9 @@ t_list *fill_args(t_list *list, t_process *proc, int i)
 		}
 		list = list->next;
 	}
-	proc->args[j] = NULL;
+	if (proc->args[j - 1][0] == '\0')
+		proc->args[j - 1] = NULL;
+	else
+		proc->args[j] = NULL;
 	return (list);
 }
-
-int	check_mtx(t_list *list, t_process *proc, int i)
-{
-	if (!list->mtx[i])
-	{
-		reset_stdin_stdout(proc);
-		free_all_generic(proc->path, proc->args);
-		return (1);
-	}
-	return (0);
-}
-
