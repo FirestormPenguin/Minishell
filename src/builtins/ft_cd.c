@@ -12,62 +12,64 @@
 
 #include "../../include/minishell.h"
 
-char *get_env_value(char *key, t_env4mini *all)
+char	*get_env_value(char *key, t_env4mini *all)
 {
-    int i = 0;
-    int key_len = ft_strlen(key);
+	int	i;
+	int	key_len;
 
-    while (all->env[i] != NULL)
-    {
-        // Check if the key is a prefix of the environment variable string
-        if (ft_strncmp(all->env[i], key, key_len) == 0 && all->env[i][key_len] == '=')
-        {
-            // Return a pointer to the value part of the string
-            return all->env[i] + key_len + 1;
-        }
-        i++;
-    }
+	i = 0;
+	key_len = ft_strlen(key);
+	while (all->env[i] != NULL)
+	{
+		if (ft_strncmp(all->env[i], key, key_len) == 0
+			&& all->env[i][key_len] == '=')
+			return (all->env[i] + key_len + 1);
+		i++;
+	}
+	return (NULL);
+}
 
-    // Return NULL if the key was not found
-    return NULL;
+int	check_cd_home(char **args, char *home)
+{
+	if (home == NULL || chdir(home) == -1)
+	{
+		args[1] = home;
+		perror("cd");
+		return (1);
+	}
+}
+
+int	check_cd_err(char **args)
+{
+	if (chdir(args[1]) == -1)
+	{
+		printf("minishell: cd: %s: No such file or directory\n", args[1]);
+		return (1);
+	}
 }
 
 int	ft_cd(char **args, t_env4mini *all)
 {
-    char *home = get_env_value("HOME", all);
+	char	*home;
 
-    //printf("args[0]: %s\n", args[0]);
-
-    if (args[1] != NULL && !ft_strcmp(args[1], "$HOME"))
-    {
-        //printf("args[1]: %s\n", args[1]);
-        home = get_env_value("HOME", all);
-        if (home == NULL || chdir(home) == -1)
-        {
-            perror("cd");
-            return (1);
-        }
-    }
-    else if (!args[1])
-    {
-        home = get_env_value("HOME", all);
-        //printf("home: %s\n", home);
-        if (home == NULL || chdir(home) == -1)
-        {
-            args[1] = home;
-            perror("cd");
-            return (1);
-        }
-    }
-    else
-    {
-        //printf("args[1]: %s\n", args[1]);
-        //printf("home: %s\n", home);
-        if (chdir(args[1]) == -1)
-        {
-            printf("minishell: cd: %s: No such file or directory\n", args[1]);
-            return (1);
-        }
-    }
-    return (0);
+	home = get_env_value("HOME", all);
+	if (!args[1] || ft_strcmp(args[1], " ") == 0
+		|| ft_strcmp(args[1], "") == 0)
+	{
+		home = get_env_value("HOME", all);
+		check_cd_home(args, home);
+	}
+	else if (args[1] != NULL && !ft_strcmp(args[1], "$HOME"))
+	{
+		home = get_env_value("HOME", all);
+		if (home == NULL || chdir(home) == -1)
+		{
+			perror("cd");
+			return (1);
+		}
+	}
+	else
+		if (check_cd_err(args))
+			return (1);
+	return (0);
 }

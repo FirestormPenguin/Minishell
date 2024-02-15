@@ -12,6 +12,14 @@
 
 #include "../../include/minishell.h"
 
+static int scroll_list_in_while(t_list *list, t_process *proc)
+{
+	reset_stdin_stdout(proc);
+	if (list != NULL)
+		return (1);
+	return (0);
+}
+
 void	handle_pipe(t_list *list, t_process *proc)
 {
 	int		pipe_fd[2];
@@ -80,66 +88,11 @@ void	while_exe(t_list *list, t_process *proc, int i)
 		list = fill_args(list, proc, i);
 		strcpy(proc->path, path_finder(proc->args, proc->all));
 		if (proc->args && proc->args[i])
-		{
-			if (ft_strcmp(proc->args[0], "exit") == 0)
-			{
-				ft_exit(proc->args);
-				reset_stdin_stdout(proc);
-				if (list == NULL)
-					break;
-				list = list->next;
-			}
-			else if (ft_strcmp(proc->args[0], "echo") == 0)
-			{
-				ft_echo(proc->args);
-				last_exit_code = 0;
-				reset_stdin_stdout(proc);
-				if (list == NULL)
-					break;
-				list = list->next;
-			}
-			else if (ft_strcmp(proc->args[0], "pwd") == 0)
-			{
-				ft_pwd();
-				last_exit_code = 0;
-				reset_stdin_stdout(proc);
-				if (list == NULL)
-					break;
-				list = list->next;
-			}
-			else if (ft_strcmp(proc->args[0], "env") == 0)
-			{
-				ft_env(proc->all->env);
-				last_exit_code = 0;
-				reset_stdin_stdout(proc);
-				if (list == NULL)
-					break;
-				list = list->next;
-			}
-			else if (ft_strcmp(proc->args[0], "cd") == 0)
-			{
-				ft_cd(proc->args, proc->all);
-				last_exit_code = 0;
-				reset_stdin_stdout(proc);
-				if (list == NULL)
-					break;
-				list = list->next;
-			}
-			else if (ft_strcmp(proc->args[0], "export") == 0)
-			{
-				ft_export(proc->args, proc->all);
-				last_exit_code = 0;
-				return ;
-			}
-			/*else if (ft_strcmp(proc->args[0], "unset") == 0)
-			{
-				ft_unset(proc->args, proc->all);
-			} */
-			else
-			{
-				list = forking(list, proc);
-			}
-		}
+			import_builtins(list, proc);
+		if (scroll_list_in_while(list, proc))
+			list = list->next;
+		else
+			break;
 	}
 }
 

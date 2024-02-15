@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/14 15:06:00 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/15 09:38:33 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,4 +159,5 @@ void	ft_export(char **args, t_env4mini *all);
 char	*path_finder(char **cmd, t_env4mini *all);
 char	*ft_getenv(char *name, char **env);
 void 	base_expander(t_parser *p);
+void	import_builtins(t_list *list, t_process *proc);
 #endif

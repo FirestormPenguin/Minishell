@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 13:27:44 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/14 18:06:41 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/14 18:24:36 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,10 @@ int tokenize_double_quotes(t_parser *p)
 				return (1);
 			}
 			if (p->input_copy[p->i1] == '$' && p->input_copy[p->i1+1] != '$')
+			{
 					base_expander(p);
+					return (1);
+			}
 			else
 				p->tmp_token[p->i2++] = p->input_copy[p->i1++];
 		}

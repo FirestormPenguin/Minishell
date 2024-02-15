@@ -14,27 +14,27 @@
 
 void ft_exit(char **args)
 {
-    int exit_value = 0;
-    write(1, "exit\n", 5);
+	int exit_value = 0;
+	write(1, "exit\n", 5);
 
-    if (args[1])
-    {
-        if (ft_isstrdigit(args[1]))
-        {
-            exit_value = ft_atoi(args[1]) % 256;
-            if (args[2])
-            {
-                printf("arg 1; %s\n", args[1]);
-                printf("minishell: exit: too many arguments\n");
-            }
-        }
-        else
-        {   
-            printf("arg 1; %s\n", args[1]);
-            printf("minishell: exit: numeric argument required\n");
-            exit_value = 2;
-        }
-    }
+	if (args[1])
+	{
+		if (ft_isstrdigit(args[1]))
+		{
+			exit_value = ft_atoi(args[1]) % 256;
+			if (args[2])
+			{
+				printf("arg 1; %s\n", args[1]);
+				printf("minishell: exit: too many arguments\n");
+			}
+		}
+		else
+		{
+			printf("arg 1; %s\n", args[1]);
+			printf("minishell: exit: numeric argument required\n");
+			exit_value = 2;
+		}
+	}
 
-    free_exit(exit_value);
+	free_exit(exit_value);
 }

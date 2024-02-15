@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:45:33 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/12 17:09:26 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/02/15 10:54:44 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	reset_stdin_stdout(t_process *proc)
 {
-	
 	dup2(proc->saved_stdout, STDOUT_FILENO);
 	dup2(proc->saved_stdin, STDIN_FILENO);
 }
@@ -130,7 +129,7 @@ void init_vars(t_process *proc, int *i, t_env4mini *all)
 t_list *fill_args(t_list *list, t_process *proc, int i)
 {
 	int j;
-	
+
 	j = 0;
 	while (list)
 	{
