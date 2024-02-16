@@ -160,4 +160,5 @@ char	*path_finder(char **cmd, t_env4mini *all);
 char	*ft_getenv(char *name, char **env);
 void 	base_expander(t_parser *p);
 void	import_builtins(t_list *list, t_process *proc);
+void	ft_unset_env(char **args, t_env4mini *all);
 #endif

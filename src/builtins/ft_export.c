@@ -1,27 +1,27 @@
 #include "../../include/minishell.h"
 
-void ft_unset_env(char *name, t_env4mini *all)
+void ft_unset_env(char **args, t_env4mini *all)
 {
-	int i;
-	int j;
-	char *tmp;
-
-	i = 0;
-	while (all->env[i])
-	{
-		if (ft_strncmp(all->env[i], name, ft_strlen(name)) == 0)
-		{
-			free(all->env[i]);
-			j = i;
-			while (all->env[j])
-			{
-				all->env[j] = all->env[j + 1];
-				j++;
-			}
-			return ;
-		}
-		i++;
-	}
+    int i = 1; // Inizia da 1 perché args[0] è il nome del comando
+    while (args[i])
+    {
+        int j = 0;
+        while (all->env[j])
+        {
+            if (ft_strncmp(all->env[j], args[i], ft_strlen(args[i])) == 0)
+            {
+                free(all->env[j]);
+                while (all->env[j])
+                {
+                    all->env[j] = all->env[j + 1];
+                    j++;
+                }
+                break; // Esce dal ciclo interno quando trova e rimuove la variabile
+            }
+            j++;
+        }
+        i++;
+    }
 }
 
 void ft_setenv(char *name, char *value, t_env4mini *all)
@@ -47,7 +47,7 @@ void ft_setenv(char *name, char *value, t_env4mini *all)
 	all->env[i + 1] = NULL;
 }
 
-void ft_export(char **args, t_env4mini *all) 
+void ft_export(char **args, t_env4mini *all)
 {
 	int i;
 	int j;
