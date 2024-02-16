@@ -110,7 +110,6 @@ char *path_finder(char **cmd, t_env4mini *all)
 			free(absol);
 			return (path);
 		}
-		//printf ("path : %s\n", path);
 		free(path);
 		i++;
 	}
@@ -123,11 +122,41 @@ void init_vars(t_process *proc, int *i, t_env4mini *all)
 	char *tmp_args = NULL;
 
 	proc->path = ft_calloc(1000, sizeof(char *));
-	proc->args = ft_calloc(50, sizeof(char *));
+	proc->args = ft_calloc(1000, sizeof(char *));
 	*i = 0;
 }
 
-t_list *fill_args(t_list *list, t_process *proc, int i)
+t_list	*fill_args_pipe(t_list *list, t_process *proc, int i)
+{
+	int j;
+
+	j = 0;
+	while (list)
+	{
+		while (list->mtx[i])
+		{
+			proc->args[j] = malloc(strlen(list->mtx[i]) + 1);
+			if (!proc->args[j])
+			{
+				perror("malloc failed");
+				exit(EXIT_FAILURE);
+			}
+			strcpy(proc->args[j], list->mtx[i]);
+			i++;
+			j++;
+		}
+		list = list->next;
+		if (list == NULL || list->type == PIPE)
+			break ;
+	}
+	if (proc->args[j - 1][0] == '\0')
+		proc->args[j - 1] = NULL;
+	else
+		proc->args[j] = NULL;
+	return (list);
+}
+
+t_list	*fill_args(t_list *list, t_process *proc, int i)
 {
 	int j;
 
@@ -135,7 +164,7 @@ t_list *fill_args(t_list *list, t_process *proc, int i)
 	while (list)
 	{
 		if (list->type == PIPE)
-			break;
+			break ;
 		i = 0;
 		if (list->type != WORD && list->type != PIPE)
 			i++;

@@ -60,5 +60,5 @@ void	import_builtins(t_list *list, t_process *proc)
 		last_exit_code = result;
 	}
 	else if (!execute_env_command(list, proc))
-		list = forking(list, proc);
+		forking(list, proc);
 }

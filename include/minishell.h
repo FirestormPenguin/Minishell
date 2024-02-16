@@ -127,7 +127,7 @@ int		tokenize_double_quotes(t_parser *p);
 
 /*Exe*/
 void	exe(t_list *list, t_env4mini *all);
-t_list	*forking(t_list *list, t_process *proc);
+void	forking(t_list *list, t_process *proc);
 
 /*Exe Utils*/
 int		check_error_redirection(t_list *list);
@@ -136,6 +136,7 @@ void	init_vars(t_process *proc, int *i, t_env4mini *all);
 t_list	*fill_args(t_list *list, t_process *proc, int i);
 int		check_mtx(t_list *list, t_process *proc, int i);
 void	reset_stdin_stdout(t_process *proc);
+t_list	*fill_args_pipe(t_list *list, t_process *proc, int i);
 
 /*Redirections*/
 void	redirections(t_list *list, t_process *proc);

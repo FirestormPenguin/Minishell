@@ -12,23 +12,23 @@
 
 #include "../../include/minishell.h"
 
-void	handle_pipe(t_list *list, t_process *proc)
+void	pipe_forking(t_list *list, t_process *proc)
 {
+	int		pid;
 	int		pipe_fd[2];
+	int		status;
 
 	if (pipe(pipe_fd) == -1)
 	{
 		perror("pipe");
 		exit(1);
 	}
-	proc->pid = fork();
-	if (proc->pid)
+	pid = fork();
+	if (pid)
 	{
 		close(pipe_fd[1]);
 		dup2(pipe_fd[0], STDIN_FILENO);
-		waitpid(proc->pid, &(proc->status), 0);
-		dup2(proc->saved_stdout, STDOUT_FILENO);
-		dup2(proc->saved_stdin, STDIN_FILENO);
+		waitpid(pid, &status, 0);
 		free_all_generic(proc->path, proc->args);
 	}
 	else
@@ -39,15 +39,7 @@ void	handle_pipe(t_list *list, t_process *proc)
 	}
 }
 
-static int scroll_list_in_while(t_list *list, t_process *proc)
-{
-	reset_stdin_stdout(proc);
-	if (list != NULL)
-		return (1);
-	return (0);
-}
-
-t_list	*forking(t_list *list, t_process *proc)
+void	forking(t_list *list, t_process *proc)
 {
 	proc->pid = fork();
 	if (proc->pid)
@@ -57,11 +49,7 @@ t_list	*forking(t_list *list, t_process *proc)
 			last_exit_code = WEXITSTATUS(proc->status);
 		else
 			last_exit_code = -1;
-		// reset_stdin_stdout(proc);
 		free_all_generic(proc->path, proc->args);
-		if (list == NULL)
-			return (NULL);
-		// list = list->next;
 	}
 	else
 	{
@@ -77,22 +65,22 @@ t_list	*forking(t_list *list, t_process *proc)
 			exit(127);
 		}
 	}
-	return (list);
 }
 
+/*tolto tutti i list = list->next, ora sono contenuti solo nei 2 fill_args_...*/
 void	while_exe(t_list *list, t_process *proc, int i)
 {
 	while (list)
 	{
 		init_vars(proc, &i, proc->all);
-		list = fill_args(list, proc, i);
+		if (list->type == PIPE)
+			list = fill_args_pipe(list, proc, i);
+		else
+			list = fill_args(list, proc, i);
 		strcpy(proc->path, path_finder(proc->args, proc->all));
 		if (proc->args && proc->args[i])
 			import_builtins(list, proc);
-		if (scroll_list_in_while(list, proc))
-			list = list->next;
-		else
-			break;
+		reset_stdin_stdout(proc);
 	}
 }
 
