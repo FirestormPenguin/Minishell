@@ -2,42 +2,39 @@
 
 void ft_unset_env(char **args, t_env4mini *all)
 {
-    int i = 1; // Inizia da 1 perché args[0] è il nome del comando
-    while (args[i])
-    {
-        int j = 0;
-        while (all->env[j])
-        {
-            if (ft_strncmp(all->env[j], args[i], ft_strlen(args[i])) == 0)
-            {
-                free(all->env[j]);
-                while (all->env[j])
-                {
-                    all->env[j] = all->env[j + 1];
-                    j++;
-                }
-                break; // Esce dal ciclo interno quando trova e rimuove la variabile
-            }
-            j++;
-        }
-        i++;
-    }
+	int i = 1;
+	while (args[i])
+	{
+		int j = 0;
+		while (all->env[j])
+		{
+			if (ft_strncmp(all->env[j], args[i], ft_strlen(args[i])) == 0)
+			{
+				free(all->env[j]);
+				while (all->env[j])
+				{
+					all->env[j] = all->env[j + 1];
+					j++;
+				}
+				break;
+			}
+			j++;
+		}
+		i++;
+	}
 }
 
 void ft_setenv(char *name, char *value, t_env4mini *all)
 {
 	int i;
-	char *tmp;
 
 	i = 0;
 	while (all->env[i])
 	{
 		if (ft_strncmp(all->env[i], name, ft_strlen(name)) == 0)
 		{
-			tmp = all->env[i];
 			all->env[i] = ft_strjoin(name, "=");
 			all->env[i] = ft_strjoin(all->env[i], value);
-			free(tmp);
 			return ;
 		}
 		i++;
@@ -54,11 +51,12 @@ void ft_export(char **args, t_env4mini *all)
 	char *name;
 	char *value;
 	char **env_copy;
+	char *new_value_appeand;
+	char *old_value_appeand;
 
 	i = 1;
 	if (!args[i])
 	{
-		// Crea una copia dell'array delle variabili d'ambiente
 		while (all->env[i])
 			i++;
 		env_copy = malloc((i + 1) * sizeof(char *));
@@ -69,18 +67,16 @@ void ft_export(char **args, t_env4mini *all)
 			i++;
 		}
 		env_copy[i] = NULL;
-
-		// Ordina la copia e la stampa
 		ft_qsort(env_copy, 0, i - 1);
 		i = 0;
 		while (env_copy[i])
 		{
 			ft_putstr(env_copy[i]);
 			ft_putstr("\n");
-			free(env_copy[i]); // Libera la memoria allocata per la copia
+			free(env_copy[i]);
 			i++;
 		}
-		free(env_copy); // Libera la memoria allocata per l'array di copia
+		free(env_copy);
 		return ;
 	}
 
@@ -89,18 +85,31 @@ void ft_export(char **args, t_env4mini *all)
 		j = 0;
 		while (args[i][j] && args[i][j] != '=')
 			j++;
+		//printf("args[i][j]: %c\n", args[i][j]);
 		if (args[i][j] == '=')
 		{
-			name = ft_substr(args[i], 0, j);
-			value = ft_substr(args[i], j + 1, ft_strlen(args[i]) - j - 1);
-			ft_setenv(name, value, all);
-			free(name);
-			free(value);
+			if (j > 0 && args[i][j - 1] == '+')
+			{
+				name = ft_substr(args[i], 0, j - 1);
+				value = ft_substr(args[i], j + 1, ft_strlen(args[i]) - j - 1);
+				old_value_appeand = ft_getenv(name, all->env);
+				new_value_appeand = ft_strjoin(old_value_appeand, value);
+				ft_setenv(name, new_value_appeand, all);
+				free(name);
+				free(value);
+				free(new_value_appeand);
+			}
+			else
+			{
+				name = ft_substr(args[i], 0, j);
+				value = ft_substr(args[i], j + 1, ft_strlen(args[i]) - j - 1);
+				ft_setenv(name, value, all);
+				free(name);
+				free(value);
+			}
 		}
 		else
-		{
 			ft_setenv(args[i], "", all);
-		}
 		i++;
 	}
 }
