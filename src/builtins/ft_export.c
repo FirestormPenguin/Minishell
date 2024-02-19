@@ -44,6 +44,21 @@ void ft_setenv(char *name, char *value, t_env4mini *all)
 	all->env[i + 1] = NULL;
 }
 
+int find_valid_equals(char *str)
+{
+	int	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+		{
+			if (i > 0 && str[i - 1] != ' ')
+				return 0;
+		}
+		i++;
+	}
+	return -1;
+}
+
 void ft_export(char **args, t_env4mini *all)
 {
 	int i;
@@ -82,10 +97,16 @@ void ft_export(char **args, t_env4mini *all)
 
 	while (args[i])
 	{
+		int equals_index = find_valid_equals(args[i]);
+		if (equals_index == -1)
+		{
+			printf("Minishell: export: `%s': not a valid identifier\n", args[2]);
+			return ;
+		}
+		//printf("args[%d]%s\n", i, args[i]);
 		j = 0;
 		while (args[i][j] && args[i][j] != '=')
 			j++;
-		//printf("args[i][j]: %c\n", args[i][j]);
 		if (args[i][j] == '=')
 		{
 			if (j > 0 && args[i][j - 1] == '+')
