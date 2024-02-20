@@ -1,4 +1,16 @@
-# include "../include/libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/20 19:25:53 by mivendit          #+#    #+#             */
+/*   Updated: 2024/02/20 19:25:54 by mivendit         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../include/libft.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {

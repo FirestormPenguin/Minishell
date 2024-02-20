@@ -1,10 +1,22 @@
-# include "../include/libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/20 19:20:05 by mivendit          #+#    #+#             */
+/*   Updated: 2024/02/20 19:20:05 by mivendit         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-char *ft_strjoin(char const *s1, char const *s2)
+#include "../include/libft.h"
+
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char *str;
-	int i;
-	int j;
+	char	*str;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;

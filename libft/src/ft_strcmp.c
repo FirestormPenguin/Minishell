@@ -1,6 +1,18 @@
-# include "../include/libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/20 19:31:41 by mivendit          #+#    #+#             */
+/*   Updated: 2024/02/20 19:32:33 by mivendit         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-static int	cmp_char(char c1, char c2)
+#include "../include/libft.h"
+
+static	int	cmp_char(char c1, char c2)
 {
 	if ((unsigned char)c1 != (unsigned char)c2)
 		return ((unsigned char)c1 - (unsigned char)c2);
@@ -17,7 +29,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 	while (s1[i] || s2[i])
 	{
 		if ((!s1[i] && s2[i]) || (s1[i] && !s2[i]))
-			return(1);
+			return (1);
 		if (cmp_char(s1[i], s2[i]) != 0)
 			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 		i++;

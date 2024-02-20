@@ -1,8 +1,20 @@
-# include "../include/libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/20 19:15:41 by mivendit          #+#    #+#             */
+/*   Updated: 2024/02/20 19:15:41 by mivendit         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-static int  ft_intlen(int n)
+#include "../include/libft.h"
+
+static int	ft_intlen(int n)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	if (n <= 0)
@@ -17,15 +29,16 @@ static int  ft_intlen(int n)
 	return (len);
 }
 
-char    *ft_itoa(int n)
+char	*ft_itoa(int n)
 {
-	char    *str;
-	int     len;
-	long    nbr;
+	char	*str;
+	int		len;
+	long	nbr;
 
 	nbr = n;
 	len = ft_intlen(nbr);
-	if (!(str = (char *)malloc(sizeof(char) * (len + 1))))
+	str = (char *)malloc(sizeof(char) * (len + 1));
+	if (!str)
 		return (NULL);
 	str[len] = '\0';
 	if (nbr < 0)

@@ -1,6 +1,18 @@
-# include "../include/libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/20 19:15:58 by mivendit          #+#    #+#             */
+/*   Updated: 2024/02/20 19:17:51 by mivendit         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-static int	count_split(char const *str, char c)
+#include "../include/libft.h"
+
+static	int	count_split(char const *str, char c)
 {
 	size_t	i;
 	size_t	total;
@@ -16,7 +28,7 @@ static int	count_split(char const *str, char c)
 				i++;
 		}
 		else
-		i++;
+			i++;
 	}
 	return (total);
 }
