@@ -148,12 +148,15 @@ void	while_exe(t_list *list, t_process *proc, int i)
 	{
 		init_vars(proc, &i, proc->all);
 		output("746d70_1", proc);
-		setup_redirection(list, proc);
 		tmp_list = list;
 		if (list->type == PIPE)
+		{
+			input("746d70_1", proc);
 			list = fill_args_pipe(list, proc, i);
+		}
 		else
 			list = fill_args(list, proc, i);
+		setup_redirection(list, proc);
 		strcpy(proc->path, path_finder(proc->args, proc->all));
 		if (proc->args && proc->args[i])
 			import_builtins(list, proc);

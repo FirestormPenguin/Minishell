@@ -144,8 +144,10 @@ void	free_double_pointer(char **ptr);
 
 /*Redirections*/
 void	redirections(t_list *list, t_process *proc);
+void	input(char *str, t_process *proc);
 void	output(char *str, t_process *proc);
 void	append (char *str, t_process *proc);
+void	here_doc(char *str, t_process *proc);
 
 /*Redirections_utils*/
 void write_into_fd(char *str);
