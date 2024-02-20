@@ -29,7 +29,6 @@ void	pipe_forking(t_list *list, t_process *proc)
 		close(pipe_fd[1]);
 		dup2(pipe_fd[0], STDIN_FILENO);
 		waitpid(pid, &status, 0);
-		free_all_generic(proc->path, proc->args);
 	}
 	else
 	{
@@ -49,7 +48,6 @@ void	forking(t_list *list, t_process *proc)
 			last_exit_code = WEXITSTATUS(proc->status);
 		else
 			last_exit_code = -1;
-		free_all_generic(proc->path, proc->args);
 	}
 	else
 	{
@@ -68,11 +66,90 @@ void	forking(t_list *list, t_process *proc)
 }
 
 /*tolto tutti i list = list->next, ora sono contenuti solo nei 2 fill_args_...*/
+// void	while_exe(t_list *list, t_process *proc, int i)
+// {
+// 	while (list)
+// 	{
+// 		setup_redirection(list, proc);
+// 		init_vars(proc, &i, proc->all);
+// 		if (list->type == PIPE)
+// 			list = fill_args_pipe(list, proc, i);
+// 		else
+// 			list = fill_args(list, proc, i);
+// 		strcpy(proc->path, path_finder(proc->args, proc->all));
+// 		if (proc->args && proc->args[i])
+// 			import_builtins(list, proc);
+// 		reset_stdin_stdout(proc);
+// 	}
+// }
+
+// void	exe(t_list *list, t_env4mini *all)
+// {
+// 	t_process	proc;
+// 	int			i;
+
+// 	i = 0;
+// 	proc.saved_stdout = dup(STDOUT_FILENO);
+// 	proc.saved_stdin = dup(STDIN_FILENO);
+// 	proc.all = all;
+// 	if (check_error_redirection(list) == 0)
+// 		while_exe(list, &proc, i);
+// 	close(proc.saved_stdout);
+// 	close(proc.saved_stdin);
+// }
+
+void	write_on_output(t_list *list, t_process *proc, int count)
+{
+	int		input_fd;
+	char	c;
+
+	input_fd = open("746d70_1", O_RDONLY);
+	while (read(input_fd, &c, 1) > 0)
+		write (STDOUT_FILENO, &c, 1);
+	close(input_fd);
+}
+
+/*questo serve per le redirection in output, non in input,
+per input si usa setup_redirection come prima*/
+void stream_output(t_list *list, t_process *proc)
+{
+	int	count;
+
+	count = 0;
+	reset_stdin_stdout(proc);
+	while (list)
+	{
+		if (list->type == OUT && list->mtx[0])
+		{
+			output(list->mtx[0], proc);
+			count++;
+			write_on_output(list, proc, count);
+		}
+		else if (list->type == DOUBLE_OUT && list->mtx[0])
+		{
+			append(list->mtx[0], proc);
+			count++;
+			write_on_output(list, proc, count);
+		}
+		list = list->next;
+		if (list == NULL || list->type == PIPE)
+			break;
+	}
+	if (count == 0)
+		write_on_output(list, proc, count);
+	return ;
+}
+
 void	while_exe(t_list *list, t_process *proc, int i)
 {
+	t_list	*tmp_list;
+
 	while (list)
 	{
 		init_vars(proc, &i, proc->all);
+		output("746d70_1", proc);
+		setup_redirection(list, proc);
+		tmp_list = list;
 		if (list->type == PIPE)
 			list = fill_args_pipe(list, proc, i);
 		else
@@ -80,20 +157,24 @@ void	while_exe(t_list *list, t_process *proc, int i)
 		strcpy(proc->path, path_finder(proc->args, proc->all));
 		if (proc->args && proc->args[i])
 			import_builtins(list, proc);
+		stream_output(tmp_list, proc);
 		reset_stdin_stdout(proc);
+		free_all_generic(proc->path, proc->args);
 	}
 }
 
 void	exe(t_list *list, t_env4mini *all)
 {
 	t_process	proc;
+	t_list		*list_h;
 	int			i;
 
+	list_h = list;
 	i = 0;
 	proc.saved_stdout = dup(STDOUT_FILENO);
 	proc.saved_stdin = dup(STDIN_FILENO);
 	proc.all = all;
-	if (check_error_redirection(list) == 0 && setup_redirection(list, &proc) == 0)
+	if (check_error_redirection(list) == 0)
 		while_exe(list, &proc, i);
 	close(proc.saved_stdout);
 	close(proc.saved_stdin);

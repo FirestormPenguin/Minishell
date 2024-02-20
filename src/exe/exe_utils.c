@@ -20,8 +20,15 @@ void	reset_stdin_stdout(t_process *proc)
 
 int	check_error_redirection(t_list *list)
 {
+	int flag = 0;
 	while (list)
 	{
+		if (list->type == PIPE && flag == 0)
+		{
+			printf("parse error near '|'\n");
+			return (1);
+		}
+		flag = 1;
 		if (list->type != WORD && check_type(list->mtx[0]) != WORD)
 		{
 			printf("parse error near '%s'\n", list->mtx[0]);
@@ -43,9 +50,9 @@ int setup_redirection(t_list *list, t_process *proc)
 	{
 		if (list->type != WORD && list->type != PIPE)
 			redirections(list, proc);
-		else if (list->type == PIPE)
-			return (0);
 		list = list->next;
+		if (list == NULL || list->type == PIPE)
+			break ;
 	}
 	return (0);
 }
@@ -134,6 +141,9 @@ t_list	*fill_args_pipe(t_list *list, t_process *proc, int i)
 	j = 0;
 	while (list)
 	{
+		i = 0;
+		if (list->type != WORD && list->type != PIPE)
+			i++;
 		while (list->mtx[i])
 		{
 			proc->args[j] = malloc(strlen(list->mtx[i]) + 1);
