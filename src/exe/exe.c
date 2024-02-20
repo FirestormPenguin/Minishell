@@ -98,7 +98,7 @@ void	forking(t_list *list, t_process *proc)
 // 	close(proc.saved_stdin);
 // }
 
-void	write_on_output(t_list *list, t_process *proc, int count)
+void	write_on_output(t_list *list, t_process *proc)
 {
 	int		input_fd;
 	char	c;
@@ -123,20 +123,20 @@ void stream_output(t_list *list, t_process *proc)
 		{
 			output(list->mtx[0], proc);
 			count++;
-			write_on_output(list, proc, count);
+			write_on_output(list, proc);
 		}
 		else if (list->type == DOUBLE_OUT && list->mtx[0])
 		{
 			append(list->mtx[0], proc);
 			count++;
-			write_on_output(list, proc, count);
+			write_on_output(list, proc);
 		}
 		list = list->next;
 		if (list == NULL || list->type == PIPE)
 			break;
 	}
 	if (count == 0)
-		write_on_output(list, proc, count);
+		write_on_output(list, proc);
 	return ;
 }
 
