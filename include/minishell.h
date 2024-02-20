@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/15 09:38:33 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/20 02:24:31 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ int		tokenize_single(t_parser *p);
 int		tokenize_double(t_parser *p);
 int		tokenize_quotes(t_parser *p);
 int		tokenize_double_quotes(t_parser *p);
+void 	base_expander(t_parser *p);
 
 /*Exe*/
 void	exe(t_list *list, t_env4mini *all);
@@ -137,6 +138,9 @@ t_list	*fill_args(t_list *list, t_process *proc, int i);
 int		check_mtx(t_list *list, t_process *proc, int i);
 void	reset_stdin_stdout(t_process *proc);
 t_list	*fill_args_pipe(t_list *list, t_process *proc, int i);
+char	*path_finder(char **cmd, t_env4mini *all);
+char	*ft_getenv(char *name, char **env);
+void	free_double_pointer(char **ptr);
 
 /*Redirections*/
 void	redirections(t_list *list, t_process *proc);
@@ -156,10 +160,10 @@ int		ft_pwd(void);
 int		ft_env(char **env);
 int		ft_cd (char **args, t_env4mini *all);
 void	ft_export(char **args, t_env4mini *all);
+void	ft_unset(char **args, t_env4mini *all);
 
-char	*path_finder(char **cmd, t_env4mini *all);
-char	*ft_getenv(char *name, char **env);
-void 	base_expander(t_parser *p);
+/*Utils Built-in*/
+void	ft_setenv(char *name, char *value, t_env4mini *all);
 void	import_builtins(t_list *list, t_process *proc);
-void	ft_unset_env(char **args, t_env4mini *all);
+int		find_valid_equals(char *str);
 #endif

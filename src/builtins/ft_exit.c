@@ -12,11 +12,12 @@
 
 #include "../../include/minishell.h"
 
-void ft_exit(char **args)
+void	ft_exit(char **args)
 {
-	int exit_value = 0;
-	write(1, "exit\n", 5);
+	int	exit_value;
 
+	exit_value = 0;
+	write(1, "exit\n", 5);
 	if (args[1])
 	{
 		if (ft_isstrdigit(args[1]))
@@ -35,6 +36,5 @@ void ft_exit(char **args)
 			exit_value = 2;
 		}
 	}
-
 	free_exit(exit_value);
 }

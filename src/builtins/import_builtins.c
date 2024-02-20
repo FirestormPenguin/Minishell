@@ -29,7 +29,7 @@ static	int	execute_env_command(t_list *list, t_process *proc)
 	}
 	else if (ft_strcmp(proc->args[0], "unset") == 0)
 	{
-		ft_unset_env(proc->args, proc->all);
+		ft_unset(proc->args, proc->all);
 		last_exit_code = 0;
 		return (1);
 	}

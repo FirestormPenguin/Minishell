@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:45:33 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/15 10:54:44 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/20 00:24:37 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void free_double_pointer(char **ptr)
 		i++;
 	}
 	free(ptr);
+	return ;
 }
 
 char *ft_getenv(char *name, char **env)

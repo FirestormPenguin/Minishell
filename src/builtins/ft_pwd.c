@@ -20,6 +20,5 @@ int	ft_pwd(void)
 		printf("%s\n", pwd);
 	else
 		printf("minshell: the path is broken");
-	
-	return(0);
+	return (0);
 }
