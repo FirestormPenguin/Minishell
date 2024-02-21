@@ -18,11 +18,7 @@ void	pipe_forking(t_list *list, t_process *proc)
 	int		pipe_fd[2];
 	int		status;
 
-	if (pipe(pipe_fd) == -1)
-	{
-		perror("pipe");
-		exit(1);
-	}
+	pipe(pipe_fd);
 	pid = fork();
 	if (pid)
 	{
@@ -64,39 +60,6 @@ void	forking(t_list *list, t_process *proc)
 		}
 	}
 }
-
-/*tolto tutti i list = list->next, ora sono contenuti solo nei 2 fill_args_...*/
-// void	while_exe(t_list *list, t_process *proc, int i)
-// {
-// 	while (list)
-// 	{
-// 		setup_redirection(list, proc);
-// 		init_vars(proc, &i, proc->all);
-// 		if (list->type == PIPE)
-// 			list = fill_args_pipe(list, proc, i);
-// 		else
-// 			list = fill_args(list, proc, i);
-// 		strcpy(proc->path, path_finder(proc->args, proc->all));
-// 		if (proc->args && proc->args[i])
-// 			import_builtins(list, proc);
-// 		reset_stdin_stdout(proc);
-// 	}
-// }
-
-// void	exe(t_list *list, t_env4mini *all)
-// {
-// 	t_process	proc;
-// 	int			i;
-
-// 	i = 0;
-// 	proc.saved_stdout = dup(STDOUT_FILENO);
-// 	proc.saved_stdin = dup(STDIN_FILENO);
-// 	proc.all = all;
-// 	if (check_error_redirection(list) == 0)
-// 		while_exe(list, &proc, i);
-// 	close(proc.saved_stdout);
-// 	close(proc.saved_stdin);
-// }
 
 void	write_on_output(t_list *list, t_process *proc)
 {
@@ -164,15 +127,15 @@ void	while_exe(t_list *list, t_process *proc, int i)
 		reset_stdin_stdout(proc);
 		free_all_generic(proc->path, proc->args);
 	}
+	if (access("746d70_1", F_OK) != -1)
+		unlink("746d70_1");
 }
 
 void	exe(t_list *list, t_env4mini *all)
 {
 	t_process	proc;
-	t_list		*list_h;
 	int			i;
 
-	list_h = list;
 	i = 0;
 	proc.saved_stdout = dup(STDOUT_FILENO);
 	proc.saved_stdin = dup(STDIN_FILENO);
