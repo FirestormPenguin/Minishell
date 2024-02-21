@@ -95,8 +95,13 @@ void stream_output(t_list *list, t_process *proc)
 			write_on_output(list, proc);
 		}
 		list = list->next;
-		if (list == NULL || list->type == PIPE)
+		/*devo capire come aggiustare questo if else in modo che quando trova la pipe dopo il primo nodo si fermi, ma senza la verifica sul null
+		inoltre deve returnare, non breakare, se no stampa, e se trova una pipe, non deve stampare, se non ce nulla deve stampare, ovviamente questo
+		se non ci sono redirection, se no funge gia*/
+		if (list == NULL)
 			break;
+		else if (list->type == PIPE)
+			break ;
 	}
 	if (count == 0)
 		write_on_output(list, proc);
