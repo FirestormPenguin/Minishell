@@ -6,9 +6,13 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 02:17:04 by mivendit          #+#    #+#             */
-/*   Updated: 2024/02/20 02:21:54 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/21 13:39:26 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*gestire export var++=value
+primo valore di nome var non deve essere un numero
+export concatenati*/
 
 #include "../../include/minishell.h"
 
@@ -27,7 +31,8 @@ void	ft_setenv(char *name, char *value, t_env4mini *all)
 		}
 		i++;
 	}
-	all->env[i] = ft_strjoin(name, "=");
+	all->env[i] = ft_strjoin(name, "");
+	//all->env[i] = ft_strjoin(name, "="); non devo mette
 	all->env[i] = ft_strjoin(all->env[i], value);
 	all->env[i + 1] = NULL;
 }

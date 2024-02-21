@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:45:33 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/20 00:24:37 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:13:41 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void free_double_pointer(char **ptr)
 	int i;
 
 	i = 0;
-	while (ptr[i])
+	while (ptr && ptr[i])
 	{
 		free(ptr[i]);
 		i++;
@@ -107,7 +107,7 @@ char *path_finder(char **cmd, t_env4mini *all)
 	tmp2 = ft_getenv("PATH", all->env);
 	paths = ft_split(tmp2, ':');
 	tmp = NULL;
-	while (paths[i])
+	while (paths && paths[i])
 	{
 		tmp = ft_strjoin(paths[i], "/");
 		path = ft_strjoin(tmp, cmd[0]);

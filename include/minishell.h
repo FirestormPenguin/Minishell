@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/20 02:24:31 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/21 13:50:57 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,6 @@ void	ft_unset(char **args, t_env4mini *all);
 
 /*Utils Built-in*/
 void	ft_setenv(char *name, char *value, t_env4mini *all);
-void	import_builtins(t_list *list, t_process *proc);
+int		import_builtins(t_list *list, t_process *proc);
 int		find_valid_equals(char *str);
 #endif

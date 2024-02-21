@@ -158,8 +158,8 @@ void	while_exe(t_list *list, t_process *proc, int i)
 			list = fill_args(list, proc, i);
 		setup_redirection(list, proc);
 		strcpy(proc->path, path_finder(proc->args, proc->all));
-		if (proc->args && proc->args[i])
-			import_builtins(list, proc);
+		if (proc->args && proc->args[i] && import_builtins(list, proc))
+			;
 		stream_output(tmp_list, proc);
 		reset_stdin_stdout(proc);
 		free_all_generic(proc->path, proc->args);
