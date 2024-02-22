@@ -43,27 +43,35 @@ int	import_builtins(t_list *list, t_process *proc)
 	if (ft_strcmp(proc->args[0], "exit") == 0)
 	{
 		ft_exit(proc->args);
-		return (1);
 	}
 	else if (ft_strcmp(proc->args[0], "echo") == 0)
 	{
 		ft_echo(proc->args);
 		last_exit_code = 0;
-		return (1);
 	}
 	else if (ft_strcmp(proc->args[0], "pwd") == 0)
 	{
 		ft_pwd();
 		last_exit_code = 0;
-		return (1);
 	}
 	else if (ft_strcmp(proc->args[0], "cd") == 0)
 	{
 		result = ft_cd(proc->args, proc->all);
 		last_exit_code = result;
-		return (1);
 	}
 	else if (!execute_env_command(list, proc))
-		forking(list, proc);
-	return (0);
+	{
+		if (access(proc->path, X_OK) == 0)
+		{
+			execve(proc->path, (char *const *)(proc->args), proc->all->env);
+			perror("execve");
+			exit(1);
+		}
+		else
+		{
+			printf("%s: command not found\n", proc->args[0]);
+			exit(127);
+		}
+	}
+	exit (0);
 }

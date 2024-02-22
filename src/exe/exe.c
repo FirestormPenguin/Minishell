@@ -12,28 +12,6 @@
 
 #include "../../include/minishell.h"
 
-void	pipe_forking(t_list *list, t_process *proc)
-{
-	int		pid;
-	int		pipe_fd[2];
-	int		status;
-
-	pipe(pipe_fd);
-	pid = fork();
-	if (pid)
-	{
-		close(pipe_fd[1]);
-		dup2(pipe_fd[0], STDIN_FILENO);
-		waitpid(pid, &status, 0);
-	}
-	else
-	{
-		close(pipe_fd[0]);
-		dup2(pipe_fd[1], STDOUT_FILENO);
-		exit(1);
-	}
-}
-
 void	sigint_handle_child(int sig)
 {
 	(void)sig;
@@ -53,10 +31,14 @@ void	forking(t_list *list, t_process *proc)
 {
 	signal(SIGINT, sigint_handle_child);
 	signal(SIGQUIT, sigquit_handle_child);
+
+	pipe(proc->pipe_fd);
 	proc->pid = fork();
 	if (proc->pid)
 	{
+		close (proc->pipe_fd[1]);
 		waitpid(-1, &(proc->status), WUNTRACED);
+		proc->saved_fd = proc->pipe_fd[0];
 		if (WIFEXITED(proc->status))
 			last_exit_code = WEXITSTATUS(proc->status);
 		else
@@ -64,65 +46,54 @@ void	forking(t_list *list, t_process *proc)
 	}
 	else
 	{
-		printf("%s\n", proc->path);
-		if (access(proc->path, X_OK) == 0)
-		{
-			execve(proc->path, (char *const *)(proc->args), proc->all->env);
-			perror("execve");
-			exit(1);
-		}
-		else
-		{
-			printf("%s: command not found\n", proc->args[0]);
-			exit(127);
-		}
+		dup2(proc->pipe_fd[1], STDOUT_FILENO);
+		close (proc->pipe_fd[1]);
+		close (proc->pipe_fd[0]);
+		if (proc->args && proc->args[0] && import_builtins(list, proc))
+			;
+		exit (1);
 	}
 }
 
-void	write_on_output(t_list *list, t_process *proc)
+void	write_on_output(t_process *proc)
 {
-	int		input_fd;
 	char	c;
 
-	input_fd = open("746d70_1", O_RDONLY);
-	while (read(input_fd, &c, 1) > 0)
+	while (read(proc->pipe_fd[0], &c, 1) > 0)
 		write (STDOUT_FILENO, &c, 1);
-	close(input_fd);
 }
 
-/*questo serve per le redirection in output, non in input,
-per input si usa setup_redirection come prima*/
 void stream_output(t_list *list, t_process *proc)
 {
 	int	count;
 
 	count = 0;
-	reset_stdin_stdout(proc);
+	dup2(proc->saved_stdout, STDOUT_FILENO);
 	while (list)
 	{
 		if (list->type == OUT && list->mtx[0])
 		{
 			output(list->mtx[0], proc);
 			count++;
-			write_on_output(list, proc);
+			write_on_output(proc);
 		}
 		else if (list->type == DOUBLE_OUT && list->mtx[0])
 		{
 			append(list->mtx[0], proc);
 			count++;
-			write_on_output(list, proc);
+			write_on_output(proc);
 		}
 		list = list->next;
-		/*devo capire come aggiustare questo if else in modo che quando trova la pipe dopo il primo nodo si fermi, ma senza la verifica sul null
-		inoltre deve returnare, non breakare, se no stampa, e se trova una pipe, non deve stampare, se non ce nulla deve stampare, ovviamente questo
-		se non ci sono redirection, se no funge gia*/
 		if (list == NULL)
 			break;
-		else if (list->type == PIPE)
+		else if (list == NULL || list->type == PIPE)
+		{
 			break ;
+			count++;
+		}
 	}
 	if (count == 0)
-		write_on_output(list, proc);
+		write_on_output(proc);
 	return ;
 }
 
@@ -133,25 +104,24 @@ void	while_exe(t_list *list, t_process *proc, int i)
 	while (list)
 	{
 		init_vars(proc, &i, proc->all);
-		output("746d70_1", proc);
 		tmp_list = list;
 		if (list->type == PIPE)
 		{
-			input("746d70_1", proc);
+			dup2 (proc->saved_fd, STDIN_FILENO);
 			list = fill_args_pipe(list, proc, i);
 		}
 		else
+		{
+			dup2 (proc->saved_stdin, STDIN_FILENO);
 			list = fill_args(list, proc, i);
+		}
 		setup_redirection(list, proc);
 		strcpy(proc->path, path_finder(proc->args, proc->all));
-		if (proc->args && proc->args[i] && import_builtins(list, proc))
-			;
+		forking(list, proc);
 		stream_output(tmp_list, proc);
 		reset_stdin_stdout(proc);
 		free_all_generic(proc->path, proc->args);
 	}
-	if (access("746d70_1", F_OK) != -1)
-		unlink("746d70_1");
 }
 
 void	exe(t_list *list, t_env4mini *all)
