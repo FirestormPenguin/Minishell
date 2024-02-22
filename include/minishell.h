@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/21 13:50:57 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/22 10:47:28 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ extern int last_exit_code;
 # include <stdbool.h>
 # include <fcntl.h>
 # include <limits.h>
+# include <signal.h>
+
 
 /*Utility Macro*/
 #define WORD 0

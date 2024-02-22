@@ -34,8 +34,25 @@ void	pipe_forking(t_list *list, t_process *proc)
 	}
 }
 
+void	sigint_handle_child(int sig)
+{
+	(void)sig;
+	printf("\n");
+	last_exit_code = 130;
+
+}
+
+void	sigquit_handle_child(int sig)
+{
+	(void)sig;
+	printf("\n");
+	last_exit_code = 131;
+}
+
 void	forking(t_list *list, t_process *proc)
 {
+	signal(SIGINT, sigint_handle_child);
+	signal(SIGQUIT, sigquit_handle_child);
 	proc->pid = fork();
 	if (proc->pid)
 	{
@@ -47,6 +64,7 @@ void	forking(t_list *list, t_process *proc)
 	}
 	else
 	{
+		printf("%s\n", proc->path);
 		if (access(proc->path, X_OK) == 0)
 		{
 			execve(proc->path, (char *const *)(proc->args), proc->all->env);
