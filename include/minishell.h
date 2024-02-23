@@ -130,7 +130,7 @@ void 	base_expander(t_parser *p);
 
 /*Exe*/
 void	exe(t_list *list, t_env4mini *all);
-void	forking(t_list *list, t_process *proc);
+void	forking(t_list *list, t_process *proc, t_list *tmp_list, int pipe_count);
 
 /*Exe Utils*/
 int		check_error_redirection(t_list *list);

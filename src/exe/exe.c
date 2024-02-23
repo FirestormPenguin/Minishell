@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-void	forking_pipe(t_list *list, t_process *proc, t_list *tmp_list, int pipe_count)
+void	forking(t_list *list, t_process *proc, t_list *tmp_list, int pipe_count)
 {
 	signal(SIGINT, sigint_handle_child);
 	signal(SIGQUIT, sigquit_handle_child);
@@ -52,13 +52,9 @@ void	forking_pipe(t_list *list, t_process *proc, t_list *tmp_list, int pipe_coun
 			close(proc->pipe_fd[0]);
 		}
 		if (check_builtins(list, proc) == 1)
-		{
 			import_builtins(list, proc);
-		}
 		else if (check_env_command(list, proc) == 1)
-		{
 			execute_env_command(list, proc);
-		}
 		else
 		{
 			if (access(proc->path, X_OK) == 0)
@@ -80,7 +76,7 @@ void	forking_pipe(t_list *list, t_process *proc, t_list *tmp_list, int pipe_coun
 	}
 }
 
-void	while_exe_pipe(t_list *list, t_process *proc, int i, int pipe_count)
+void	while_exe(t_list *list, t_process *proc, int i, int pipe_count)
 {
 	t_list	*tmp_list;
 
@@ -91,7 +87,7 @@ void	while_exe_pipe(t_list *list, t_process *proc, int i, int pipe_count)
 		tmp_list = list;
 		list = fill_args_pipe(list, proc, i);
 		strcpy(proc->path, path_finder(proc->args, proc->all));
-		forking_pipe(list, proc, tmp_list, pipe_count);
+		forking(list, proc, tmp_list, pipe_count);
 		reset_stdin_stdout(proc);
 		free_all_generic(proc->path, proc->args);
 		pipe_count--;
@@ -119,7 +115,7 @@ void	exe(t_list *list, t_env4mini *all)
 				pipe_count++;
 			list = list->next;
 		}
-		while_exe_pipe(list_h, &proc, i, pipe_count);
+		while_exe(list_h, &proc, i, pipe_count);
 	}
 	close(proc.saved_stdout);
 	close(proc.saved_stdin);
