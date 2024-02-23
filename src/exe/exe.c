@@ -23,6 +23,12 @@ void	forking(t_list *list, t_process *proc)
 	{
 		close (proc->pipe_fd[1]);
 		waitpid(-1, &(proc->status), WUNTRACED);
+		if (check_builtins(list, proc) == 1)
+		{
+			import_builtins(list, proc);
+		}
+		else if (check_env_command(list, proc) == 1)
+			execute_env_command(list, proc);
 		proc->saved_fd = proc->pipe_fd[0];
 		if (WIFEXITED(proc->status))
 			g_last_exit_code = WEXITSTATUS(proc->status);
@@ -34,8 +40,77 @@ void	forking(t_list *list, t_process *proc)
 		dup2(proc->pipe_fd[1], STDOUT_FILENO);
 		close (proc->pipe_fd[1]);
 		close (proc->pipe_fd[0]);
-		if (proc->args && proc->args[0] && import_builtins(list, proc))
-			;
+		if (check_builtins(list, proc) == 1)
+		{
+			exit (0);
+		}
+		else if (check_env_command(list, proc) == 1)
+		{
+			exit (0);
+		}
+		else
+		{
+			if (access(proc->path, X_OK) == 0)
+			{
+				execve(proc->path, (char *const *)(proc->args), proc->all->env);
+				perror("execve");
+				exit(1);
+			}
+			else
+			{
+				printf("%s: command not found\n", proc->args[0]);
+				exit(127);
+			}
+		}
+		exit (1);
+	}
+}
+
+void	forking_pipe(t_list *list, t_process *proc)
+{
+	signal(SIGINT, sigint_handle_child);
+	signal(SIGQUIT, sigquit_handle_child);
+
+	pipe(proc->pipe_fd);
+	proc->pid = fork();
+	if (proc->pid)
+	{
+		close (proc->pipe_fd[1]);
+		waitpid(-1, &(proc->status), WUNTRACED);
+		proc->saved_fd = proc->pipe_fd[0];
+		close(proc->pipe_fd[0]);
+		if (WIFEXITED(proc->status))
+			g_last_exit_code = WEXITSTATUS(proc->status);
+		else
+			g_last_exit_code = -1;
+	}
+	else
+	{
+		dup2(proc->pipe_fd[1], STDOUT_FILENO);
+		close (proc->pipe_fd[1]);
+		close (proc->pipe_fd[0]);
+		if (check_builtins(list, proc) == 1)
+		{
+			import_builtins(list, proc);
+		}
+		else if (check_env_command(list, proc) == 1)
+		{
+			execute_env_command(list, proc);
+		}
+		else
+		{
+			if (access(proc->path, X_OK) == 0)
+			{
+				execve(proc->path, (char *const *)(proc->args), proc->all->env);
+				perror("execve");
+				exit(1);
+			}
+			else
+			{
+				printf("%s: command not found\n", proc->args[0]);
+				exit(127);
+			}
+		}
 		exit (1);
 	}
 }
@@ -44,7 +119,7 @@ void	write_on_output(t_process *proc)
 {
 	char	c;
 
-	while (read(proc->pipe_fd[0], &c, 1) > 0)
+	while (read(proc->saved_fd, &c, 1) > 0)
 		write (STDOUT_FILENO, &c, 1);
 }
 
@@ -90,6 +165,25 @@ void	while_exe(t_list *list, t_process *proc, int i)
 	{
 		init_vars(proc, &i, proc->all);
 		tmp_list = list;
+		dup2 (proc->saved_stdin, STDIN_FILENO);
+		setup_redirection(list, proc);
+		list = fill_args(list, proc, i);
+		strcpy(proc->path, path_finder(proc->args, proc->all));
+		forking(list, proc);
+		stream_output(tmp_list, proc);
+		reset_stdin_stdout(proc);
+		free_all_generic(proc->path, proc->args);
+	}
+}
+
+void	while_exe_pipe(t_list *list, t_process *proc, int i)
+{
+	t_list	*tmp_list;
+
+	while (list)
+	{
+		init_vars(proc, &i, proc->all);
+		tmp_list = list;
 		if (list->type == PIPE)
 		{
 			dup2 (proc->saved_fd, STDIN_FILENO);
@@ -102,7 +196,7 @@ void	while_exe(t_list *list, t_process *proc, int i)
 		}
 		setup_redirection(list, proc);
 		strcpy(proc->path, path_finder(proc->args, proc->all));
-		forking(list, proc);
+		forking_pipe(list, proc);
 		stream_output(tmp_list, proc);
 		reset_stdin_stdout(proc);
 		free_all_generic(proc->path, proc->args);
@@ -113,13 +207,28 @@ void	exe(t_list *list, t_env4mini *all)
 {
 	t_process	proc;
 	int			i;
+	t_list		*list_h;
+	int			pipe_count;
 
 	i = 0;
+	pipe_count = 0;
+	list_h = list;
 	proc.saved_stdout = dup(STDOUT_FILENO);
 	proc.saved_stdin = dup(STDIN_FILENO);
 	proc.all = all;
 	if (check_error_redirection(list) == 0)
-		while_exe(list, &proc, i);
+	{
+		while(list)
+		{
+			if(list->type == PIPE)
+				pipe_count++;
+			list = list->next;
+		}
+		if (pipe_count > 0)
+			while_exe_pipe(list_h, &proc, i);
+		else
+			while_exe(list_h, &proc, i);
+	}
 	close(proc.saved_stdout);
 	close(proc.saved_stdin);
 }

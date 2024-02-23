@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/23 09:20:50 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/23 12:47:03 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,4 +178,8 @@ void	sigquit_handle(int sig);
 void	sigint_handle(int sig);
 void	sigquit_handle_child(int sig);
 void	sigint_handle_child(int sig);
+
+int		check_builtins(t_list *list, t_process *proc);
+int		check_env_command(t_list *list, t_process *proc);
+int		execute_env_command(t_list *list, t_process *proc);
 #endif

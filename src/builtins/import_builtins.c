@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-static int	execute_env_command(t_list *list, t_process *proc)
+int	execute_env_command(t_list *list, t_process *proc)
 {
 	if (ft_strcmp(proc->args[0], "env") == 0 && (!proc->args[1]
 			|| ft_strcmp(proc->args[1], "") == 0))
@@ -36,6 +36,24 @@ static int	execute_env_command(t_list *list, t_process *proc)
 	return (0);
 }
 
+int	check_env_command(t_list *list, t_process *proc)
+{
+	if (ft_strcmp(proc->args[0], "env") == 0 && (!proc->args[1]
+			|| ft_strcmp(proc->args[1], "") == 0))
+	{
+		return (1);
+	}
+	else if (ft_strcmp(proc->args[0], "export") == 0)
+	{
+		return (1);
+	}
+	else if (ft_strcmp(proc->args[0], "unset") == 0)
+	{
+		return (1);
+	}
+	return (0);
+}
+
 int	import_builtins(t_list *list, t_process *proc)
 {
 	int	result;
@@ -47,6 +65,7 @@ int	import_builtins(t_list *list, t_process *proc)
 	else if (ft_strcmp(proc->args[0], "echo") == 0)
 	{
 		ft_echo(proc->args);
+		printf("BEDUG echo \n");
 		g_last_exit_code = 0;
 	}
 	else if (ft_strcmp(proc->args[0], "pwd") == 0)
@@ -59,19 +78,27 @@ int	import_builtins(t_list *list, t_process *proc)
 		result = ft_cd(proc->args, proc->all);
 		g_last_exit_code = result;
 	}
-	else if (!execute_env_command(list, proc))
+	return(0);
+}
+
+int	check_builtins(t_list *list, t_process *proc)
+{
+	if (ft_strcmp(proc->args[0], "exit") == 0)
 	{
-		if (access(proc->path, X_OK) == 0)
-		{
-			execve(proc->path, (char *const *)(proc->args), proc->all->env);
-			perror("execve");
-			exit(1);
-		}
-		else
-		{
-			printf("%s: command not found\n", proc->args[0]);
-			exit(127);
-		}
+		return (1);
 	}
-	exit (0);
+	else if (ft_strcmp(proc->args[0], "echo") == 0)
+	{
+		return (1);
+	}
+	else if (ft_strcmp(proc->args[0], "pwd") == 0)
+	{
+		return (1);
+	}
+	else if (ft_strcmp(proc->args[0], "cd") == 0)
+	{
+		return (1);
+	}
+
+	return(0);
 }
