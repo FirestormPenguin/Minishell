@@ -46,14 +46,22 @@ int	check_error_redirection(t_list *list)
 
 int setup_redirection(t_list *list, t_process *proc)
 {
+	int	count;
+
+	count = 0;
 	while (list)
 	{
 		if (list->type != WORD && list->type != PIPE)
+		{
 			redirections(list, proc);
+			count++;
+		}
 		list = list->next;
 		if (list == NULL || list->type == PIPE)
 			break ;
 	}
+	if (count > 0)
+		return (1);
 	return (0);
 }
 
@@ -99,11 +107,8 @@ char *path_finder(char **cmd, t_env4mini *all)
 	char	**paths;
 	char 	*tmp;
 	char 	*tmp2;
-	char	*absol;
 
 	i = 0;
-	absol = ft_calloc(5, sizeof(char *));
-	strcpy(absol, "");
 	tmp2 = ft_getenv("PATH", all->env);
 	paths = ft_split(tmp2, ':');
 	tmp = NULL;
@@ -115,14 +120,13 @@ char *path_finder(char **cmd, t_env4mini *all)
 		if (access(path, F_OK) == 0)
 		{
 			free_double_pointer(paths);
-			free(absol);
 			return (path);
 		}
 		free(path);
 		i++;
 	}
 	free_double_pointer(paths);
-	return (absol);
+	return (ft_strdup(cmd[0]));
 }
 
 void init_vars(t_process *proc, int *i, t_env4mini *all)
@@ -167,35 +171,35 @@ t_list	*fill_args_pipe(t_list *list, t_process *proc, int i)
 	return (list);
 }
 
-t_list	*fill_args(t_list *list, t_process *proc, int i)
-{
-	int j;
+// t_list	*fill_args(t_list *list, t_process *proc, int i)
+// {
+// 	int j;
 
-	j = 0;
-	while (list)
-	{
-		if (list->type == PIPE)
-			break ;
-		i = 0;
-		if (list->type != WORD && list->type != PIPE)
-			i++;
-		while (list->mtx[i])
-		{
-			proc->args[j] = malloc(strlen(list->mtx[i]) + 1);
-			if (!proc->args[j])
-			{
-				perror("malloc failed");
-				exit(EXIT_FAILURE);
-			}
-			strcpy(proc->args[j], list->mtx[i]);
-			i++;
-			j++;
-		}
-		list = list->next;
-	}
-	if (proc->args[j - 1][0] == '\0')
-		proc->args[j - 1] = NULL;
-	else
-		proc->args[j] = NULL;
-	return (list);
-}
+// 	j = 0;
+// 	while (list)
+// 	{
+// 		if (list->type == PIPE)
+// 			break ;
+// 		i = 0;
+// 		if (list->type != WORD && list->type != PIPE)
+// 			i++;
+// 		while (list->mtx[i])
+// 		{
+// 			proc->args[j] = malloc(strlen(list->mtx[i]) + 1);
+// 			if (!proc->args[j])
+// 			{
+// 				perror("malloc failed");
+// 				exit(EXIT_FAILURE);
+// 			}
+// 			strcpy(proc->args[j], list->mtx[i]);
+// 			i++;
+// 			j++;
+// 		}
+// 		list = list->next;
+// 	}
+// 	if (proc->args[j - 1][0] == '\0')
+// 		proc->args[j - 1] = NULL;
+// 	else
+// 		proc->args[j] = NULL;
+// 	return (list);
+// }

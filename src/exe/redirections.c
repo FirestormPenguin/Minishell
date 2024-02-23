@@ -16,7 +16,6 @@ void	input(char *str, t_process *proc)
 {
 	int input_fd;
 
-	dup2(proc->saved_stdin, STDIN_FILENO);
 	input_fd = open(str, O_RDONLY);
 	if (input_fd == -1)
 		perror("open");
@@ -29,7 +28,6 @@ void output(char *str, t_process *proc)
 {
 	int output_fd;
 
-	dup2(proc->saved_stdout, STDOUT_FILENO);
 	output_fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (output_fd == -1)
 		perror("open");
@@ -42,7 +40,6 @@ void append (char *str, t_process *proc)
 {
 	int fd_append;
 
-	dup2(proc->saved_stdout, STDOUT_FILENO);
 	fd_append = open(str, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd_append == -1)
 		perror("open");
@@ -74,7 +71,11 @@ void here_doc(char *str, t_process *proc)
 void	redirections(t_list *list, t_process *proc)
 {
 	if (list->type == IN && list->mtx[0])
-		input (list->mtx[0], proc);
+		input(list->mtx[0], proc);
+	if (list->type == OUT && list->mtx[0])
+		output(list->mtx[0], proc);
+	if (list->type == DOUBLE_OUT && list->mtx[0])
+		append(list->mtx[0], proc);
 	else if (list->type == HERE_DOC && list->mtx[0])
 		here_doc(list->mtx[0], proc);
 }

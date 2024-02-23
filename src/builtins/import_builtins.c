@@ -65,7 +65,6 @@ int	import_builtins(t_list *list, t_process *proc)
 	else if (ft_strcmp(proc->args[0], "echo") == 0)
 	{
 		ft_echo(proc->args);
-		printf("BEDUG echo \n");
 		g_last_exit_code = 0;
 	}
 	else if (ft_strcmp(proc->args[0], "pwd") == 0)
