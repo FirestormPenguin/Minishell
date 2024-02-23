@@ -11,6 +11,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 SRC = 	$(SRC_DIR)/minishell.c\
 		$(SRC_DIR)/utils.c\
+		$(SRC_DIR)/signal.c\
 		$(SRC_DIR)/parser/tokenizer.c\
 		$(SRC_DIR)/parser/parser.c\
 		$(SRC_DIR)/parser/utils_tokenizer.c\

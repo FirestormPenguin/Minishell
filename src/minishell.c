@@ -6,32 +6,13 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/22 11:29:31 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/23 09:19:51 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int last_exit_code;
-
-void	sigint_handle(int sig)
-{
-	(void)sig;
-	printf("\n");
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-
-}
-
-void	sigquit_handle(int sig)
-{
-	(void)sig;
-	printf("\n");
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-}
+int g_last_exit_code;
 
 void getInput(t_env4mini *all, t_parser *pars)
 {
@@ -60,7 +41,7 @@ int main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 
-	last_exit_code = 0;
+	g_last_exit_code = 0;
 	t_env4mini *all = ft_calloc(1, sizeof(t_env4mini));
 	t_parser pars;
 

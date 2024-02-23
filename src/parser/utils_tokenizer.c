@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 13:27:44 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/14 18:24:36 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/23 09:13:19 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,9 @@ void question_expander(t_parser *p)
 	int i;
 	char *exit_code_str;
 
-	if (last_exit_code != -1 || !last_exit_code)
+	if (g_last_exit_code != -1 || !g_last_exit_code)
 	{
-		exit_code_str = ft_itoa(last_exit_code);
+		exit_code_str = ft_itoa(g_last_exit_code);
 		i = 0;
 		while(i < ft_strlen(exit_code_str))
 		{

@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/22 14:03:54 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/02/23 09:20:50 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
-extern int last_exit_code;
+extern int g_last_exit_code;
 
 # include "../libft/include/libft.h"
 # include <stdio.h>
@@ -92,8 +92,6 @@ typedef struct s_process
 	int			saved_fd;
 	t_env4mini  *all;
 }	t_process;
-
-
 
 typedef	struct	s_struct_pointers
 {
@@ -174,4 +172,10 @@ void	ft_unset(char **args, t_env4mini *all);
 void	ft_setenv(char *name, char *value, t_env4mini *all);
 int		import_builtins(t_list *list, t_process *proc);
 int		find_valid_equals(char *str);
+
+/*Signal*/
+void	sigquit_handle(int sig);
+void	sigint_handle(int sig);
+void	sigquit_handle_child(int sig);
+void	sigint_handle_child(int sig);
 #endif

@@ -12,21 +12,6 @@
 
 #include "../../include/minishell.h"
 
-void	sigint_handle_child(int sig)
-{
-	(void)sig;
-	printf("\n");
-	last_exit_code = 130;
-
-}
-
-void	sigquit_handle_child(int sig)
-{
-	(void)sig;
-	printf("\n");
-	last_exit_code = 131;
-}
-
 void	forking(t_list *list, t_process *proc)
 {
 	signal(SIGINT, sigint_handle_child);
@@ -40,9 +25,9 @@ void	forking(t_list *list, t_process *proc)
 		waitpid(-1, &(proc->status), WUNTRACED);
 		proc->saved_fd = proc->pipe_fd[0];
 		if (WIFEXITED(proc->status))
-			last_exit_code = WEXITSTATUS(proc->status);
+			g_last_exit_code = WEXITSTATUS(proc->status);
 		else
-			last_exit_code = -1;
+			g_last_exit_code = -1;
 	}
 	else
 	{

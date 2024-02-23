@@ -18,19 +18,19 @@ static int	execute_env_command(t_list *list, t_process *proc)
 			|| ft_strcmp(proc->args[1], "") == 0))
 	{
 		ft_env(proc->all->env);
-		last_exit_code = 0;
+		g_last_exit_code = 0;
 		return (1);
 	}
 	else if (ft_strcmp(proc->args[0], "export") == 0)
 	{
 		ft_export(proc->args, proc->all);
-		last_exit_code = 0;
+		g_last_exit_code = 0;
 		return (1);
 	}
 	else if (ft_strcmp(proc->args[0], "unset") == 0)
 	{
 		ft_unset(proc->args, proc->all);
-		last_exit_code = 0;
+		g_last_exit_code = 0;
 		return (1);
 	}
 	return (0);
@@ -47,17 +47,17 @@ int	import_builtins(t_list *list, t_process *proc)
 	else if (ft_strcmp(proc->args[0], "echo") == 0)
 	{
 		ft_echo(proc->args);
-		last_exit_code = 0;
+		g_last_exit_code = 0;
 	}
 	else if (ft_strcmp(proc->args[0], "pwd") == 0)
 	{
 		ft_pwd();
-		last_exit_code = 0;
+		g_last_exit_code = 0;
 	}
 	else if (ft_strcmp(proc->args[0], "cd") == 0)
 	{
 		result = ft_cd(proc->args, proc->all);
-		last_exit_code = result;
+		g_last_exit_code = result;
 	}
 	else if (!execute_env_command(list, proc))
 	{
