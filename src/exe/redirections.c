@@ -24,7 +24,7 @@ void	input(char *str, t_process *proc)
 	close(input_fd);
 }
 
-void output(char *str, t_process *proc)
+void	output(char *str, t_process *proc)
 {
 	int output_fd;
 
@@ -36,7 +36,7 @@ void output(char *str, t_process *proc)
 	close(output_fd);
 }
 
-void append (char *str, t_process *proc)
+void	append (char *str, t_process *proc)
 {
 	int fd_append;
 
@@ -48,7 +48,7 @@ void append (char *str, t_process *proc)
 	close(fd_append);
 }
 
-void here_doc(char *str, t_process *proc)
+void	here_doc(char *str, t_process *proc)
 {
 	char	*input_line;
 	char	*tmp_str;
@@ -66,16 +66,4 @@ void here_doc(char *str, t_process *proc)
 	}
 	write_into_fd(tmp_str);
 	input("HERE_DOC", proc);
-}
-
-void	redirections(t_list *list, t_process *proc)
-{
-	if (list->type == IN && list->mtx[0])
-		input(list->mtx[0], proc);
-	if (list->type == OUT && list->mtx[0])
-		output(list->mtx[0], proc);
-	if (list->type == DOUBLE_OUT && list->mtx[0])
-		append(list->mtx[0], proc);
-	else if (list->type == HERE_DOC && list->mtx[0])
-		here_doc(list->mtx[0], proc);
 }

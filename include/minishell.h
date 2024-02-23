@@ -28,7 +28,6 @@ extern int g_last_exit_code;
 # include <limits.h>
 # include <signal.h>
 
-
 /*Utility Macro*/
 #define WORD 0
 #define PIPE 1
@@ -145,13 +144,13 @@ char	*ft_getenv(char *name, char **env);
 void	free_double_pointer(char **ptr);
 
 /*Redirections*/
-void	redirections(t_list *list, t_process *proc);
 void	input(char *str, t_process *proc);
 void	output(char *str, t_process *proc);
 void	append (char *str, t_process *proc);
 void	here_doc(char *str, t_process *proc);
 
 /*Redirections_utils*/
+void	redirections(t_list *list, t_process *proc);
 void write_into_fd(char *str);
 
 /*Enviromenrt*/
