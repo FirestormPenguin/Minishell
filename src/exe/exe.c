@@ -12,45 +12,49 @@
 
 #include "../../include/minishell.h"
 
-void	forking(t_list *list, t_process *proc, t_list *tmp_list, int pipe_count)
+void	set_in_out_pipe(t_process *proc)
 {
-	int	red_ctrl;
+	if (proc->red_ctrl != 1)
+		dup2(proc->pipe_fd[1], STDOUT_FILENO);
+	close(proc->pipe_fd[1]);
+	proc->saved_fd = proc->pipe_fd[0];
+}
 
-	red_ctrl = 0;
-	signal(SIGINT, sigint_handle_child);
-	signal(SIGQUIT, sigquit_handle_child);
-	if (pipe_count)
-		pipe(proc->pipe_fd);
+int	check_b_e(t_list *list, t_process *proc, t_list *tmp_list, int pipe_count)
+{
 	if (check_builtins(list, proc))
 	{
 		close(proc->saved_fd);
-		red_ctrl = setup_redirection(tmp_list, proc);
 		if (pipe_count)
 		{
-			if (red_ctrl != 1)
-				dup2(proc->pipe_fd[1], STDOUT_FILENO);
-			close(proc->pipe_fd[1]);
-			proc->saved_fd = proc->pipe_fd[0];
+			set_in_out_pipe(proc);
 			if (!ft_strncmp(proc->args[0], "cd", 3))
-				return ;
+				return (1);
 		}
 		import_builtins(list, proc);
-		return ;
+		return (1);
 	}
 	else if (check_env_command(list, proc))
 	{
 		close(proc->saved_fd);
-		red_ctrl = setup_redirection(tmp_list, proc);
 		if (pipe_count)
-		{
-			if (red_ctrl != 1)
-				dup2(proc->pipe_fd[1], STDOUT_FILENO);
-			close(proc->pipe_fd[1]);
-			proc->saved_fd = proc->pipe_fd[0];
-		}
+			set_in_out_pipe(proc);
 		execute_env_command(list, proc);
-		return ;
+		return (1);
 	}
+	return (0);
+}
+
+void	forking(t_list *list, t_process *proc, t_list *tmp_list, int pipe_count)
+{
+	signal(SIGINT, sigint_handle_child);
+	signal(SIGQUIT, sigquit_handle_child);
+	proc->red_ctrl = 0;
+	if (pipe_count)
+		pipe(proc->pipe_fd);
+	proc->red_ctrl = setup_redirection(tmp_list, proc);
+	if (check_b_e(list, proc, tmp_list, pipe_count) == 1)
+		return ;
 	proc->pid = fork();
 	if (proc->pid)
 	{
@@ -73,17 +77,16 @@ void	forking(t_list *list, t_process *proc, t_list *tmp_list, int pipe_count)
 	}
 	else
 	{
-		red_ctrl = setup_redirection(tmp_list, proc);
 		if (pipe_count)
 		{
-			if (red_ctrl != 1)
+			if (proc->red_ctrl != 1)
 				dup2(proc->pipe_fd[1], STDOUT_FILENO);
 			close(proc->pipe_fd[1]);
 			close(proc->pipe_fd[0]);
 		}
 		if (access(proc->path, X_OK) == 0)
 		{
-			if (red_ctrl != 1)
+			if (proc->red_ctrl != 1)
 				dup2(proc->saved_fd, STDIN_FILENO);
 			close(proc->saved_fd);
 			execve(proc->path, (char *const *)(proc->args), proc->all->env);

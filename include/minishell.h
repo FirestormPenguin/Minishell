@@ -89,6 +89,7 @@ typedef struct s_process
 	int			saved_stdout;
 	int			pipe_fd[2];
 	int			saved_fd;
+	int			red_ctrl;
 	t_env4mini	*all;
 }	t_process;
 
