@@ -33,16 +33,6 @@ void	*struct_box(t_struct_pointers *ptr_struct, int operation)
 	return (NULL);
 }
 
-void	free_all_generic(char *path, char **args)
-{
-	if (args)
-		free_double_pointer(args);
-	if (path)
-		free (path);
-	if (access("HERE_DOC", F_OK) != -1)
-		unlink("HERE_DOC");
-}
-
 void	free_args(t_args *args)
 {
 	if (args)
@@ -55,7 +45,7 @@ void	free_args(t_args *args)
 
 void	free_list(t_list *list)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (list)
@@ -81,7 +71,7 @@ void	free_parser(t_parser *parser)
 			free(parser->input_copy);
 		if (parser->tokens)
 		{
-			while(parser->tokens[i])
+			while (parser->tokens[i])
 			{
 				free(parser->tokens[i]);
 				i++;
@@ -94,12 +84,12 @@ void	free_parser(t_parser *parser)
 
 void	free_env4mini(t_env4mini *env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (env)
 	{
-		while(env->env[i])
+		while (env->env[i])
 		{
 			free(env->env[i]);
 			i++;
@@ -107,19 +97,4 @@ void	free_env4mini(t_env4mini *env)
 		free(env->env);
 		free(env);
 	}
-}
-
-void free_exit(int exit_code)
-{
-	t_struct_pointers *ptr_struct;
-
-	ptr_struct = (t_struct_pointers *)struct_box(NULL, SET_ACTUAL);
-	if (ptr_struct)
-	{
-		free_args(ptr_struct->args_ptr);
-		free_list(ptr_struct->list_ptr);
-		free_parser(ptr_struct->parser_ptr);
-		free_env4mini(ptr_struct->env_ptr);
-	}
-	exit(exit_code);
 }

@@ -77,7 +77,7 @@ int	import_builtins(t_list *list, t_process *proc)
 		result = ft_cd(proc->args, proc->all);
 		g_last_exit_code = result;
 	}
-	return(0);
+	return (0);
 }
 
 int	check_builtins(t_list *list, t_process *proc)
@@ -98,6 +98,5 @@ int	check_builtins(t_list *list, t_process *proc)
 	{
 		return (1);
 	}
-
-	return(0);
+	return (0);
 }

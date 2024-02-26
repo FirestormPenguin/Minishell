@@ -12,46 +12,44 @@
 
 #include "../include/minishell.h"
 
-int g_last_exit_code;
+int		g_last_exit_code;
 
-void getInput(t_env4mini *all, t_parser *pars)
+void	get_input(t_env4mini *all, t_parser *pars)
 {
-	char *inputString;
-	t_list *list;
+	char	*input_string;
+	t_list	*list;
 
 	while (1)
 	{
 		signal(SIGINT, sigint_handle);
 		signal(SIGQUIT, SIG_IGN);
-		inputString = readline("Minishell: ");
-		if (!inputString)
-			break;
+		input_string = readline("Minishell: ");
+		if (!input_string)
+			break ;
 		else
 		{
-			list = parser(inputString, pars);
-			add_history(inputString);
+			list = parser(input_string, pars);
+			add_history(input_string);
 			exe(list, all);
 			free_list(list);
 		}
-		free(inputString);
+		free(input_string);
 	}
 }
 
-int main(int ac, char **av, char **envp)
+int	main(int ac, char **av, char **envp)
 {
+	t_env4mini	*all;
+	t_parser	pars;
+
 	(void)ac;
 	(void)av;
-
 	g_last_exit_code = 0;
-	t_env4mini *all = ft_calloc(1, sizeof(t_env4mini));
-	t_parser pars;
-
+	all = ft_calloc(1, sizeof(t_env4mini));
 	copy_env(envp, all);
 	pars.cp_env = all;
-	//print_env_copy(pars.cp_env);
-	getInput(all, &pars);
+	get_input(all, &pars);
 	free_env(all);
 	free(all);
-
-	return 0;
+	return (0);
 }

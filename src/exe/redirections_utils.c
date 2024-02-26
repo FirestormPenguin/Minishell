@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exe_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/05 15:45:33 by egiubell          #+#    #+#             */
+/*   Updated: 2024/02/26 11:19:50 by mivendit         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 void	redirections(t_list *list, t_process *proc)
@@ -12,10 +24,10 @@ void	redirections(t_list *list, t_process *proc)
 		here_doc(list->mtx[0], proc);
 }
 
-void write_into_fd(char *str)
+void	write_into_fd(char *str)
 {
-	int	fd;
-	size_t len;
+	int		fd;
+	size_t	len;
 
 	fd = open("HERE_DOC", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	len = strlen(str);

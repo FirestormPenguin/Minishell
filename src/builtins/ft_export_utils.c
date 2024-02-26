@@ -32,7 +32,6 @@ void	ft_setenv(char *name, char *value, t_env4mini *all)
 		i++;
 	}
 	all->env[i] = ft_strjoin(name, "");
-	//all->env[i] = ft_strjoin(name, "="); non devo mette
 	all->env[i] = ft_strjoin(all->env[i], value);
 	all->env[i + 1] = NULL;
 }

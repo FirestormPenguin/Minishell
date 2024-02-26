@@ -97,7 +97,6 @@ t_list	*parser(char *str, t_parser *pars)
 	if (mtx == NULL)
 		return (NULL);
 	list_head = init_list(mtx);
-	//scroll_list(list_head);
-	free_double_pointer(mtx);
+	//free_double_pointer(mtx);
 	return (list_head);
 }

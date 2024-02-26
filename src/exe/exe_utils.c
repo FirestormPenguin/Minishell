@@ -12,29 +12,34 @@
 
 #include "../../include/minishell.h"
 
-void	reset_stdin_stdout(t_process *proc)
+int	check_pipe_at_first(t_list *list, int flag)
 {
-	dup2(proc->saved_stdin, STDIN_FILENO);
-	dup2(proc->saved_stdout, STDOUT_FILENO);
+	if (list->type == PIPE && flag == 0)
+	{
+		printf("parse error near '|'\n");
+		return (1);
+	}
+	return (0);
 }
 
 int	check_error_redirection(t_list *list)
 {
-	int flag = 0;
+	int		flag;
+
+	flag = 0;
 	while (list)
 	{
-		if (list->type == PIPE && flag == 0)
-		{
-			printf("parse error near '|'\n");
+		if (check_pipe_at_first(list, flag) == 1)
 			return (1);
-		}
 		flag = 1;
 		if (list->type != WORD && check_type(list->mtx[0]) != WORD)
 		{
 			printf("parse error near '%s'\n", list->mtx[0]);
 			return (1);
 		}
-		else if (ft_strcmp(list->mtx[0], "\n") == 0 || ft_strcmp(list->mtx[0], " ") == 0 || ft_strcmp(list->mtx[0], "") == 0)
+		else if (ft_strcmp(list->mtx[0], "\n") == 0
+			|| ft_strcmp(list->mtx[0], " ") == 0
+			|| ft_strcmp(list->mtx[0], "") == 0)
 		{
 			printf("parse error near '%s'\n", list->mtx[0]);
 			return (1);
@@ -44,7 +49,7 @@ int	check_error_redirection(t_list *list)
 	return (0);
 }
 
-int setup_redirection(t_list *list, t_process *proc)
+int	setup_redirection(t_list *list, t_process *proc)
 {
 	int	count;
 
@@ -65,32 +70,18 @@ int setup_redirection(t_list *list, t_process *proc)
 	return (0);
 }
 
-void free_double_pointer(char **ptr)
+char	*ft_getenv(char *name, char **env)
 {
-	int i;
-
-	i = 0;
-	while (ptr && ptr[i])
-	{
-		free(ptr[i]);
-		i++;
-	}
-	free(ptr);
-	return ;
-}
-
-char *ft_getenv(char *name, char **env)
-{
-	int i;
-	int len;
+	int	i;
+	int	len;
 
 	i = 0;
 	len = ft_strlen(name);
-	if (name == NULL || env == NULL) {
+	if (name == NULL || env == NULL)
+	{
 		printf("name or env is NULL\n");
-		return NULL;
+		return (NULL);
 	}
-
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], name, len) == 0 && env[i][len] == '=')
@@ -100,13 +91,13 @@ char *ft_getenv(char *name, char **env)
 	return (NULL);
 }
 
-char *path_finder(char **cmd, t_env4mini *all)
+char	*path_finder(char **cmd, t_env4mini *all)
 {
 	int		i;
 	char	*path;
 	char	**paths;
-	char 	*tmp;
-	char 	*tmp2;
+	char	*tmp;
+	char	*tmp2;
 
 	i = 0;
 	tmp2 = ft_getenv("PATH", all->env);
@@ -128,76 +119,3 @@ char *path_finder(char **cmd, t_env4mini *all)
 	free_double_pointer(paths);
 	return (ft_strdup(cmd[0]));
 }
-
-void init_vars(t_process *proc, int *i, t_env4mini *all)
-{
-	char *tmp_args = NULL;
-
-	proc->path = ft_calloc(1000, sizeof(char));
-	proc->args = ft_calloc(1000, sizeof(char *));
-	*i = 0;
-}
-
-t_list	*fill_args_pipe(t_list *list, t_process *proc, int i)
-{
-	int j;
-
-	j = 0;
-	while (list)
-	{
-		i = 0;
-		if (list->type != WORD && list->type != PIPE)
-			i++;
-		while (list->mtx[i])
-		{
-			proc->args[j] = malloc(strlen(list->mtx[i]) + 1);
-			if (!proc->args[j])
-			{
-				perror("malloc failed");
-				exit(EXIT_FAILURE);
-			}
-			strcpy(proc->args[j++], list->mtx[i++]);
-		}
-		list = list->next;
-		if (list == NULL || list->type == PIPE)
-			break ;
-	}
-	if (proc->args[j - 1][0] == '\0')
-		proc->args[j - 1] = NULL;
-	else
-		proc->args[j] = NULL;
-	return (list);
-}
-
-// t_list	*fill_args(t_list *list, t_process *proc, int i)
-// {
-// 	int j;
-
-// 	j = 0;
-// 	while (list)
-// 	{
-// 		if (list->type == PIPE)
-// 			break ;
-// 		i = 0;
-// 		if (list->type != WORD && list->type != PIPE)
-// 			i++;
-// 		while (list->mtx[i])
-// 		{
-// 			proc->args[j] = malloc(strlen(list->mtx[i]) + 1);
-// 			if (!proc->args[j])
-// 			{
-// 				perror("malloc failed");
-// 				exit(EXIT_FAILURE);
-// 			}
-// 			strcpy(proc->args[j], list->mtx[i]);
-// 			i++;
-// 			j++;
-// 		}
-// 		list = list->next;
-// 	}
-// 	if (proc->args[j - 1][0] == '\0')
-// 		proc->args[j - 1] = NULL;
-// 	else
-// 		proc->args[j] = NULL;
-// 	return (list);
-// }

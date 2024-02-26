@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-static	void	malloc_perror(void)
+static void	malloc_perror(void)
 {
 	perror("Memory allocation error");
 	exit(1);

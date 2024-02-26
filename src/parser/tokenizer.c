@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-void init_parser(t_parser *p, char *input)
+void	init_parser(t_parser *p, char *input)
 {
 	p->input_copy = ft_strdup(input);
 	p->count = 0;
@@ -23,33 +23,33 @@ void init_parser(t_parser *p, char *input)
 	p->i3 = 0;
 	p->in_quote = 0;
 	p->in_double_quote = 0;
-    return;
+	return ;
 }
 
-void tokenize_parser(t_parser *p)
+void	tokenize_parser(t_parser *p)
 {
 	while (p->input_copy[p->i1])
 	{
 		if (tokenize_single(p))
-			break;
+			break ;
 		if (tokenize_double(p))
-			break;
+			break ;
 		if (tokenize_quotes(p))
-			break;
+			break ;
 		if (tokenize_double_quotes(p))
-			break;
-		if (p->input_copy[p->i1] == '$' && p->input_copy[p->i1+1] != '$')
-                base_expander(p);
-        else
-            p->tmp_token[p->i2++] = p->input_copy[p->i1++];
+			break ;
+		if (p->input_copy[p->i1] == '$' && p->input_copy[p->i1 + 1] != '$')
+			base_expander(p);
+		else
+			p->tmp_token[p->i2++] = p->input_copy[p->i1++];
 		if (p->input_copy[p->i1] == ' ' || p->input_copy[p->i1] == '\t'
 			|| p->input_copy[p->i1] == '|' || p->input_copy[p->i1] == '>'
 			|| p->input_copy[p->i1] == '<')
-			break;
+			break ;
 	}
 }
 
-char **tokenizer(char *input, int *token_count, t_parser *p)
+char	**tokenizer(char *input, int *token_count, t_parser *p)
 {
 	init_parser(p, input);
 	while (p->input_copy[p->i1])

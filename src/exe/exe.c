@@ -12,50 +12,45 @@
 
 #include "../../include/minishell.h"
 
-
 void	forking(t_list *list, t_process *proc, t_list *tmp_list, int pipe_count)
 {
+	int	red_ctrl;
+
+	red_ctrl = 0;
 	signal(SIGINT, sigint_handle_child);
 	signal(SIGQUIT, sigquit_handle_child);
-
 	if (pipe_count)
 		pipe(proc->pipe_fd);
-
 	if (check_builtins(list, proc))
 	{
 		close(proc->saved_fd);
-		int a = setup_redirection(tmp_list, proc);
+		red_ctrl = setup_redirection(tmp_list, proc);
 		if (pipe_count)
 		{
-			if (a != 1)
+			if (red_ctrl != 1)
 				dup2(proc->pipe_fd[1], STDOUT_FILENO);
 			close(proc->pipe_fd[1]);
 			proc->saved_fd = proc->pipe_fd[0];
-
-			if(!ft_strncmp(proc->args[0], "cd", 3))
+			if (!ft_strncmp(proc->args[0], "cd", 3))
 				return ;
 		}
-
 		import_builtins(list, proc);
 		return ;
 	}
 	else if (check_env_command(list, proc))
 	{
 		close(proc->saved_fd);
-		int a = setup_redirection(tmp_list, proc);
+		red_ctrl = setup_redirection(tmp_list, proc);
 		if (pipe_count)
 		{
-			if (a != 1)
+			if (red_ctrl != 1)
 				dup2(proc->pipe_fd[1], STDOUT_FILENO);
 			close(proc->pipe_fd[1]);
 			proc->saved_fd = proc->pipe_fd[0];
 		}
-
 		execute_env_command(list, proc);
 		return ;
 	}
-
-
 	proc->pid = fork();
 	if (proc->pid)
 	{
@@ -78,18 +73,17 @@ void	forking(t_list *list, t_process *proc, t_list *tmp_list, int pipe_count)
 	}
 	else
 	{
-		int a = setup_redirection(tmp_list, proc);
+		red_ctrl = setup_redirection(tmp_list, proc);
 		if (pipe_count)
 		{
-			if (a != 1)
+			if (red_ctrl != 1)
 				dup2(proc->pipe_fd[1], STDOUT_FILENO);
 			close(proc->pipe_fd[1]);
 			close(proc->pipe_fd[0]);
 		}
-
 		if (access(proc->path, X_OK) == 0)
 		{
-			if (a != 1)
+			if (red_ctrl != 1)
 				dup2(proc->saved_fd, STDIN_FILENO);
 			close(proc->saved_fd);
 			execve(proc->path, (char *const *)(proc->args), proc->all->env);
@@ -114,10 +108,11 @@ void	while_exe(t_list *list, t_process *proc, int i, int pipe_count)
 	{
 		init_vars(proc, &i, proc->all);
 		tmp_list = list;
-		list = fill_args_pipe(list, proc, i);
+		list = fill_args(list, proc, i);
 		proc->path = path_finder(proc->args, proc->all);
 		forking(list, proc, tmp_list, pipe_count);
-		reset_stdin_stdout(proc);
+		dup2(proc->saved_stdin, STDIN_FILENO);
+		dup2(proc->saved_stdout, STDOUT_FILENO);
 		free_all_generic(proc->path, proc->args);
 		pipe_count--;
 	}
@@ -138,9 +133,9 @@ void	exe(t_list *list, t_env4mini *all)
 	proc.all = all;
 	if (check_error_redirection(list) == 0)
 	{
-		while(list)
+		while (list)
 		{
-			if(list->type == PIPE)
+			if (list->type == PIPE)
 				pipe_count++;
 			list = list->next;
 		}

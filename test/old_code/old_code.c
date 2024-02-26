@@ -203,21 +203,3 @@ void exe(t_list *list, t_env4mini *all)
 	close(saved_stdout);
 	close(saved_stdin);
 }*/
-
-
-/*original fill_args 08/02/2024
-char	**fill_args(t_list *list, char **args, int i)
-{
-	int j;
-	
-	j = 0;
-	while (list->mtx[i])
-		{
-			args[j] = malloc (sizeof(char) * 50);
-			strcpy(args[j], list->mtx[i]);
-			i++;
-			j++;
-		}
-	args[j] = NULL;
-	return (args);
-} */

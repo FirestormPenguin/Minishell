@@ -12,9 +12,9 @@
 
 #include "../../include/minishell.h"
 
-int check_type(char *str)
+int	check_type(char *str)
 {
-	int type;
+	int	type;
 
 	type = 0;
 	if (!str)
@@ -34,9 +34,9 @@ int check_type(char *str)
 	return (type);
 }
 
-void scroll_list(t_list *node)
+void	scroll_list(t_list *node)
 {
-	int i;
+	int	i;
 
 	while (node)
 	{

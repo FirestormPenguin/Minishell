@@ -14,7 +14,7 @@
 
 void	input(char *str, t_process *proc)
 {
-	int input_fd;
+	int	input_fd;
 
 	input_fd = open(str, O_RDONLY);
 	if (input_fd == -1)
@@ -26,7 +26,7 @@ void	input(char *str, t_process *proc)
 
 void	output(char *str, t_process *proc)
 {
-	int output_fd;
+	int	output_fd;
 
 	output_fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (output_fd == -1)
@@ -36,9 +36,9 @@ void	output(char *str, t_process *proc)
 	close(output_fd);
 }
 
-void	append (char *str, t_process *proc)
+void	append(char *str, t_process *proc)
 {
-	int fd_append;
+	int	fd_append;
 
 	fd_append = open(str, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd_append == -1)
@@ -59,7 +59,7 @@ void	here_doc(char *str, t_process *proc)
 	{
 		input_line = readline("> ");
 		if (ft_strcmp(input_line, str) == 0)
-			break;
+			break ;
 		strcat(tmp_str, input_line);
 		strcat(tmp_str, "\n");
 		free(input_line);
