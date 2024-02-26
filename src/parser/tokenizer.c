@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 13:27:36 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/14 18:07:19 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/26 11:10:26 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,7 @@ void tokenize_parser(t_parser *p)
 
 char **tokenizer(char *input, int *token_count, t_parser *p)
 {
-	//t_parser	p;
-
 	init_parser(p, input);
-
 	while (p->input_copy[p->i1])
 	{
 		while (p->input_copy[p->i1] == ' ' || p->input_copy[p->i1] == '\t')
@@ -72,5 +69,6 @@ char **tokenizer(char *input, int *token_count, t_parser *p)
 		printf("Error: unclosed quote\n");
 		return (NULL);
 	}
+	free(p->input_copy);
 	return (p->tokens);
 }

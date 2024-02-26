@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:45:33 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/21 14:13:41 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/26 11:19:50 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void init_vars(t_process *proc, int *i, t_env4mini *all)
 {
 	char *tmp_args = NULL;
 
-	proc->path = ft_calloc(1000, sizeof(char *));
+	proc->path = ft_calloc(1000, sizeof(char));
 	proc->args = ft_calloc(1000, sizeof(char *));
 	*i = 0;
 }
@@ -156,9 +156,7 @@ t_list	*fill_args_pipe(t_list *list, t_process *proc, int i)
 				perror("malloc failed");
 				exit(EXIT_FAILURE);
 			}
-			strcpy(proc->args[j], list->mtx[i]);
-			i++;
-			j++;
+			strcpy(proc->args[j++], list->mtx[i++]);
 		}
 		list = list->next;
 		if (list == NULL || list->type == PIPE)

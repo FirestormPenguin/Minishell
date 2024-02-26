@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 13:27:21 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/09 14:39:12 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/26 11:05:32 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	*struct_box(t_struct_pointers *ptr_struct, int operation)
 void	free_all_generic(char *path, char **args)
 {
 	if (args)
-		free (args);
+		free_double_pointer(args);
 	if (path)
 		free (path);
 	if (access("HERE_DOC", F_OK) != -1)

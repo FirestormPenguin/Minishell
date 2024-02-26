@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/11 11:32:04 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/26 11:15:06 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,6 @@ t_list	*parser(char *str, t_parser *pars)
 		return (NULL);
 	list_head = init_list(mtx);
 	//scroll_list(list_head);
+	free_double_pointer(mtx);
 	return (list_head);
 }
