@@ -48,6 +48,18 @@ int	check_cd_err(char **args)
 	}
 }
 
+void	update_pwd(t_env4mini *all)
+{
+	char	*oldpwd;
+	char	*pwd;
+
+	oldpwd = get_env_value("PWD", all);
+	pwd = getcwd(NULL, 0);
+	ft_setenv("OLDPWD", oldpwd, all);
+	ft_setenv("PWD", pwd, all);
+	free(pwd);
+}
+
 int	ft_cd(char **args, t_env4mini *all)
 {
 	char	*home;
@@ -71,5 +83,6 @@ int	ft_cd(char **args, t_env4mini *all)
 	else
 		if (check_cd_err(args))
 			return (1);
+	update_pwd(all);
 	return (0);
 }

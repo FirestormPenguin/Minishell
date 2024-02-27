@@ -39,7 +39,7 @@ SRC = 	$(SRC_DIR)/minishell.c\
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 RM = rm -rf
 NORMI = norminette
-NORM_FOLDER = ./src
+NORM_FOLDER = ./src ./include
 
 UPurple = \033[4;35m
 BIRed =\033[1;91m
@@ -99,7 +99,7 @@ norm:
 	@$(NORMI) $(LIBFT_DIR)
 	@echo "$(RED)"$(SEPARATOR)
 	@echo -n "$(CYAN)"
-	@-$(NORMI) $(NORM_FOLDER)
+	@-$(NORMI) $(NORM_FOLDER) 2>/dev/null
 	@echo "$(RED)"$(SEPARATOR)
 
 .PHONY: all clean fclean re norm obj_dir

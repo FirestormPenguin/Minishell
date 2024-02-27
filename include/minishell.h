@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/27 09:41:42 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/27 10:26:23 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,5 @@ void			sigquit_handle(int sig);
 void			sigint_handle(int sig);
 void			sigquit_handle_child(int sig);
 void			sigint_handle_child(int sig);
-
 
 #endif
