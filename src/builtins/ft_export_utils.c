@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 02:17:04 by mivendit          #+#    #+#             */
-/*   Updated: 2024/02/21 13:39:26 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/27 09:36:59 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,30 @@ export concatenati*/
 
 void	ft_setenv(char *name, char *value, t_env4mini *all)
 {
-	int	i;
+	int		i;
+	char	*temp;
 
 	i = 0;
 	while (all->env[i])
 	{
 		if (ft_strncmp(all->env[i], name, ft_strlen(name)) == 0)
 		{
+			temp = all->env[i];
 			all->env[i] = ft_strjoin(name, "=");
+			free(temp);
+			temp = all->env[i];
 			all->env[i] = ft_strjoin(all->env[i], value);
+			free(temp);
 			return ;
 		}
 		i++;
 	}
+	temp = all->env[i];
 	all->env[i] = ft_strjoin(name, "");
+	free(temp);
+	temp = all->env[i];
 	all->env[i] = ft_strjoin(all->env[i], value);
+	free(temp);
 	all->env[i + 1] = NULL;
 }
 

@@ -25,6 +25,7 @@ SRC = 	$(SRC_DIR)/minishell.c\
 		$(SRC_DIR)/exe/redirections.c\
 		$(SRC_DIR)/exe/redirections_utils.c\
 		$(SRC_DIR)/env/env.c\
+		$(SRC_DIR)/env/env_setup.c\
 		$(SRC_DIR)/builtins/ft_exit.c\
 		$(SRC_DIR)/builtins/ft_echo.c\
 		$(SRC_DIR)/builtins/ft_pwd.c\
@@ -48,6 +49,7 @@ GREEN = \033[0;32m
 RED = \033[0;31m
 PURPLE = \033[1;200m
 BLUE = \033[0;36m
+ORANGE = \033[0;33m
 BOLD = \033[1m
 RESET = \033[0m
 COLOR_SEPARATOR = \033[1;92m
@@ -92,8 +94,12 @@ fclean: clean
 re: fclean all
 
 norm:
-	@echo "$(CYAN)"
-	@$(NORMI) $(NORM_FOLDER)
-	@echo "$(RESET)"$(SEPARATOR)
+	@echo "$(RED)"$(SEPARATOR)
+	@echo -n "$(ORANGE)"
+	@$(NORMI) $(LIBFT_DIR)
+	@echo "$(RED)"$(SEPARATOR)
+	@echo -n "$(CYAN)"
+	@-$(NORMI) $(NORM_FOLDER)
+	@echo "$(RED)"$(SEPARATOR)
 
 .PHONY: all clean fclean re norm obj_dir

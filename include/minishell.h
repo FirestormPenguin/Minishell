@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/26 11:22:19 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/02/27 09:41:42 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ void			free_list(t_list *list);
 void			free_parser(t_parser *parser);
 void			free_env4mini(t_env4mini *env);
 void			free_all_generic(char *path, char **args);
+void			free_double_pointer(char **ptr);
 void			free_exit(int exit_code);
 
 /*Parser*/
@@ -147,7 +148,6 @@ t_list			*fill_args(t_list *list, t_process *proc, int i);
 int				check_mtx(t_list *list, t_process *proc, int i);
 char			*path_finder(char **cmd, t_env4mini *all);
 char			*ft_getenv(char *name, char **env);
-void			free_double_pointer(char **ptr);
 
 /*Redirections*/
 void			input(char *str, t_process *proc);
@@ -163,6 +163,7 @@ void			write_into_fd(char *str);
 int				copy_env(char **env, t_env4mini *all);
 void			print_env_copy(t_env4mini *all);
 void			free_env(t_env4mini *all);
+void			increment_shlvl(t_env4mini *all);
 
 /*Built-in Func*/
 int				ft_echo(char **command_string);
@@ -177,6 +178,9 @@ void			ft_unset(char **args, t_env4mini *all);
 void			ft_setenv(char *name, char *value, t_env4mini *all);
 int				import_builtins(t_list *list, t_process *proc);
 int				find_valid_equals(char *str);
+int				check_builtins(t_list *list, t_process *proc);
+int				check_env_command(t_list *list, t_process *proc);
+int				execute_env_command(t_list *list, t_process *proc);
 
 /*Signal*/
 void			sigquit_handle(int sig);
@@ -184,9 +188,5 @@ void			sigint_handle(int sig);
 void			sigquit_handle_child(int sig);
 void			sigint_handle_child(int sig);
 
-int				check_builtins(t_list *list, t_process *proc);
-int				check_env_command(t_list *list, t_process *proc);
-int				execute_env_command(t_list *list, t_process *proc);
-void			free_list(t_list *list);
 
 #endif
