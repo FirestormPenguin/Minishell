@@ -67,17 +67,25 @@ void	equal_case(char **args, t_env4mini *all, int i, int j)
 	}
 }
 
-void	ft_export(char **args, t_env4mini *all)
+void	norm_print_index(char **args, t_env4mini *all)
 {
-	int	i;
-	int	j;
-	int	equals_index;
+	printf("Mini: export: `%s': not a valid identifier\n", args[2]);
+	ft_setenv(args[1], "", all);
+	return ;
+}
 
-	i = 1;
-	if (!args[i])
-		exp_no_argument(args, all, i);
-	while (args[i])
+void	while_export(char **args, int i, t_env4mini *all)
+{
+	int	equals_index;
+	int	j;
+
+	while (args[++i])
 	{
+		if (ft_isdigit(args[i][0]))
+		{
+			printf("Mini: export: `%s': not a valid identifier\n", args[i++]);
+			continue ;
+		}
 		equals_index = find_valid_equals(args[i]);
 		if (equals_index == -1)
 		{
@@ -92,6 +100,12 @@ void	ft_export(char **args, t_env4mini *all)
 			equal_case(args, all, i, j);
 		else if (equals_index == 1)
 			ft_setenv(args[i], "", all);
-		i++;
 	}
+}
+
+void	ft_export(char **args, t_env4mini *all)
+{
+	if (!args[1])
+		exp_no_argument(args, all, 1);
+	while_export(args, 0, all);
 }
