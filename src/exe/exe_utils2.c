@@ -17,12 +17,14 @@ void	free_double_pointer(char **ptr)
 	int	i;
 
 	i = 0;
-	while (ptr && ptr[i])
+	while (ptr[i])
 	{
-		free(ptr[i]);
+		if (ptr[i])
+			free(ptr[i]);
 		i++;
 	}
-	free(ptr);
+	if (ptr)
+		free(ptr);
 	return ;
 }
 

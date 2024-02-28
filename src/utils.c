@@ -60,26 +60,25 @@ void	free_list(t_list *list)
 	}
 }
 
-void	free_parser(t_parser *parser)
+void	free_parser(t_parser *pars)
 {
 	int	i;
 
 	i = 0;
-	if (parser)
+	while (pars->tokens[i])
 	{
-		if (parser->input_copy)
-			free(parser->input_copy);
-		if (parser->tokens)
-		{
-			while (parser->tokens[i])
-			{
-				free(parser->tokens[i]);
-				i++;
-			}
-			free(parser->tokens);
-		}
-		free(parser);
+		if (pars->tokens[i])
+			free (pars->tokens[i]);
+		i++;
 	}
+	if (pars->tokens)
+		free (pars->tokens);
+	if (pars->input_copy)
+		free (pars->input_copy);
+	if (pars->tmp_token)
+		free (pars->tmp_token);
+	if (pars)
+		free (pars);
 }
 
 void	free_env4mini(t_env4mini *env)
