@@ -106,6 +106,8 @@ char	*path_finder(char **cmd, t_env4mini *all)
 	while (paths && paths[i])
 	{
 		tmp = ft_strjoin(paths[i], "/");
+		if (!cmd)
+			break ;
 		path = ft_strjoin(tmp, cmd[0]);
 		free(tmp);
 		if (access(path, F_OK) == 0)
@@ -117,5 +119,7 @@ char	*path_finder(char **cmd, t_env4mini *all)
 		i++;
 	}
 	free_double_pointer(paths);
+	if (!cmd)
+		return (NULL);
 	return (ft_strdup(cmd[0]));
 }

@@ -99,6 +99,8 @@ void	forking(t_list *list, t_process *proc, t_list *tmp_list, int pipe_count)
 	if (pipe_count)
 		pipe(proc->pipe_fd);
 	proc->red_ctrl = setup_redirection(tmp_list, proc);
+	if (!proc->args)
+			return ;
 	if (check_b_e(list, proc, tmp_list, pipe_count) == 1)
 		return ;
 	proc->pid = fork();

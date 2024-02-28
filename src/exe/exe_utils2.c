@@ -40,8 +40,10 @@ void	init_vars(t_process *proc, int *i, t_env4mini *all)
 
 void	set_last_args(t_process *proc, int j)
 {
-	if (proc->args[j - 1][0] == '\0')
+	if (proc->args[j - 1] && proc->args[j - 1][0] == '\0')
 		proc->args[j - 1] = NULL;
+	else if (!proc->args[j] && !proc->args[j - 1])
+		proc->args = NULL;
 	else
 		proc->args[j] = NULL;
 }

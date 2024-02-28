@@ -31,7 +31,7 @@ void	free_exit(int exit_code)
 	{
 		free_args(ptr_struct->args_ptr);
 		free_list(ptr_struct->list_ptr);
-		free_parser(ptr_struct->parser_ptr);
+		//free_parser(ptr_struct->parser_ptr);
 		free_env4mini(ptr_struct->env_ptr);
 	}
 	exit(exit_code);
