@@ -22,6 +22,25 @@ int	check_pipe_at_first(t_list *list, int flag)
 	return (0);
 }
 
+void	parse_error_gen(t_list *list)
+{
+	char	*s;
+	
+	s = malloc(sizeof(char) * 5);
+	if (list->next)
+	{
+		if (list->next->type == IN)
+			s = "<";
+		else if (list->next->type == OUT)
+			s = ">";
+		else if (list->next->type == DOUBLE_OUT)
+			s = ">>";
+		else if (list->next->type == HERE_DOC)
+			s = "<<";
+	}
+	printf("parse error near '%s'\n", s);
+}
+
 int	check_error_redirection(t_list *list)
 {
 	int		flag;
@@ -32,16 +51,29 @@ int	check_error_redirection(t_list *list)
 		if (check_pipe_at_first(list, flag) == 1)
 			return (1);
 		flag = 1;
-		if (list->type != WORD && check_type(list->mtx[0]) != WORD)
+		if (list->next)
 		{
-			printf("parse error near '%s'\n", list->mtx[0]);
+			if (list->type == PIPE && list->next->type != WORD && list->next->type != PIPE && list->next->mtx)
+			{
+				list = list->next;
+				continue ;
+			}
+			else if (list->type != WORD && list->type != PIPE && !list->mtx && list->next->type != WORD)
+			{
+				parse_error_gen(list);
+				return (1);
+			}
+		}
+		else if (list->type != WORD && !list->next && !list->mtx)
+		{
+			parse_error_gen(list);
 			return (1);
 		}
 		else if (ft_strcmp(list->mtx[0], "\n") == 0
 			|| ft_strcmp(list->mtx[0], " ") == 0
 			|| ft_strcmp(list->mtx[0], "") == 0)
 		{
-			printf("parse error near '%s'\n", list->mtx[0]);
+			parse_error_gen(list);
 			return (1);
 		}
 		list = list->next;

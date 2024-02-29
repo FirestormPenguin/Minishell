@@ -36,15 +36,15 @@ static	t_list	*create_node(char **mtx, int *i, int *next_type)
 	list->type = *next_type;
 	while (mtx[*i])
 	{
-		list->mtx[j] = mtx[*i];
-		j++;
-		(*i)++;
 		if (check_type(mtx[*i]) != WORD)
 		{
 			*next_type = check_type(mtx[*i]);
 			(*i)++;
 			break ;
 		}
+		list->mtx[j] = mtx[*i];
+		j++;
+		(*i)++;
 	}
 	list->mtx[j] = NULL;
 	return (list);
@@ -53,10 +53,7 @@ static	t_list	*create_node(char **mtx, int *i, int *next_type)
 void	init_first_node(t_list **list, char **mtx, int *i, int *next_type)
 {
 	if (check_type(mtx[*i]) != WORD)
-	{
 		*next_type = check_type(mtx[*i]);
-		(*i)++;
-	}
 	*list = create_node(mtx, i, next_type);
 }
 
