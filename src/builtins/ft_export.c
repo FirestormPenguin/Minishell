@@ -30,6 +30,7 @@ void	exp_no_argument(char **args, t_env4mini *all, int index)
 	index = 0;
 	while (env_copy[index])
 	{
+		ft_putstr("declare -x ");
 		ft_putstr(env_copy[index]);
 		ft_putstr("\n");
 		free(env_copy[index]);
