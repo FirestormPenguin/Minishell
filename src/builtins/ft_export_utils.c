@@ -6,13 +6,12 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 02:17:04 by mivendit          #+#    #+#             */
-/*   Updated: 2024/02/27 09:36:59 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/01 08:51:25 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*gestire export var++=value
-primo valore di nome var non deve essere un numero
-export concatenati*/
+fanculo agli export concatenati*/
 
 #include "../../include/minishell.h"
 
@@ -20,28 +19,35 @@ void	ft_setenv(char *name, char *value, t_env4mini *all)
 {
 	int		i;
 	char	*temp;
+	int		size;
 
 	i = 0;
 	while (all->env[i])
 	{
 		if (ft_strncmp(all->env[i], name, ft_strlen(name)) == 0)
 		{
-			temp = all->env[i];
-			all->env[i] = ft_strjoin(name, "=");
-			free(temp);
-			temp = all->env[i];
-			all->env[i] = ft_strjoin(all->env[i], value);
-			free(temp);
+			free(all->env[i]);
+			if (value && *value != '\0')
+				all->env[i] = ft_strjoin(ft_strjoin(name, "="), value);
+			else
+				all->env[i] = ft_strjoin(name, "");
 			return ;
 		}
 		i++;
 	}
+
+	if (value && *value != '\0')
+		all->env[i] = ft_strjoin(ft_strjoin(name, "="), value);
+	else
+		all->env[i] = ft_strjoin(name, "");
+	size = i + 2;
 	temp = all->env[i];
-	all->env[i] = ft_strjoin(name, "");
-	free(temp);
-	temp = all->env[i];
-	all->env[i] = ft_strjoin(all->env[i], value);
-	free(temp);
+	all->env = (char **)realloc(all->env, size * sizeof(char *));
+	if (!all->env)
+	{
+		printf("all->env in ft_setenv realloc error\n");
+		return ;
+	}
 	all->env[i + 1] = NULL;
 }
 
