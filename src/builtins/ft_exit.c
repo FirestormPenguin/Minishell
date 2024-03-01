@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-void	ft_exit(char **args)
+void	ft_exit(char **args, t_grb_collector *grb_ptr)
 {
 	int	exit_value;
 
@@ -36,5 +36,5 @@ void	ft_exit(char **args)
 			exit_value = 2;
 		}
 	}
-	free_exit(exit_value);
+	free_exit(exit_value, grb_ptr);
 }

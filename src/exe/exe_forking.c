@@ -22,6 +22,8 @@ void	set_in_out_pipe(t_process *proc)
 
 int	check_b_e(t_list *list, t_process *proc, t_list *tmp_list, int pipe_count)
 {
+	t_grb_collector	*grb_ptr;
+
 	if (check_builtins(list, proc))
 	{
 		close(proc->saved_fd);
@@ -31,7 +33,8 @@ int	check_b_e(t_list *list, t_process *proc, t_list *tmp_list, int pipe_count)
 			if (!ft_strncmp(proc->args[0], "cd", 3))
 				return (1);
 		}
-		import_builtins(list, proc);
+		grb_ptr = set_garbage_collector(list, proc);
+		import_builtins(list, proc, grb_ptr);
 		return (1);
 	}
 	else if (check_env_command(list, proc))

@@ -54,13 +54,13 @@ int	check_env_command(t_list *list, t_process *proc)
 	return (0);
 }
 
-int	import_builtins(t_list *list, t_process *proc)
+int	import_builtins(t_list *list, t_process *proc, t_grb_collector *grb_ptr)
 {
 	int	result;
 
 	if (ft_strcmp(proc->args[0], "exit") == 0)
 	{
-		ft_exit(proc->args);
+		ft_exit(proc->args, grb_ptr);
 	}
 	else if (ft_strcmp(proc->args[0], "echo") == 0)
 	{

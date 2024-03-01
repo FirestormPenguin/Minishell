@@ -12,36 +12,36 @@
 
 #include "../include/minishell.h"
 
-void	*struct_box(t_struct_pointers *ptr_struct, int operation)
-{
-	static t_struct_pointers	*this_ptr_struct;
+// void	*struct_box(t_struct_pointers *ptr_struct, int operation)
+// {
+// 	static t_struct_pointers	*this_ptr_struct;
 
-	this_ptr_struct = NULL;
-	if (operation == SET_ACTUAL)
-	{
-		this_ptr_struct = ptr_struct;
-		return (NULL);
-	}
-	else if (operation == GET_ARGS)
-		return (this_ptr_struct->args_ptr);
-	else if (operation == GET_LIST)
-		return (this_ptr_struct->list_ptr);
-	else if (operation == GET_PARSER)
-		return (this_ptr_struct->parser_ptr);
-	else if (operation == GET_ENV)
-		return (this_ptr_struct->env_ptr);
-	return (NULL);
-}
+// 	this_ptr_struct = NULL;
+// 	if (operation == SET_ACTUAL)
+// 	{
+// 		this_ptr_struct = ptr_struct;
+// 		return (NULL);
+// 	}
+// 	// else if (operation == GET_ARGS)
+// 	// 	return (this_ptr_struct->args_ptr);
+// 	else if (operation == GET_LIST)
+// 		return (this_ptr_struct->list_ptr);
+// 	else if (operation == GET_PARSER)
+// 		return (this_ptr_struct->parser_ptr);
+// 	else if (operation == GET_ENV)
+// 		return (this_ptr_struct->env_ptr);
+// 	return (NULL);
+// }
 
-void	free_args(t_args *args)
-{
-	if (args)
-	{
-		if (args->str)
-			free(args->str);
-		free(args);
-	}
-}
+// void	free_args(t_args *args)
+// {
+// 	if (args)
+// 	{
+// 		if (args->str)
+// 			free(args->str);
+// 		free(args);
+// 	}
+// }
 
 void	free_list(t_list *list)
 {
@@ -75,10 +75,6 @@ void	free_parser(t_parser *pars)
 		free (pars->tokens);
 	if (pars->input_copy)
 		free (pars->input_copy);
-	if (pars->tmp_token)
-		free (pars->tmp_token);
-	if (pars)
-		free (pars);
 }
 
 void	free_env4mini(t_env4mini *env)

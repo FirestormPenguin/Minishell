@@ -22,17 +22,20 @@ void	free_all_generic(char *path, char **args)
 		unlink("HERE_DOC");
 }
 
-void	free_exit(int exit_code)
+void	free_exit(int exit_code, t_grb_collector *grb_ptr)
 {
-	t_struct_pointers	*ptr_struct;
+	// t_struct_pointers	*ptr_struct;
 
-	ptr_struct = (t_struct_pointers *)struct_box(NULL, SET_ACTUAL);
-	if (ptr_struct)
-	{
-		free_args(ptr_struct->args_ptr);
-		free_list(ptr_struct->list_ptr);
-		//free_parser(ptr_struct->parser_ptr);
-		free_env4mini(ptr_struct->env_ptr);
-	}
+	// ptr_struct = (t_struct_pointers *)struct_box(NULL, SET_ACTUAL);
+	// if (ptr_struct)
+	// {
+		// free_list(ptr_struct->list_ptr);
+		// free_parser(ptr_struct->parser_ptr);
+		// free_env4mini(ptr_struct->env_ptr);
+	// }
+	free_list(grb_ptr->list_ptr);
+	free_parser(grb_ptr->parser_ptr);
+	free_env4mini(grb_ptr->env_ptr);
+	free (grb_ptr);
 	exit(exit_code);
 }

@@ -19,6 +19,7 @@ void	get_input(t_env4mini *all, t_parser *pars)
 	char	*input_string;
 	t_list	*list;
 
+	all->pars = pars;
 	while (1)
 	{
 		signal(SIGINT, sigint_handle);

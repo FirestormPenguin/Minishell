@@ -94,7 +94,5 @@ t_list	*parser(char *str, t_parser *pars)
 	if (mtx == NULL)
 		return (NULL);
 	list_head = init_list(mtx);
-	//free_parser(pars);
-	//free_double_pointer(mtx);
 	return (list_head);
 }
