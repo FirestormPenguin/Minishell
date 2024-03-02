@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/27 10:26:23 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/02 23:39:56 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,7 @@ int				find_valid_equals(char *str);
 int				check_builtins(t_list *list, t_process *proc);
 int				check_env_command(t_list *list, t_process *proc);
 int				execute_env_command(t_list *list, t_process *proc);
+int				is_valid_str(char *str);
 
 /*Signal*/
 void			sigquit_handle(int sig);

@@ -82,17 +82,16 @@ void	while_export(char **args, int i, t_env4mini *all)
 
 	while (args[++i])
 	{
-		if (ft_isdigit(args[i][0]))
+		equals_index = find_valid_equals(args[i]);
+		if (ft_isdigit(args[i][0]) || equals_index == 2 || !is_valid_str(args[i]))
 		{
 			printf("Mini: export: `%s': not a valid identifier\n", args[i++]);
 			continue ;
 		}
-		equals_index = find_valid_equals(args[i]);
 		if (equals_index == -1)
 		{
-			printf("Mini: export: `%s': not a valid identifier\n", args[2]);
+			printf("Mini: export: `%s': not a valid identifier\n", args[i]);
 			ft_setenv(args[1], "", all);
-			return ;
 		}
 		j = 0;
 		while (args[i][j] && args[i][j] != '=')

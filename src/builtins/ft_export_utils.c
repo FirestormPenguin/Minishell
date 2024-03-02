@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 02:17:04 by mivendit          #+#    #+#             */
-/*   Updated: 2024/03/01 08:51:25 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/03 00:39:31 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_setenv(char *name, char *value, t_env4mini *all)
 		all->env[i] = ft_strjoin(name, "");
 	size = i + 2;
 	temp = all->env[i];
-	all->env = (char **)realloc(all->env, size * sizeof(char *));
+	all->env = (char **)ft_realloc(all->env, sizeof(char *), i + 1, size);
 	if (!all->env)
 	{
 		printf("all->env in ft_setenv realloc error\n");
@@ -60,11 +60,27 @@ int	find_valid_equals(char *str)
 	{
 		if (str[i] == '=')
 		{
-			if (i > 0 && str[i - 1] != ' ')
+			if ((i > 0 && str[i - 1] == '+' && (str[i - 2] != ' ' || str[i - 2] != '+')))
+				return (2);
+			if ((i > 0 && str[i - 1] != ' ' ))
 				return (0);
 			else
 				return (-1);
 		}
+		i++;
+	}
+	return (1);
+}
+
+int	is_valid_str(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isalpha(str[i]) && str[i] != '_' && str[i] != '+' && str[i] != '=' )
+			return (0);
 		i++;
 	}
 	return (1);

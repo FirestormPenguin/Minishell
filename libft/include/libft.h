@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 19:08:33 by mivendit          #+#    #+#             */
-/*   Updated: 2024/02/20 19:10:08 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/03 00:44:02 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,6 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	ft_putstr(char *s);
 void	ft_qsort(char **arr, int low, int high);
 char	*ft_itoa(int n);
+int		ft_isalpha(int c);
+void	*ft_realloc(void *old_pointer, size_t element_size, int old_dim, int new_dim);
 #endif
