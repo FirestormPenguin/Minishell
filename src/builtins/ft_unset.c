@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 02:17:30 by mivendit          #+#    #+#             */
-/*   Updated: 2024/02/20 02:18:19 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/03 01:38:12 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_unset(char **args, t_env4mini *all)
 		j = 0;
 		while (all->env[j])
 		{
-			if (ft_strncmp(all->env[j], args[i], ft_strlen(args[i])) == 0)
+			if (ft_strcmp(all->env[j], args[i]) == 0)
 			{
 				free(all->env[j]);
 				while (all->env[j])
