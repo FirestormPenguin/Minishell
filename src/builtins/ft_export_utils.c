@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 02:17:04 by mivendit          #+#    #+#             */
-/*   Updated: 2024/03/03 00:39:31 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/03 01:21:42 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,12 @@ int	find_valid_equals(char *str)
 	{
 		if (str[i] == '=')
 		{
-			if ((i > 0 && str[i - 1] == '+' && (str[i - 2] != ' ' || str[i - 2] != '+')))
-				return (2);
-			if ((i > 0 && str[i - 1] != ' ' ))
+			if (i > 0 && str[i - 1] == '+')
+			{
+				if ((str[i - 2] == ' ' || str[i - 2] == '+' || !str[i - 2]))
+					return (2);
+			}
+			if ((i > 0 && str[i - 1] != ' '))
 				return (0);
 			else
 				return (-1);
