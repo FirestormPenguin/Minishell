@@ -29,6 +29,7 @@ void	while_exe(t_list *list, t_process *proc, int i, int pipe_count)
 		free_all_generic(proc->path, proc->args);
 		pipe_count--;
 	}
+	free_list(list);
 }
 
 void	exe(t_list *list, t_env4mini *all)

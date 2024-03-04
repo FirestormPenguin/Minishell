@@ -95,6 +95,7 @@ typedef struct s_grb_collector
 	t_list		*list_ptr;
 	t_env4mini	*env_ptr;
 	t_parser	*parser_ptr;
+	t_process	*proc_ptr;
 }	t_grb_collector;
 
 /*Main*/

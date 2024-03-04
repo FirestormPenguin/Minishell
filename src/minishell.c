@@ -52,7 +52,7 @@ int	main(int ac, char **av, char **envp)
 	increment_shlvl(all);
 	pars.cp_env = all;
 	get_input(all, &pars);
-	free_env(all);
-	free(all);
+	// free_env(all);
+	// free(all);
 	return (0);
 }

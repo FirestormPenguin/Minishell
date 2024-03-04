@@ -16,10 +16,11 @@ t_grb_collector	*set_garbage_collector (t_list *list, t_process *proc)
 {
 	t_grb_collector	*tmp;
 
-	tmp = ft_calloc(1, sizeof(t_grb_collector));
+	tmp = malloc(sizeof(t_grb_collector));
 	tmp->list_ptr = list;
 	tmp->env_ptr = proc->all;
 	tmp->parser_ptr = proc->all->pars;
+	tmp->proc_ptr = proc;
 	return (tmp);
 }
 

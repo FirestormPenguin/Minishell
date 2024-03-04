@@ -49,6 +49,7 @@ void	ft_setenv(char *name, char *value, t_env4mini *all)
 		return ;
 	}
 	all->env[i + 1] = NULL;
+	free (value);
 }
 
 int	find_valid_equals(char *str)

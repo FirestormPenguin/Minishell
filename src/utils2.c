@@ -36,6 +36,9 @@ void	free_exit(int exit_code, t_grb_collector *grb_ptr)
 	free_list(grb_ptr->list_ptr);
 	free_parser(grb_ptr->parser_ptr);
 	free_env4mini(grb_ptr->env_ptr);
+	free(grb_ptr->proc_ptr->path);
+	free_double_pointer(grb_ptr->proc_ptr->args);
 	free (grb_ptr);
+	fscanf(stdin, "c");
 	exit(exit_code);
 }
