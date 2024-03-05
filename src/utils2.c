@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 13:27:21 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/26 11:05:32 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/05 12:12:45 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ void	free_exit(int exit_code, t_grb_collector *grb_ptr)
 	free(grb_ptr->proc_ptr->path);
 	free_double_pointer(grb_ptr->proc_ptr->args);
 	free (grb_ptr);
-	fscanf(stdin, "c");
+	fscanf(stdin, "c"); // TODO: TOGLIMI
 	exit(exit_code);
 }

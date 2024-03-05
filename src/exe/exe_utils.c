@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:45:33 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/26 11:19:50 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/05 12:04:38 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	check_pipe_at_first(t_list *list, int flag)
 void	parse_error_gen(t_list *list)
 {
 	char	*s;
-	
+
 	s = malloc(sizeof(char) * 5);
 	if (list->next)
 	{
@@ -116,8 +116,12 @@ char	*ft_getenv(char *name, char **env)
 	}
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], name, len) == 0 && env[i][len] == '=')
-			return (&env[i][len + 1]);
+		if (ft_strncmp(env[i], name, len) == 0)
+		{
+			if (env[i][len] == '=')
+				return (&env[i][len + 1]);
+			return (&env[i][len]);
+		}
 		i++;
 	}
 	return (NULL);

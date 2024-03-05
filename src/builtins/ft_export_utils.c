@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 02:17:04 by mivendit          #+#    #+#             */
-/*   Updated: 2024/03/03 01:21:42 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/05 11:55:25 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	ft_setenv(char *name, char *value, t_env4mini *all)
 		return ;
 	}
 	all->env[i + 1] = NULL;
-	free (value);
 }
 
 int	find_valid_equals(char *str)
