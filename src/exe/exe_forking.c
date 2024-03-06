@@ -91,7 +91,7 @@ void	child(t_process *proc, int pipe_count)
 		printf("%s: command not found\n", proc->args[0]);
 		exit(127);
 	}
-	exit (1);
+	exit(1);
 }
 
 void	forking(t_list *list, t_process *proc, t_list *tmp_list, int pipe_count)

@@ -33,31 +33,34 @@
 // 	return (NULL);
 // }
 
-// void	free_args(t_args *args)
-// {
-// 	if (args)
-// 	{
-// 		if (args->str)
-// 			free(args->str);
-// 		free(args);
-// 	}
-// }
-
 void	free_list(t_list *list)
 {
 	int	i;
 
 	i = 0;
-	if (list)
+	// while (list->mtx[i])
+	// {
+	// 	printf ("mtx lis : %s", list->mtx[i]);
+	// 	i++;
+	// }
+	i = 0;
+	// printf ("test list\n");
+	//printf ("mtx list : %p\n", list);
+	while (list)
 	{
 		while (list->mtx[i])
 		{
 			free(list->mtx[i]);
+			list->mtx[i] = NULL;
 			i++;
 		}
 		free(list->mtx);
-		free(list);
+		list->mtx = NULL;
+		// printf ("p: %p\n", list);
+		list = list->next;
 	}
+	free(list);
+	list = NULL;
 }
 
 void	free_parser(t_parser *pars)
@@ -68,13 +71,16 @@ void	free_parser(t_parser *pars)
 	while (pars->tokens[i])
 	{
 		if (pars->tokens[i])
+		{
 			free (pars->tokens[i]);
+			pars->tokens[i] = NULL;
+		}
 		i++;
 	}
-	if (pars->tokens)
-		free (pars->tokens);
-	if (pars->input_copy)
-		free (pars->input_copy);
+	free (pars->tokens);
+	pars->tokens = NULL;
+	free (pars->input_copy);
+	pars->input_copy = NULL;
 }
 
 void	free_env4mini(t_env4mini *env)
@@ -87,9 +93,12 @@ void	free_env4mini(t_env4mini *env)
 		while (env->env[i])
 		{
 			free(env->env[i]);
+			env->env[i] = NULL;
 			i++;
 		}
 		free(env->env);
+		env->env = NULL;
 		free(env);
+		env = NULL;
 	}
 }

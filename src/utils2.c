@@ -33,12 +33,21 @@ void	free_exit(int exit_code, t_grb_collector *grb_ptr)
 		// free_parser(ptr_struct->parser_ptr);
 		// free_env4mini(ptr_struct->env_ptr);
 	// }
+	// t_list *tmp_list = grb_ptr->list_ptr;
+	// while (tmp_list)
+	// {
+	// 	printf ("p: %p\n", tmp_list);
+
+	// 	tmp_list = tmp_list->next;
+	// }
 	free_list(grb_ptr->list_ptr);
+	// printf("\tpost proc P: %p\n", grb_ptr->proc_ptr);
 	free_parser(grb_ptr->parser_ptr);
 	free_env4mini(grb_ptr->env_ptr);
 	free(grb_ptr->proc_ptr->path);
 	free_double_pointer(grb_ptr->proc_ptr->args);
 	free (grb_ptr);
+	grb_ptr = NULL;
 	fscanf(stdin, "c"); // TODO: TOGLIMI
 	exit(exit_code);
 }
