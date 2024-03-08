@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-void	exp_no_argument(char **args, t_env4mini *all, int index)
+void	exp_no_argument(t_env4mini *all, int index)
 {
 	char	**env_copy;
 
@@ -107,6 +107,6 @@ void	while_export(char **args, int i, t_env4mini *all)
 void	ft_export(char **args, t_env4mini *all)
 {
 	if (!args[1])
-		exp_no_argument(args, all, 1);
+		exp_no_argument(all, 1);
 	while_export(args, 0, all);
 }

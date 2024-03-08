@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 02:17:04 by mivendit          #+#    #+#             */
-/*   Updated: 2024/03/05 11:55:25 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/08 22:22:08 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ fanculo agli export concatenati*/
 void	ft_setenv(char *name, char *value, t_env4mini *all)
 {
 	int		i;
-	char	*temp;
 	int		size;
+	char	*joined;
 
 	i = 0;
 	while (all->env[i])
@@ -28,7 +28,11 @@ void	ft_setenv(char *name, char *value, t_env4mini *all)
 		{
 			free(all->env[i]);
 			if (value && *value != '\0')
-				all->env[i] = ft_strjoin(ft_strjoin(name, "="), value);
+			{
+				joined = ft_strjoin(name, "=");
+				all->env[i] = ft_strjoin(joined, value);
+				free(joined);
+			}
 			else
 				all->env[i] = ft_strjoin(name, "");
 			return ;
@@ -37,11 +41,14 @@ void	ft_setenv(char *name, char *value, t_env4mini *all)
 	}
 
 	if (value && *value != '\0')
-		all->env[i] = ft_strjoin(ft_strjoin(name, "="), value);
+	{
+		joined = ft_strjoin(name, "=");
+		all->env[i] = ft_strjoin(joined, value);
+		free(joined);
+	}
 	else
 		all->env[i] = ft_strjoin(name, "");
 	size = i + 2;
-	temp = all->env[i];
 	all->env = (char **)ft_realloc(all->env, sizeof(char *), i + 1, size);
 	if (!all->env)
 	{

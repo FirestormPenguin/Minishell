@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/03/02 23:39:56 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/08 22:54:47 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void			free_exit(int exit_code, t_grb_collector *grb_ptr);
 /*Parser*/
 t_list			*parser(char *str, t_parser *pars);
 t_list			*init_list(char **mtx);
-static t_list	*ft_lstnew(void);
+t_list			*ft_lstnew(void);
 
 /*Parser Utils*/
 int				check_type(char *str);
@@ -139,8 +139,8 @@ void			forking(t_list *list, t_process *proc,
 
 /*Exe Utils*/
 int				check_error_redirection(t_list *list);
-int				setup_redirection(t_list *list, t_process *proc);
-void			init_vars(t_process *proc, int *i, t_env4mini *all);
+int				setup_redirection(t_list *list);
+void			init_vars(t_process *proc, int *i);
 t_list			*fill_args(t_list *list, t_process *proc, int i);
 int				check_mtx(t_list *list, t_process *proc, int i);
 char			*path_finder(char **cmd, t_env4mini *all);
@@ -148,13 +148,13 @@ char			*ft_getenv(char *name, char **env);
 t_grb_collector	*set_garbage_collector (t_list *list, t_process *proc);
 
 /*Redirections*/
-void			input(char *str, t_process *proc);
-void			output(char *str, t_process *proc);
-void			append(char *str, t_process *proc);
-void			here_doc(char *str, t_process *proc);
+void			input(char *str);
+void			output(char *str);
+void			append(char *str);
+void			here_doc(char *str);
 
 /*Redirections_utils*/
-void			redirections(t_list *list, t_process *proc);
+void			redirections(t_list *list);
 void			write_into_fd(char *str);
 
 /*Enviromenrt*/
@@ -174,11 +174,11 @@ void			ft_unset(char **args, t_env4mini *all);
 
 /*Utils Built-in*/
 void			ft_setenv(char *name, char *value, t_env4mini *all);
-int				import_builtins(t_list *list, t_process *proc, t_grb_collector *grb_ptr);
+int				import_builtins(t_process *proc, t_grb_collector *grb_ptr);
 int				find_valid_equals(char *str);
-int				check_builtins(t_list *list, t_process *proc);
-int				check_env_command(t_list *list, t_process *proc);
-int				execute_env_command(t_list *list, t_process *proc);
+int				check_builtins(t_process *proc);
+int				check_env_command(t_process *proc);
+int				execute_env_command(t_process *proc);
 int				is_valid_str(char *str);
 
 /*Signal*/

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_tokenizer.c                                  :+:      :+:    :+:   */
+/*   utils_tokenizer2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 13:27:44 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/23 09:13:19 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/08 21:49:16 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	question_expander(t_parser *p)
 	{
 		exit_code_str = ft_itoa(g_last_exit_code);
 		i = 0;
-		while (i < ft_strlen(exit_code_str))
+		while ((size_t)i < ft_strlen(exit_code_str))
 		{
 			p->tmp_token[p->i2++] = exit_code_str[i];
 			i++;

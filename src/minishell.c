@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/27 10:11:59 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/08 23:16:47 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	get_input(t_env4mini *all, t_parser *pars)
 			list = parser(input_string, pars);
 			add_history(input_string);
 			exe(list, all);
-			free_list(list);
+			//free_list(list);
 		}
 		free(input_string);
 	}

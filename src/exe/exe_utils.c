@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:45:33 by egiubell          #+#    #+#             */
-/*   Updated: 2024/03/05 12:04:38 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/08 22:54:53 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,19 +81,27 @@ int	check_error_redirection(t_list *list)
 	return (0);
 }
 
-int	setup_redirection(t_list *list, t_process *proc)
+int	setup_redirection(t_list *list)
 {
-	int	count;
+	int		count;
+	//int		flag;
+	//t_list	*tmp;
 
+	//flag = 0;
 	count = 0;
 	while (list)
 	{
 		if (list->type != WORD && list->type != PIPE)
 		{
-			redirections(list, proc);
+			redirections(list);
 			count++;
 		}
+		//tmp = list;
 		list = list->next;
+		//if(tmp == curr_list)
+		//	flag = 1;
+		//if (!flag)
+		//	free(tmp);
 		if (list == NULL || list->type == PIPE)
 			break ;
 	}

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exe.c                                              :+:      :+:    :+:   */
+/*   exe_forking.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:23:54 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/26 11:27:47 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/08 22:55:23 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	set_in_out_pipe(t_process *proc)
 	proc->saved_fd = proc->pipe_fd[0];
 }
 
-int	check_b_e(t_list *list, t_process *proc, t_list *tmp_list, int pipe_count)
+int	check_b_e(t_list *list, t_process *proc, int pipe_count)
 {
 	t_grb_collector	*grb_ptr;
 
-	if (check_builtins(list, proc))
+	if (check_builtins(proc))
 	{
 		close(proc->saved_fd);
 		if (pipe_count)
@@ -34,15 +34,15 @@ int	check_b_e(t_list *list, t_process *proc, t_list *tmp_list, int pipe_count)
 				return (1);
 		}
 		grb_ptr = set_garbage_collector(list, proc);
-		import_builtins(list, proc, grb_ptr);
+		import_builtins(proc, grb_ptr);
 		return (1);
 	}
-	else if (check_env_command(list, proc))
+	else if (check_env_command(proc))
 	{
 		close(proc->saved_fd);
 		if (pipe_count)
 			set_in_out_pipe(proc);
-		execute_env_command(list, proc);
+		execute_env_command(proc);
 		return (1);
 	}
 	return (0);
@@ -101,10 +101,10 @@ void	forking(t_list *list, t_process *proc, t_list *tmp_list, int pipe_count)
 	proc->red_ctrl = 0;
 	if (pipe_count)
 		pipe(proc->pipe_fd);
-	proc->red_ctrl = setup_redirection(tmp_list, proc);
+	proc->red_ctrl = setup_redirection(tmp_list);
 	if (!proc->args)
 			return ;
-	if (check_b_e(list, proc, tmp_list, pipe_count) == 1)
+	if (check_b_e(list, proc, pipe_count) == 1)
 		return ;
 	proc->pid = fork();
 	if (proc->pid)

@@ -6,18 +6,16 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/26 11:15:06 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/08 22:59:46 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static	t_list	*ft_lstnew(void)
+t_list	*ft_lstnew(void)
 {
 	t_list	*tmp_node;
-	int		i;
 
-	i = 0;
 	tmp_node = NULL;
 	tmp_node = malloc(sizeof(t_list));
 	tmp_node->mtx = malloc (sizeof(char *) * 100);
@@ -81,6 +79,8 @@ t_list	*init_list(char **mtx)
 			list = list->next;
 		}
 	}
+	free(mtx);
+	mtx = NULL;
 	return (list_h);
 }
 

@@ -1,8 +1,8 @@
 NAME = minishell
 INCLUDE = ./include
 CC = gcc -g
-# CFLAGS = -Wall -Wextra -Werror -lreadline -I./include
-CFLAGS = -lreadline -I./include
+CFLAGS = -Wall -Wextra -Werror -lreadline -I./include
+#CFLAGS = -lreadline -I./include
 SRC_DIR = ./src
 OBJ_DIR = ./obj
 
@@ -34,7 +34,7 @@ SRC = 	$(SRC_DIR)/minishell.c\
 		$(SRC_DIR)/builtins/ft_export.c\
 		$(SRC_DIR)/builtins/import_builtins.c\
 		$(SRC_DIR)/builtins/ft_export_utils.c\
-		$(SRC_DIR)/builtins/ft_unset.c\
+		$(SRC_DIR)/builtins/ft_unset.c
 
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 RM = rm -rf

@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 13:27:44 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/23 09:13:19 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/08 21:48:51 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	base_expander(t_parser *p)
 		if (var_value != NULL)
 		{
 			i = 0;
-			while (i < strlen(var_value))
+			while ((size_t)i < strlen(var_value))
 			{
 				p->tmp_token[p->i2++] = var_value[i];
 				i++;

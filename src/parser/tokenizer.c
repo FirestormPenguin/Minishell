@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 13:27:36 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/26 11:10:26 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/08 23:09:26 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ char	**tokenizer(char *input, int *token_count, t_parser *p)
 		tokenize_parser(p);
 		p->tmp_token[p->i2] = '\0';
 		p->tokens[p->i3++] = ft_strdup(p->tmp_token);
+		printf("|%s|\n", p->tokens[p->i3-1]);
 		p->count++;
 	}
 	*token_count = p->count;

@@ -37,6 +37,7 @@ int	check_cd_home(char **args, char *home)
 		perror("cd");
 		return (1);
 	}
+	return (0);
 }
 
 int	check_cd_err(char **args)
@@ -46,6 +47,7 @@ int	check_cd_err(char **args)
 		printf("minishell: cd: %s: No such file or directory\n", args[1]);
 		return (1);
 	}
+	return (0);
 }
 
 void	update_pwd(t_env4mini *all)

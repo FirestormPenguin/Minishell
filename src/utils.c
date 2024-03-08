@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 13:27:21 by egiubell          #+#    #+#             */
-/*   Updated: 2024/02/26 11:05:32 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/08 23:25:03 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,32 +35,29 @@
 
 void	free_list(t_list *list)
 {
-	int	i;
+	int		i;
 
+	t_list	*tmp;
 	i = 0;
-	// while (list->mtx[i])
-	// {
-	// 	printf ("mtx lis : %s", list->mtx[i]);
-	// 	i++;
-	// }
-	i = 0;
-	// printf ("test list\n");
-	//printf ("mtx list : %p\n", list);
 	while (list)
 	{
+		printf("%d %p %p\n", list->type, list->next, NULL);
 		while (list->mtx[i])
 		{
+			printf("|%s|\n",list->mtx[i]);
 			free(list->mtx[i]);
 			list->mtx[i] = NULL;
 			i++;
 		}
 		free(list->mtx);
 		list->mtx = NULL;
-		// printf ("p: %p\n", list);
+		tmp = list;
 		list = list->next;
+		printf("%p %p\n", list, tmp);
+		free(tmp);
+		tmp = NULL;
+
 	}
-	free(list);
-	list = NULL;
 }
 
 void	free_parser(t_parser *pars)
@@ -92,6 +89,7 @@ void	free_env4mini(t_env4mini *env)
 	{
 		while (env->env[i])
 		{
+			//printf("%s\n", env->env[i]);
 			free(env->env[i]);
 			env->env[i] = NULL;
 			i++;

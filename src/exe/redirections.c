@@ -6,13 +6,13 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/02/23 13:55:51 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/08 21:52:36 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	input(char *str, t_process *proc)
+void	input(char *str)
 {
 	int	input_fd;
 
@@ -24,7 +24,7 @@ void	input(char *str, t_process *proc)
 	close(input_fd);
 }
 
-void	output(char *str, t_process *proc)
+void	output(char *str)
 {
 	int	output_fd;
 
@@ -36,7 +36,7 @@ void	output(char *str, t_process *proc)
 	close(output_fd);
 }
 
-void	append(char *str, t_process *proc)
+void	append(char *str)
 {
 	int	fd_append;
 
@@ -48,7 +48,7 @@ void	append(char *str, t_process *proc)
 	close(fd_append);
 }
 
-void	here_doc(char *str, t_process *proc)
+void	here_doc(char *str)
 {
 	char	*input_line;
 	char	*tmp_str;
@@ -65,5 +65,5 @@ void	here_doc(char *str, t_process *proc)
 		free(input_line);
 	}
 	write_into_fd(tmp_str);
-	input("HERE_DOC", proc);
+	input("HERE_DOC");
 }

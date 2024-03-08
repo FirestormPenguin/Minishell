@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 13:27:21 by egiubell          #+#    #+#             */
-/*   Updated: 2024/03/05 12:12:45 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/08 22:12:07 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ void	free_exit(int exit_code, t_grb_collector *grb_ptr)
 
 	// 	tmp_list = tmp_list->next;
 	// }
+
 	free_list(grb_ptr->list_ptr);
 	// printf("\tpost proc P: %p\n", grb_ptr->proc_ptr);
-	free_parser(grb_ptr->parser_ptr);
 	free_env4mini(grb_ptr->env_ptr);
 	free(grb_ptr->proc_ptr->path);
 	free_double_pointer(grb_ptr->proc_ptr->args);
-	free (grb_ptr);
+	free(grb_ptr);
 	grb_ptr = NULL;
 	fscanf(stdin, "c"); // TODO: TOGLIMI
 	exit(exit_code);

@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-int	execute_env_command(t_list *list, t_process *proc)
+int	execute_env_command(t_process *proc)
 {
 	if (ft_strcmp(proc->args[0], "env") == 0 && (!proc->args[1]
 			|| ft_strcmp(proc->args[1], "") == 0))
@@ -36,7 +36,7 @@ int	execute_env_command(t_list *list, t_process *proc)
 	return (0);
 }
 
-int	check_env_command(t_list *list, t_process *proc)
+int	check_env_command(t_process *proc)
 {
 	if (ft_strcmp(proc->args[0], "env") == 0 && (!proc->args[1]
 			|| ft_strcmp(proc->args[1], "") == 0))
@@ -54,7 +54,7 @@ int	check_env_command(t_list *list, t_process *proc)
 	return (0);
 }
 
-int	import_builtins(t_list *list, t_process *proc, t_grb_collector *grb_ptr)
+int	import_builtins(t_process *proc, t_grb_collector *grb_ptr)
 {
 	int	result;
 
@@ -80,7 +80,7 @@ int	import_builtins(t_list *list, t_process *proc, t_grb_collector *grb_ptr)
 	return (0);
 }
 
-int	check_builtins(t_list *list, t_process *proc)
+int	check_builtins(t_process *proc)
 {
 	if (ft_strcmp(proc->args[0], "exit") == 0)
 	{
