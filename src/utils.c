@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 13:27:21 by egiubell          #+#    #+#             */
-/*   Updated: 2024/03/08 23:25:03 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/09 10:45:42 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,13 @@
 void	free_list(t_list *list)
 {
 	int		i;
-
 	t_list	*tmp;
-	i = 0;
+
 	while (list)
 	{
-		printf("%d %p %p\n", list->type, list->next, NULL);
+		i = 0; // i = 0 deve essere nel ciclo, altrimenti non funzionerà
 		while (list->mtx[i])
 		{
-			printf("|%s|\n",list->mtx[i]);
 			free(list->mtx[i]);
 			list->mtx[i] = NULL;
 			i++;
@@ -53,7 +51,6 @@ void	free_list(t_list *list)
 		list->mtx = NULL;
 		tmp = list;
 		list = list->next;
-		printf("%p %p\n", list, tmp);
 		free(tmp);
 		tmp = NULL;
 

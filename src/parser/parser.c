@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/03/08 22:59:46 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/09 10:45:14 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static	t_list	*create_node(char **mtx, int *i, int *next_type)
 		if (check_type(mtx[*i]) != WORD)
 		{
 			*next_type = check_type(mtx[*i]);
+			free(mtx[*i]); // aggiunta questa free per liberare la '|' che al momento stiamo saltando e non possiamo più puntarla quindi.
 			(*i)++;
 			break ;
 		}
