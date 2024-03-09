@@ -37,7 +37,7 @@ static	t_list	*create_node(char **mtx, int *i, int *next_type)
 		if (check_type(mtx[*i]) != WORD)
 		{
 			*next_type = check_type(mtx[*i]);
-			free(mtx[*i]); // aggiunta questa free per liberare la '|' che al momento stiamo saltando e non possiamo più puntarla quindi.
+			free(mtx[*i]);
 			(*i)++;
 			break ;
 		}

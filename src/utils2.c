@@ -24,25 +24,7 @@ void	free_all_generic(char *path, char **args)
 
 void	free_exit(int exit_code, t_grb_collector *grb_ptr)
 {
-	// t_struct_pointers	*ptr_struct;
-
-	// ptr_struct = (t_struct_pointers *)struct_box(NULL, SET_ACTUAL);
-	// if (ptr_struct)
-	// {
-		// free_list(ptr_struct->list_ptr);
-		// free_parser(ptr_struct->parser_ptr);
-		// free_env4mini(ptr_struct->env_ptr);
-	// }
-	// t_list *tmp_list = grb_ptr->list_ptr;
-	// while (tmp_list)
-	// {
-	// 	printf ("p: %p\n", tmp_list);
-
-	// 	tmp_list = tmp_list->next;
-	// }
-
 	free_list(grb_ptr->list_ptr);
-	// printf("\tpost proc P: %p\n", grb_ptr->proc_ptr);
 	free_env4mini(grb_ptr->env_ptr);
 	free(grb_ptr->proc_ptr->path);
 	free_double_pointer(grb_ptr->proc_ptr->args);

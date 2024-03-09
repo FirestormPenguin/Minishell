@@ -15,9 +15,7 @@
 void	while_exe(t_list *list, t_process *proc, int i, int pipe_count)
 {
 	t_list	*tmp_list;
-	// t_list	*h_list;
 
-	// h_list = list;
 	proc->saved_fd = dup(STDIN_FILENO);
 	while (list)
 	{
@@ -31,7 +29,6 @@ void	while_exe(t_list *list, t_process *proc, int i, int pipe_count)
 		free_all_generic(proc->path, proc->args);
 		pipe_count--;
 	}
-	// free_list(h_list);
 }
 
 void	exe(t_list *list, t_env4mini *all)

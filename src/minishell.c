@@ -32,7 +32,6 @@ void	get_input(t_env4mini *all, t_parser *pars)
 			list = parser(input_string, pars);
 			add_history(input_string);
 			exe(list, all);
-			//free_list(list);
 		}
 		free(input_string);
 	}
