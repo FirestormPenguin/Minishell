@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:23:54 by egiubell          #+#    #+#             */
-/*   Updated: 2024/03/08 22:55:23 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/09 14:44:27 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	check_b_e(t_list *list, t_process *proc, int pipe_count)
 		}
 		grb_ptr = set_garbage_collector(list, proc);
 		import_builtins(proc, grb_ptr);
+		free(grb_ptr);
 		return (1);
 	}
 	else if (check_env_command(proc))

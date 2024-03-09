@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:45:33 by egiubell          #+#    #+#             */
-/*   Updated: 2024/03/08 22:38:29 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/09 15:20:51 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ void	free_double_pointer(char **ptr)
 	i = 0;
 	while (ptr[i])
 	{
-		if (ptr[i])
-			free(ptr[i]);
+		free(ptr[i]);
+		ptr[i] = NULL;
 		i++;
 	}
-	if (ptr)
-		free(ptr);
+	free(ptr);
+	ptr = NULL;
 	return ;
 }
 
@@ -51,12 +51,17 @@ void	init_vars(t_process *proc, int *i)
 
 void	set_last_args(t_process *proc, int j)
 {
-	if (proc->args[j - 1] && proc->args[j - 1][0] == '\0')
-		proc->args[j - 1] = NULL;
-	else if (!proc->args[j] && !proc->args[j - 1])
-		proc->args = NULL;
+	if (proc->args)
+	{
+		if (!proc->args[j] && !proc->args[j - 1])
+			proc->args = NULL;
+		else if (proc->args[j - 1] && proc->args[j - 1][0] == '\0')
+			proc->args[j - 1] = NULL;
+		else
+			proc->args[j] = NULL;
+	}
 	else
-		proc->args[j] = NULL;
+		proc->args = NULL;
 }
 
 t_list	*fill_args(t_list *list, t_process *proc, int i)

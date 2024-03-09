@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:45:33 by egiubell          #+#    #+#             */
-/*   Updated: 2024/03/08 22:54:53 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/09 15:21:55 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,11 @@ void	parse_error_gen(t_list *list)
 			s = ">>";
 		else if (list->next->type == HERE_DOC)
 			s = "<<";
+		else if (list->next->type == PIPE)
+			s = "|";
 	}
 	printf("parse error near '%s'\n", s);
+	free (s);
 }
 
 int	check_error_redirection(t_list *list)
@@ -151,7 +154,10 @@ char	*path_finder(char **cmd, t_env4mini *all)
 	{
 		tmp = ft_strjoin(paths[i], "/");
 		if (!cmd)
+		{
+			free (tmp);
 			break ;
+		}
 		path = ft_strjoin(tmp, cmd[0]);
 		free(tmp);
 		if (access(path, F_OK) == 0)

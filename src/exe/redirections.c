@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/03/08 21:52:36 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/09 15:00:48 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,15 @@ void	here_doc(char *str)
 	{
 		input_line = readline("> ");
 		if (ft_strcmp(input_line, str) == 0)
+		{
+			free(input_line);
 			break ;
+		}
 		strcat(tmp_str, input_line);
 		strcat(tmp_str, "\n");
 		free(input_line);
 	}
 	write_into_fd(tmp_str);
+	free (tmp_str);
 	input("HERE_DOC");
 }

@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/03/08 23:16:47 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/09 14:57:58 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	main(int ac, char **av, char **envp)
 	increment_shlvl(all);
 	pars.cp_env = all;
 	get_input(all, &pars);
-	// free_env(all);
-	// free(all);
+	free_env(all);
+	free(all);
 	return (0);
 }
