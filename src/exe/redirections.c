@@ -36,7 +36,7 @@ void	output(char *str)
 	close(output_fd);
 }
 
-void	append(char *str)
+void	append(char *str) // to_fix (cat << m | ls) (cat < m | ls)
 {
 	int	fd_append;
 
@@ -54,7 +54,7 @@ void	here_doc(char *str)
 	char	*tmp_str;
 
 	input_line = NULL;
-	tmp_str = ft_calloc(1000, sizeof(char *));
+	tmp_str = ft_calloc(10000, sizeof(char));
 	while (1)
 	{
 		input_line = readline("> ");
@@ -68,6 +68,6 @@ void	here_doc(char *str)
 		free(input_line);
 	}
 	write_into_fd(tmp_str);
-	free (tmp_str);
+	free(tmp_str);
 	input("HERE_DOC");
 }

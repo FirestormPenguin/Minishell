@@ -72,8 +72,12 @@ t_list	*fill_args(t_list *list, t_process *proc, int i)
 	while (list)
 	{
 		i = 0;
+		//printf("type: %d %d %d\n", list->type, i, j);
 		if (list->type != WORD && list->type != PIPE)
+		//{
 			i++;
+			//j++;
+		//}
 		while (list->mtx[i])
 		{
 			proc->args[j] = malloc(strlen(list->mtx[i]) + 1);
@@ -86,7 +90,7 @@ t_list	*fill_args(t_list *list, t_process *proc, int i)
 		}
 	list = list->next;
 	if (list == NULL || list->type == PIPE)
-			break ;
+		break ;
 	}
 	set_last_args(proc, j);
 	return (list);

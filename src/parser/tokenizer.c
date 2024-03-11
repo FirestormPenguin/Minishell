@@ -60,7 +60,7 @@ char	**tokenizer(char *input, int *token_count, t_parser *p)
 		tokenize_parser(p);
 		p->tmp_token[p->i2] = '\0';
 		p->tokens[p->i3++] = ft_strdup(p->tmp_token);
-		printf("|%s|\n", p->tokens[p->i3-1]);
+		//printf("|%s|\n", p->tokens[p->i3-1]);
 		p->count++;
 	}
 	*token_count = p->count;

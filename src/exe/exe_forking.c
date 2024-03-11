@@ -71,6 +71,7 @@ void	parent(t_process *proc, int pipe_count)
 
 void	child(t_process *proc, int pipe_count)
 {
+	printf("|%d|%d\n", proc->red_ctrl, pipe_count);
 	if (pipe_count)
 	{
 		if (proc->red_ctrl != 1)

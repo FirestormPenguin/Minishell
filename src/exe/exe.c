@@ -48,6 +48,7 @@ void	exe(t_list *list, t_env4mini *all)
 	{
 		while (list)
 		{
+			printf("cmd: %s, type: %d\n", list->mtx[0], list->type);
 			if (list->type == PIPE)
 				pipe_count++;
 			list = list->next;

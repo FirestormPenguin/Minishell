@@ -20,7 +20,7 @@ void	redirections(t_list *list)
 		output(list->mtx[0]);
 	if (list->type == DOUBLE_OUT && list->mtx[0])
 		append(list->mtx[0]);
-	else if (list->type == HERE_DOC && list->mtx[0])
+	if (list->type == HERE_DOC && list->mtx[0])
 		here_doc(list->mtx[0]);
 }
 
