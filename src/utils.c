@@ -12,27 +12,6 @@
 
 #include "../include/minishell.h"
 
-// void	*struct_box(t_struct_pointers *ptr_struct, int operation)
-// {
-// 	static t_struct_pointers	*this_ptr_struct;
-
-// 	this_ptr_struct = NULL;
-// 	if (operation == SET_ACTUAL)
-// 	{
-// 		this_ptr_struct = ptr_struct;
-// 		return (NULL);
-// 	}
-// 	// else if (operation == GET_ARGS)
-// 	// 	return (this_ptr_struct->args_ptr);
-// 	else if (operation == GET_LIST)
-// 		return (this_ptr_struct->list_ptr);
-// 	else if (operation == GET_PARSER)
-// 		return (this_ptr_struct->parser_ptr);
-// 	else if (operation == GET_ENV)
-// 		return (this_ptr_struct->env_ptr);
-// 	return (NULL);
-// }
-
 void	free_list(t_list *list)
 {
 	int		i;
@@ -40,7 +19,7 @@ void	free_list(t_list *list)
 
 	while (list)
 	{
-		i = 0; // i = 0 deve essere nel ciclo, altrimenti non funzionerà
+		i = 0;
 		while (list->mtx[i])
 		{
 			free(list->mtx[i]);
@@ -86,7 +65,6 @@ void	free_env4mini(t_env4mini *env)
 	{
 		while (env->env[i])
 		{
-			//printf("%s\n", env->env[i]);
 			free(env->env[i]);
 			env->env[i] = NULL;
 			i++;

@@ -36,12 +36,10 @@ static	t_list	*create_node(char **mtx, int *i, int *next_type)
 	h_list = list;
 	while (mtx[*i])
 	{	
-		//printf("+|%s| %d %d\n", mtx[*i], *i, *next_type);
 		if (check_type(mtx[*i]) != WORD)
 		{
 			if (*next_type != WORD && *i != 0)
 			{
-				//printf("i: %d nt: %d t: %d\n", *i, *next_type, check_type(mtx[*i]));
 				list->type = *next_type;
 				list->mtx[0] = ft_strdup("echo");
 				list->mtx[1] = ft_strdup("-n");
@@ -52,27 +50,16 @@ static	t_list	*create_node(char **mtx, int *i, int *next_type)
 			}
 			(*i)++;
 		}
-		//printf("++|%s| %d %d\n", mtx[*i], *i, *next_type);
-		/*if (check_type(mtx[*i]) != WORD)
-		{
-			*next_type = check_type(mtx[*i]);
-			free(mtx[*i]);
-			(*i)++;
-			break ;
-		}*/
 		list->mtx[j] = mtx[*i];
 		j++;
 		(*i)++;
 		if (check_type(mtx[*i]) != WORD)
 		{
-			//if (j == 0)
-			//	list->mtx[j++] = ft_strdup("");
 			*next_type = check_type(mtx[*i]);
 			free(mtx[*i]);
 			(*i)++;
 			break ;
 		}
-		//printf("+|%s| %d\n", mtx[*i], *i);
 	}
 	list->mtx[j] = NULL;
 	return (h_list);
@@ -102,7 +89,6 @@ t_list	*init_list(char **mtx)
 		{
 			init_first_node(&list, mtx, &i, &next_type);
 			list_h = list;
-			//printf("f-%s %d\n", list->mtx[0], list->type);
 		}
 		else
 		{
@@ -110,11 +96,7 @@ t_list	*init_list(char **mtx)
 				list = list->next;
 			list->next = create_node(mtx, &i, &next_type);
 			while (list->next)
-			//{
-				//printf("-> .%s.%d\n", list->next->mtx[0], list->next->type);
 				list = list->next;
-			//}
-			//printf("f+%s %d\n", list->mtx[0], list->type);
 		}
 	}
 	free(mtx);

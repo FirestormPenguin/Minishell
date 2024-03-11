@@ -16,13 +16,11 @@ t_grb_collector	*set_garbage_collector(t_list *list, t_process *proc)
 {
 	t_grb_collector	*tmp;
 
-	//printf("\tpre proc: %p\n", proc);
 	tmp = malloc(sizeof(t_grb_collector));
 	tmp->list_ptr = list;
 	tmp->env_ptr = proc->all;
 	tmp->parser_ptr = proc->all->pars;
 	tmp->proc_ptr = proc;
-	//printf("\tpre proc P: %p\n", tmp->proc_ptr);
 	return (tmp);
 }
 
@@ -44,7 +42,6 @@ void	free_double_pointer(char **ptr)
 
 void	init_vars(t_process *proc, int *i)
 {
-	//proc->path = ft_calloc(1000, sizeof(char));
 	proc->args = ft_calloc(1000, sizeof(char *));
 	*i = 0;
 }
@@ -72,12 +69,8 @@ t_list	*fill_args(t_list *list, t_process *proc, int i)
 	while (list)
 	{
 		i = 0;
-		//printf("type: %d %d %d\n", list->type, i, j);
 		if (list->type != WORD && list->type != PIPE)
-		//{
 			i++;
-			//j++;
-		//}
 		while (list->mtx[i])
 		{
 			proc->args[j] = malloc(strlen(list->mtx[i]) + 1);
