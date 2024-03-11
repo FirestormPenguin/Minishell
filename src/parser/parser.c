@@ -35,7 +35,7 @@ static	t_list	*create_node(char **mtx, int *i, int *next_type)
 	list->type = *next_type;
 	h_list = list;
 	while (mtx[*i])
-	{
+	{	
 		//printf("+|%s| %d %d\n", mtx[*i], *i, *next_type);
 		if (check_type(mtx[*i]) != WORD)
 		{

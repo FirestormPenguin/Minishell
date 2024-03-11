@@ -86,30 +86,24 @@ int	check_error_redirection(t_list *list)
 
 int	setup_redirection(t_list *list)
 {
-	int		count;
-	//int		flag;
-	//t_list	*tmp;
+	int	count;
+	int	status;
 
-	//flag = 0;
 	count = 0;
+	status = 0;
 	while (list)
 	{
 		if (list->type != WORD && list->type != PIPE)
 		{
-			redirections(list);
+			status |= redirections(list);
 			count++;
 		}
-		//tmp = list;
 		list = list->next;
-		//if(tmp == curr_list)
-		//	flag = 1;
-		//if (!flag)
-		//	free(tmp);
 		if (list == NULL || list->type == PIPE)
 			break ;
 	}
 	if (count > 0)
-		return (1);
+		return (status);
 	return (0);
 }
 

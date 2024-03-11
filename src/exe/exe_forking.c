@@ -71,17 +71,16 @@ void	parent(t_process *proc, int pipe_count)
 
 void	child(t_process *proc, int pipe_count)
 {
-	printf("|%d|%d\n", proc->red_ctrl, pipe_count);
 	if (pipe_count)
 	{
-		if (proc->red_ctrl != 1)
+		if (!(proc->red_ctrl & 0x1))
 			dup2(proc->pipe_fd[1], STDOUT_FILENO);
 		close(proc->pipe_fd[1]);
 		close(proc->pipe_fd[0]);
 	}
 	if (access(proc->path, X_OK) == 0)
 	{
-		if (proc->red_ctrl != 1)
+		if (!(proc->red_ctrl & 0x2))
 			dup2(proc->saved_fd, STDIN_FILENO);
 		close(proc->saved_fd);
 		execve(proc->path, (char *const *)(proc->args), proc->all->env);

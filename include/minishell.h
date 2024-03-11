@@ -154,7 +154,7 @@ void			append(char *str);
 void			here_doc(char *str);
 
 /*Redirections_utils*/
-void			redirections(t_list *list);
+int				redirections(t_list *list);
 void			write_into_fd(char *str);
 
 /*Enviromenrt*/

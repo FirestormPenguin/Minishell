@@ -12,16 +12,32 @@
 
 #include "../../include/minishell.h"
 
-void	redirections(t_list *list)
+int	redirections(t_list *list)
 {
+	int	status;
+
+	status = 0;
 	if (list->type == IN && list->mtx[0])
+	{
+		status |= 0x2;
 		input(list->mtx[0]);
+	}
 	if (list->type == OUT && list->mtx[0])
+	{
+		status |= 0x1;
 		output(list->mtx[0]);
+	}
 	if (list->type == DOUBLE_OUT && list->mtx[0])
+	{
+		status |= 0x1;
 		append(list->mtx[0]);
+	}
 	if (list->type == HERE_DOC && list->mtx[0])
+	{
+		status |= 0x2;
 		here_doc(list->mtx[0]);
+	}
+	return (status);
 }
 
 void	write_into_fd(char *str)
