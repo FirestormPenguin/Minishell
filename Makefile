@@ -24,6 +24,7 @@ SRC = 	$(SRC_DIR)/minishell.c\
 		$(SRC_DIR)/exe/exe_utils2.c\
 		$(SRC_DIR)/exe/redirections.c\
 		$(SRC_DIR)/exe/redirections_utils.c\
+		$(SRC_DIR)/exe/check_redirection.c\
 		$(SRC_DIR)/env/env.c\
 		$(SRC_DIR)/env/env_setup.c\
 		$(SRC_DIR)/builtins/ft_exit.c\

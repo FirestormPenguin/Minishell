@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/03/14 21:44:22 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/14 23:33:38 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,6 @@ int				check_error_redirection(t_list *list);
 int				setup_redirection(t_list *list);
 void			init_vars(t_process *proc, int *i);
 t_list			*fill_args(t_list *list, t_process *proc, int i);
-int				check_mtx(t_list *list, t_process *proc, int i);
 char			*path_finder(char **cmd, t_env4mini *all);
 char			*ft_getenv(char *name, char **env);
 t_grb_collector	*set_garbage_collector(t_list *list, t_process *proc);
@@ -156,6 +155,9 @@ void			here_doc(char *str);
 /*Redirections_utils*/
 int				redirections(t_list *list);
 void			write_into_fd(char *str);
+
+/*Check redirection*/
+int				check_error_redirection(t_list *list);
 
 /*Enviromenrt*/
 int				copy_env(char **env, t_env4mini *all);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:23:54 by egiubell          #+#    #+#             */
-/*   Updated: 2024/03/09 15:08:13 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/14 23:28:18 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	exe(t_list *list, t_env4mini *all)
 	{
 		while (list)
 		{
-			printf("cmd: %s, type: %d\n", list->mtx[0], list->type);
 			if (list->type == PIPE)
 				pipe_count++;
 			list = list->next;
