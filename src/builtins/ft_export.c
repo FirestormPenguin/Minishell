@@ -77,19 +77,19 @@ void	norm_print_index(char **args, t_env4mini *all)
 
 void	while_export(char **args, int i, t_env4mini *all)
 {
-	int	equals_index;
+	int	eq_ind;
 	int	j;
 
 	while (args[++i])
 	{
-		equals_index = find_valid_equals(args[i]);
-		if (ft_isdigit(args[i][0]) || equals_index == 2 || !is_valid_str(args[i]))
+		eq_ind = find_valid_equals(args[i]);
+		if (ft_isdigit(args[i][0]) || eq_ind == 2 || !is_valid_str(args[i]))
 		{
 			printf("In wrong if state!\n");
 			printf("Mini: export: `%s': not a valid identifier\n", args[i++]);
 			continue ;
 		}
-		if (equals_index == -1)
+		if (eq_ind == -1)
 		{
 			printf("Mini: export: `%s': not a valid identifier\n", args[i]);
 			ft_setenv(args[1], "", all);
@@ -99,7 +99,7 @@ void	while_export(char **args, int i, t_env4mini *all)
 			j++;
 		if (args[i][j] == '=')
 			equal_case(args, all, i, j);
-		else if (equals_index == 1)
+		else if (eq_ind == 1)
 			ft_setenv(args[i], "", all);
 	}
 }

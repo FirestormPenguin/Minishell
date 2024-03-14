@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:45:33 by egiubell          #+#    #+#             */
-/*   Updated: 2024/03/09 15:21:55 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:47:42 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,14 @@ int	check_error_redirection(t_list *list)
 		flag = 1;
 		if (list->next)
 		{
-			if (list->type == PIPE && list->next->type != WORD && list->next->type != PIPE && list->next->mtx)
+			if (list->type == PIPE && list->next->type != WORD
+				&& list->next->type != PIPE && list->next->mtx)
 			{
 				list = list->next;
 				continue ;
 			}
-			else if (list->type != WORD && list->type != PIPE && !list->mtx && list->next->type != WORD)
+			else if (list->type != WORD && list->type != PIPE
+				&& !list->mtx && list->next->type != WORD)
 			{
 				parse_error_gen(list);
 				return (1);

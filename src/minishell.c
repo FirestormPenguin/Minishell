@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/03/09 14:57:58 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/14 22:40:27 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	main(int ac, char **av, char **envp)
 	g_last_exit_code = 0;
 	all = ft_calloc(1, sizeof(t_env4mini));
 	copy_env(envp, all);
-	ft_setenv("SHELL", "/minishell", all);
+	ft_setenv("SHELL", "./minishell", all);
 	increment_shlvl(all);
 	pars.cp_env = all;
 	get_input(all, &pars);

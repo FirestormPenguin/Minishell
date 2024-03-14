@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/03/08 22:54:47 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:44:22 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
-struct	s_parser;
+struct		s_parser;
 
 typedef struct s_env4mini
 {
@@ -145,7 +145,7 @@ t_list			*fill_args(t_list *list, t_process *proc, int i);
 int				check_mtx(t_list *list, t_process *proc, int i);
 char			*path_finder(char **cmd, t_env4mini *all);
 char			*ft_getenv(char *name, char **env);
-t_grb_collector	*set_garbage_collector (t_list *list, t_process *proc);
+t_grb_collector	*set_garbage_collector(t_list *list, t_process *proc);
 
 /*Redirections*/
 void			input(char *str);

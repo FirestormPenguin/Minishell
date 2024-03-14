@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:45:33 by egiubell          #+#    #+#             */
-/*   Updated: 2024/03/09 15:20:51 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:45:55 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ t_list	*fill_args(t_list *list, t_process *proc, int i)
 			}
 			strcpy(proc->args[j++], list->mtx[i++]);
 		}
-	list = list->next;
-	if (list == NULL || list->type == PIPE)
-		break ;
+		list = list->next;
+		if (list == NULL || list->type == PIPE)
+			break ;
 	}
 	set_last_args(proc, j);
 	return (list);

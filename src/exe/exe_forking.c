@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:23:54 by egiubell          #+#    #+#             */
-/*   Updated: 2024/03/09 14:44:27 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:46:22 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	forking(t_list *list, t_process *proc, t_list *tmp_list, int pipe_count)
 		pipe(proc->pipe_fd);
 	proc->red_ctrl = setup_redirection(tmp_list);
 	if (!proc->args)
-			return ;
+		return ;
 	if (check_b_e(list, proc, pipe_count) == 1)
 		return ;
 	proc->pid = fork();

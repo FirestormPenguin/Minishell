@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/03/09 10:45:14 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/14 23:11:01 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static	t_list	*create_node(char **mtx, int *i, int *next_type)
 	list->type = *next_type;
 	h_list = list;
 	while (mtx[*i])
-	{	
+	{
 		if (check_type(mtx[*i]) != WORD)
 		{
 			if (*next_type != WORD && *i != 0)

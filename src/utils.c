@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 13:27:21 by egiubell          #+#    #+#             */
-/*   Updated: 2024/03/09 14:27:07 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:40:56 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	free_list(t_list *list)
 		list = list->next;
 		free(tmp);
 		tmp = NULL;
-
 	}
 }
 
