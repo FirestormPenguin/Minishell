@@ -18,6 +18,7 @@ SRC = 	$(SRC_DIR)/minishell.c\
 		$(SRC_DIR)/parser/utils_tokenizer.c\
 		$(SRC_DIR)/parser/utils_tokenizer2.c\
 		$(SRC_DIR)/parser/utils_parser.c\
+		$(SRC_DIR)/parser/parser_list_utils.c\
 		$(SRC_DIR)/exe/exe.c\
 		$(SRC_DIR)/exe/exe_forking.c\
 		$(SRC_DIR)/exe/exe_utils.c\

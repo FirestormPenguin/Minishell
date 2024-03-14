@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:45:33 by egiubell          #+#    #+#             */
-/*   Updated: 2024/03/14 23:33:13 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/03/15 00:02:27 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,50 @@ char	*ft_getenv(char *name, char **env)
 	return (NULL);
 }
 
+char	*construct_path(char **paths, char *cmd)
+{
+	int		i;
+	char	*path;
+	char	*tmp;
+
+	i = 0;
+	tmp = NULL;
+	while (paths && paths[i])
+	{
+		tmp = ft_strjoin(paths[i], "/");
+		if (!cmd)
+		{
+			free(tmp);
+			break ;
+		}
+		path = ft_strjoin(tmp, cmd);
+		free(tmp);
+		if (access(path, F_OK) == 0)
+			return (path);
+		free(path);
+		i++;
+	}
+	return (NULL);
+}
+
 char	*path_finder(char **cmd, t_env4mini *all)
+{
+	char	*tmp2;
+	char	**paths;
+	char	*result;
+
+	tmp2 = ft_getenv("PATH", all->env);
+	paths = ft_split(tmp2, ':');
+	result = construct_path(paths, cmd[0]);
+	free_double_pointer(paths);
+	if (!cmd)
+		return (NULL);
+	if (result)
+		return (result);
+	return (ft_strdup(cmd[0]));
+}
+
+/*char	*path_finder(char **cmd, t_env4mini *all)
 {
 	int		i;
 	char	*path;
@@ -94,4 +137,4 @@ char	*path_finder(char **cmd, t_env4mini *all)
 	if (!cmd)
 		return (NULL);
 	return (ft_strdup(cmd[0]));
-}
+}*/

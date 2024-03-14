@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:45:33 by egiubell          #+#    #+#             */
-/*   Updated: 2024/03/14 23:39:57 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/03/15 00:12:23 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,10 @@ int	check_mtx_null(t_list *list)
 	return (0);
 }
 
-int check_double_red_pipe(t_list *list)
+int	check_double_red_pipe(t_list *list)
 {
-	if (list->type != WORD && !list->mtx && (!list->next || list->next->type != WORD))
+	if (list->type != WORD && !list->mtx && (!list->next
+			|| list->next->type != WORD))
 	{
 		printf("parse error near ''\n");
 		return (1);
@@ -86,7 +87,9 @@ int	check_error_redirection(t_list *list)
 		if (check_pipe_at_first(list, flag) == 1)
 			return (1);
 		flag = 1;
-		if (list->type == PIPE && list->next->type != WORD && list->next->mtx[0])
+		if ((list->type == PIPE && list->mtx[0] && !list->next)
+			|| (list->type == PIPE && list->next->type != WORD
+				&& list->next->mtx[0]))
 		{
 			list = list->next;
 			continue ;

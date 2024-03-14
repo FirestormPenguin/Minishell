@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/03/14 23:33:38 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/03/15 00:54:46 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,12 @@ t_list			*ft_lstnew(void);
 /*Parser Utils*/
 int				check_type(char *str);
 void			scroll_list(t_list *node);
+
+/*Parser_list_utils*/
+void			init_first_node(t_list **list, char **mtx, int *i,
+					int *next_type);
+t_list			*create_node(char **mtx, int *i, int *next_type);
+t_list			*ft_lstnew(void);
 
 /*Tokenizer*/
 char			**tokenizer(char *input, int *token_count, t_parser *pars);
