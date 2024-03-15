@@ -6,11 +6,23 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/01/29 16:42:03 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:23:07 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+t_list	*ft_lstnew(void)
+{
+	t_list	*tmp_node;
+
+	tmp_node = NULL;
+	tmp_node = malloc(sizeof(t_list));
+	tmp_node->mtx = malloc (sizeof(char *) * 100);
+	tmp_node->type = 0;
+	tmp_node->next = NULL;
+	return (tmp_node);
+}
 
 int	check_type(char *str)
 {

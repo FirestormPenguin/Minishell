@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:23:54 by egiubell          #+#    #+#             */
-/*   Updated: 2024/03/14 23:28:18 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/03/15 16:13:57 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	while_exe(t_list *list, t_process *proc, int i, int pipe_count)
 		init_vars(proc, &i);
 		tmp_list = list;
 		list = fill_args(list, proc, i);
-		proc->path = path_finder(proc->args, proc->all);
+		if (tmp_list->type != HERE_DOC)
+			proc->path = path_finder(proc->args, proc->all);
 		forking(list, proc, tmp_list, pipe_count);
 		dup2(proc->saved_stdin, STDIN_FILENO);
 		dup2(proc->saved_stdout, STDOUT_FILENO);

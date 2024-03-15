@@ -6,23 +6,11 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/03/15 00:53:09 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:36:32 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-t_list	*ft_lstnew(void)
-{
-	t_list	*tmp_node;
-
-	tmp_node = NULL;
-	tmp_node = malloc(sizeof(t_list));
-	tmp_node->mtx = malloc (sizeof(char *) * 100);
-	tmp_node->type = 0;
-	tmp_node->next = NULL;
-	return (tmp_node);
-}
 
 t_list	*condition_node(t_list *list, int next_type, char **mtx, int i)
 {
@@ -51,6 +39,14 @@ t_list	*various(t_list *list, char **mtx, int *j, int i)
 	return (list);
 }
 
+t_list	*idk(t_list *list, char **mtx, int next_type, int i)
+{
+	if (next_type != WORD && i != 0)
+		list = condition_node (list, next_type, mtx, i);
+	free(mtx[i]);
+	return (list);
+}
+
 t_list	*create_node(char **mtx, int *i, int *next_type)
 {
 	int			j;
@@ -62,8 +58,7 @@ t_list	*create_node(char **mtx, int *i, int *next_type)
 	{
 		if (check_type(mtx[*i]) != WORD)
 		{
-			if (*next_type != WORD && *i != 0)
-				list = condition_node (list, *next_type, mtx, *i);
+			list = idk(list, mtx, *next_type, *i);
 			(*i)++;
 		}
 		list = various(list, mtx, &j, *i);
