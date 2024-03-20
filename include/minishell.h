@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/03/15 00:54:46 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/03/20 10:03:30 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,7 @@ int				check_builtins(t_process *proc);
 int				check_env_command(t_process *proc);
 int				execute_env_command(t_process *proc);
 int				is_valid_str(char *str);
+int				is_valid_val(char *str);
 
 /*Signal*/
 void			sigquit_handle(int sig);

@@ -85,7 +85,6 @@ void	while_export(char **args, int i, t_env4mini *all)
 		eq_ind = find_valid_equals(args[i]);
 		if (ft_isdigit(args[i][0]) || eq_ind == 2 || !is_valid_str(args[i]))
 		{
-			printf("In wrong if state!\n");
 			printf("Mini: export: `%s': not a valid identifier\n", args[i++]);
 			continue ;
 		}

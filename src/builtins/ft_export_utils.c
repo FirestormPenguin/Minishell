@@ -6,7 +6,7 @@
 /*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 02:17:04 by mivendit          #+#    #+#             */
-/*   Updated: 2024/03/14 23:07:05 by mivendit         ###   ########.fr       */
+/*   Updated: 2024/03/20 10:16:23 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	ft_setenv(char *name, char *value, t_env4mini *all)
 	int		size;
 
 	i = 0;
+	if (name[ft_strlen(name)-1] == '+' || name[ft_strlen(name)-1] == '=')
+		return ;
 	while (all->env[i])
 	{
 		if (ft_strncmp(all->env[i], name, ft_strlen(name)) == 0)
@@ -85,10 +87,25 @@ int	is_valid_str(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (str[i] && str[i] != '=')
 	{
 		if (!ft_isalpha(str[i]) && str[i] != '_'
-			&& str[i] != '+' && str[i] != '=' )
+			&& str[i] != '+' && str[i] != '=')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	is_valid_val(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != '=')
+	{
+		if (!(ft_isalpha(str[i]) || ft_isdigit(str[i])) && str[i] != '_'
+			&& str[i] != '+' && str[i] != '=')
 			return (0);
 		i++;
 	}

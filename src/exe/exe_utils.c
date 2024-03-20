@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mivendit <mivendit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:45:33 by egiubell          #+#    #+#             */
-/*   Updated: 2024/03/15 00:02:27 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/03/20 09:57:56 by mivendit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ char	*path_finder(char **cmd, t_env4mini *all)
 	char	*result;
 
 	tmp2 = ft_getenv("PATH", all->env);
+	if (!tmp2)
+		return (ft_strdup(cmd[0]));
 	paths = ft_split(tmp2, ':');
 	result = construct_path(paths, cmd[0]);
 	free_double_pointer(paths);
