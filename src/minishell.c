@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/03/15 14:04:58 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/04/24 14:11:41 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,3 +55,16 @@ int	main(int ac, char **av, char **envp)
 	free(all);
 	return (0);
 }
+
+/*
+1)viene utilizzata una sola variabile globale (g_last...)--> e'definita fuori da una funzione,
+puo'essere utilizzata in qualunque parte del codice
+come da subject (da un warning su normiette)
+
+get_imput = readline (ti scrive sul terminale quello che c'e'nella parentesi e attende che l'utente scrive
+qualcosa nel terminale
+
+ioboh
+
+env->da chidere a Mirko
+*/
