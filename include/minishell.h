@@ -6,7 +6,7 @@
 /*   By: egiubell <egiubell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:54:05 by codespace         #+#    #+#             */
-/*   Updated: 2024/04/24 15:25:43 by egiubell         ###   ########.fr       */
+/*   Updated: 2024/05/01 19:22:36 by egiubell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ typedef struct s_parser
 	int			count;
 	char		tmp_token[50000];
 	char		**tokens;
-	int			i1;
-	int			i2;
-	int			i3;
+	int			i1;		//Posizione nella stringa originale in input a mini
+	int			i2;		//Posizione nella tmp_toke utile durante la copia dei singoli token
+	int			i3;		//Posizione nella matrice di token che ritorneremo alla fine del tokenizer
 	int			in_quote;
 	int			in_double_quote;
 	t_env4mini	*cp_env;
